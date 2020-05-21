@@ -10,19 +10,21 @@
 	<context:annotation-config></context:annotation-config>
 	
 	<bean id="csrfRequestMatcher"
-		class="com.swan.picturerepository.controllerkr.CsrfRequestMatcher">
+		class="com.swan.picturerepository.controller.CsrfRequestMatcher">
 	</bean>
 
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:jdbc-user-service
 				data-source-ref="dataSource"
-				users-by-username-query="SELECT username, password, enabled FROM User WHERE username=?"
-				authorities-by-username-query="SELECT username, authority FROM User WHERE username=?" />
+				users-by-username-query="select username, password, enabled from user where username=?"
+				authorities-by-username-query="select username, authority from user where username=?" />
 		</security:authentication-provider>
 	</security:authentication-manager>
 
 	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url access="permitAll"
+			pattern="/home" />
 		<security:intercept-url access="permitAll"
 			pattern="/login" />
 		<security:intercept-url access="permitAll"
@@ -31,11 +33,13 @@
 			pattern="/upload/**" />
 		<security:intercept-url access="permitAll"
 			pattern="/resources/**" />
-		<security:intercept-url access="isAuthenticated()"
+<!-- 		<security:intercept-url access="permitAll"
+			pattern="/**" />	 -->		
+ 		<security:intercept-url access="isAuthenticated()"
 			pattern="/**" />
-		<security:form-login login-page="/login" />
+<!-- 		<security:form-login login-page="/login" />
 		<security:logout />
-		<security:csrf request-matcher-ref="csrfRequestMatcher" />
+		<security:csrf request-matcher-ref="csrfRequestMatcher" /> -->
 	</security:http>
 
 </beans>
