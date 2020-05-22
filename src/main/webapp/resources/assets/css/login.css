@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+.label-login {
+	background-Color: #ffffff;
+	FONT-SIZE: 14px;
+	COLOR: #000;
+	text-align: left;
+	font-weight: 600;
+	vertical-align: center;
+	height: 40px;
+	width: 100px;
+}
+
+.input_login {
+	font-size: 14px;
+	padding: 1 3 0 2;
+	border: 0px;
+	background: #ffffff;
+	outline: none;
+	width: 200px;
+	height: 40px;
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+	ime-mode: disabled
+}
+
+.input_msg {
+	font-size: 14px;
+	padding: 1 3 0 2;
+	border: 0px;
+	background: #ffffff;
+	outline: none;
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+	ime-mode: disabled;
+	resize: none;
+}
+
+.Button-LOGIN {
+	background-color: #ffffff;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 2px solid #ea1e69;
+	display: inline-block;
+	cursor: pointer;
+	color: #ea1e69;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 8px 24px;
+	text-decoration: none;
+	outline: none;
+}
+
+.Button-LOGIN:hover {
+	background-color: #ea1e69;
+	color: white;
+}
+
+.Button-LOGIN:active {
+	position: relative;
+	top: 1px;
+}
+
+.error {
+	font-size: 0.8em;
+	color: red;
+	width: 300px;
+}
+
+.logout {
+	font-size: 0.8em;
+	color: blue;
+	width: 300px;
+}

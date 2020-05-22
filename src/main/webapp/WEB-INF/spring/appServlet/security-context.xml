@@ -32,14 +32,12 @@
 		<security:intercept-url access="permitAll"
 			pattern="/upload/**" />
 		<security:intercept-url access="permitAll"
-			pattern="/resources/**" />
-<!-- 		<security:intercept-url access="permitAll"
-			pattern="/**" />	 -->		
- 		<security:intercept-url access="isAuthenticated()"
-			pattern="/**" />
-<!-- 		<security:form-login login-page="/login" />
+			pattern="/resources/**" />	
+ 		<security:intercept-url access="hasRole('ROLE_USER')"
+			pattern="/**"/>
+		<security:form-login login-page="/login"/>
 		<security:logout />
-		<security:csrf request-matcher-ref="csrfRequestMatcher" /> -->
+		<security:csrf request-matcher-ref="csrfRequestMatcher" /> 
 	</security:http>
 
 </beans>
