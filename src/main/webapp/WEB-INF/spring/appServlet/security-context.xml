@@ -8,9 +8,17 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<context:annotation-config></context:annotation-config>
-	
+
 	<bean id="csrfRequestMatcher"
 		class="com.swan.picturerepository.controller.CsrfRequestMatcher">
+	</bean>
+
+	<bean id="loginFailureHandler"
+		class="com.swan.picturerepository.security.LoginFailureHandler">
+		<property name="loginUsername" value="username" />
+		<property name="loginPassword" value="password" />
+		<property name="defaultFailureUrl"
+			value="/login?error" />
 	</bean>
 
 	<security:authentication-manager>
@@ -32,12 +40,15 @@
 		<security:intercept-url access="permitAll"
 			pattern="/upload/**" />
 		<security:intercept-url access="permitAll"
-			pattern="/resources/**" />	
- 		<security:intercept-url access="hasRole('ROLE_USER')"
-			pattern="/**"/>
-		<security:form-login login-page="/login"/>
+			pattern="/resources/**" />
+		<security:intercept-url
+			access="hasRole('ROLE_USER')" pattern="/**" />
+		<security:form-login username-parameter="username"
+			password-parameter="password" login-processing-url="/login"
+			login-page="/login" default-target-url="/"
+			authentication-failure-handler-ref="loginFailureHandler" />
 		<security:logout />
-		<security:csrf request-matcher-ref="csrfRequestMatcher" /> 
+		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>
 
 </beans>
