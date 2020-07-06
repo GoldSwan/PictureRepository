@@ -31,7 +31,6 @@ body {
 }
 
 table tr {
-	text-align: center;
 	height: 15px;
 }
 
@@ -81,11 +80,11 @@ table {
 	padding: 8px 24px;
 	text-decoration: none;
 	outline: none;
-	width: 300px;
+	width: 304px;
 	height: 40px;
 }
 
-.Button-JOIN {
+.a-JOIN {
 	background-color: #ffffff;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
@@ -96,11 +95,11 @@ table {
 	color: #0080ff;
 	font-size: 15px;
 	font-weight: bold;
-	padding: 8px 24px;
 	text-decoration: none;
 	outline: none;
 	width: 300px;
 	height: 40px;
+	line-height: 40px;
 }
 
 .Button-LOGIN:hover {

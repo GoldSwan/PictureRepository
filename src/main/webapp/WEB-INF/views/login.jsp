@@ -66,16 +66,11 @@
 						</tr>
 					</table>
 				</form>
-				<form action="<c:url value="/join" />" method="POST" name="join">
-					<input type="hidden" name="${_csrf.parameterName }"
-						value="${_csrf.token }" />
 					<table>
 						<tr>
-							<td><button class="Button-JOIN" type="submit" id="join"
-									name="join" tabindex="4">회원가입</button></td>
+							<td><a class="Button-JOIN" href= "<c:url value="/join" />">회원가입</a></td>
 						</tr>
 					</table>
-				</form>
 			</div>
 		</div>
 	</div>
