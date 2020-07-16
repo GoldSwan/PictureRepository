@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+body {
+	background-color: #000;
+	background-image: url("../../images/bg.jpg");
+	background-size: cover;
+	background-position: top center;
+}
+
+.layer {
+	position: absolute;
+	display: table;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.intro_span {
+	color : #ffffff; 
+}
+
+.layer .layer_inner {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.layer .content {
+	display: inline-block;
+}
+
+table tr {
+	text-align: center;
+	height: 15px;
+}
+
+table td {
+	text-align: center;
+	height: 15px;
+}
+
+table {
+	margin: auto;
+}
+
+.input_join {
+	font-size: 14px;
+	border: 0px;
+	background: #ffffff;
+	outline: none;
+	width: 300px;
+	height: 40px;
+	border-bottom: 1px solid #808080;
+	ime-mode: disabled;
+	size: 25;
+	text-align: left;
+}
+
+.input_msg {
+	font-size: 14px;
+	padding: 1 3 0 2;
+	border: 0px;
+	background: #ffffff;
+	outline: none;
+	ime-mode: disabled;
+	resize: none;
+}
+
+.Button-LOGIN {
+	background-color: #ffffff;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 2px solid #ea1e69;
+	display: inline-block;
+	cursor: pointer;
+	color: #ea1e69;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 8px 24px;
+	text-decoration: none;
+	outline: none;
+	width: 304px;
+	height: 40px;
+}
+
+.Button-JOIN {
+	background-color: #ffffff;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 2px solid #0080ff;
+	display: inline-block;
+	cursor: pointer;
+	color: #0080ff;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	outline: none;
+	width: 300px;
+	height: 40px;
+}
+
+.Button-LOGIN:hover {
+	background-color: #ea1e69;
+	color: white;
+}
+
+.Button-LOGIN:active {
+	position: relative;
+	top: 1px;
+}
+
+.Button-JOIN:hover {
+	background-color: #0080ff;
+	color: white;
+}
+
+.Button-JOIN:active {
+	position: relative;
+	top: 1px;
+}
+
+.error {
+	font-size: 0.8em;
+	color: red;
+	width: 300px;
+	text-align: center;
+}
+
+.logout {
+	font-size: 0.8em;
+	color: blue;
+	width: 300px;
+	text-align: center;
+}

@@ -36,7 +36,11 @@
 		<security:intercept-url access="permitAll"
 			pattern="/login" />
 		<security:intercept-url access="permitAll"
-			pattern="/join" />			
+			pattern="/join" />		
+		<security:intercept-url access="permitAll"
+			pattern="/join.do" />	
+				<security:intercept-url access="permitAll"
+			pattern="/joinSuccess" />					
 		<security:intercept-url access="permitAll"
 			pattern="/RegisterKey" />
 		<security:intercept-url access="permitAll"
