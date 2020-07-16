@@ -35,12 +35,12 @@
 						</tr>
 						<tr>
 							<td><input class="input_login" placeholder="아이디"
-								maxLength="255" type="text" id="username" name="username"
+								maxLength="20" type="text" id="username" name="username"
 								value="${username }" tabindex="1"></td>
 						</tr>
 						<tr>
 							<td><input class="input_login" placeholder="비밀번호"
-								maxLength="255" type="password" id="password" name="password"
+								maxLength="20" type="password" id="password" name="password"
 								value="${password }" tabindex="2"></td>
 						</tr>
 						<tr>
@@ -68,7 +68,7 @@
 				</form>
 					<table>
 						<tr>
-							<td><a class="Button-JOIN" href= "<c:url value="/join" />">회원가입</a></td>
+							<td><a class="a-JOIN" href= "<c:url value="/join" />">회원가입</a></td>
 						</tr>
 					</table>
 			</div>
