@@ -39,6 +39,8 @@
 			pattern="/join" />		
 		<security:intercept-url access="permitAll"
 			pattern="/join.do" />	
+		<security:intercept-url access="permitAll"
+			pattern="/move/**" />				
 				<security:intercept-url access="permitAll"
 			pattern="/joinSuccess" />					
 		<security:intercept-url access="permitAll"

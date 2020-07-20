@@ -20,4 +20,9 @@ public class LoginController {
 
 		return "login";
 	}
+	@RequestMapping(value = "/move/login", method = {RequestMethod.GET, RequestMethod.POST})
+	public String moveLogin() {
+
+		return "login";
+	}
 }
