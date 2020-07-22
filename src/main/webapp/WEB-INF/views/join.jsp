@@ -30,19 +30,19 @@
 						<tr>
 							<td><sf:input class="input_join" placeholder="이메일"
 								maxLength="100" type="text" id="email" name="email"
-								path = "email" value="${email }" tabindex="1"/><br>
+								path = "email" value="${email }" tabindex="2"/><br>
 								<sf:errors path="email" class="error"/></td>
 						</tr>						
 						<tr>
 							<td><sf:input class="input_join" placeholder="비밀번호"
 								maxLength="20" type="password" id="password" name="password"
-								path = "password" value="${password }" tabindex="2"/><br>
+								path = "password" value="${password }" tabindex="3"/><br>
 								<sf:errors path="password" class="error"/></td>
 						</tr>
 						 
  						<tr>
 							<td><input class="input_join" placeholder="비밀번호 확인"
-								maxLength="20" type="password" id="passwordConfirm" name="passwordConfirm" value="${passwordConfirm }" tabindex="2"/>
+								maxLength="20" type="password" id="confirmPassword" name="confirmPassword" value="${confirmPassword }" tabindex="4"/>
 							</td>
 						</tr> 
 						<c:if test="${not empty errorMsg }">
@@ -54,7 +54,7 @@
 						</tr>
 						<tr>
 							<td><input class="Button-JOIN" type="submit" id="join"
-								name="join" value="회원가입" tabindex="3" /></td>
+								name="join" value="회원가입" tabindex="5" /></td>
 						</tr>
 						<tr>
 						</tr>

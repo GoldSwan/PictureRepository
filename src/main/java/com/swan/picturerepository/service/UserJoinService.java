@@ -14,4 +14,12 @@ public class UserJoinService {
 	public void createUser(User user) {
 		userDAO.insertUser(user);
 	}
+	
+	public boolean reConfirmPassword(String password, String confirmPassword) {
+		
+		if(password.equals(confirmPassword))
+			return true;
+		
+		return false;
+	}
 }

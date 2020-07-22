@@ -2,6 +2,7 @@ package com.swan.picturerepository.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,10 @@ public class JoinController {
 	private UserJoinService userJoinService;
 	
 	@RequestMapping(value = "/join.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String doJoin(Model model,@Valid User user, BindingResult result) {
+	public String doJoin(HttpServletRequest req, Model model,@Valid User user, BindingResult result) {
+		
+		String password = user.getPassword();
+		String confirmPassword = req.getParameter("confirmPassword");
 		
 		if(result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
@@ -30,6 +34,11 @@ public class JoinController {
 			for(ObjectError error:errors) {
 				System.out.println(error.getDefaultMessage());
 			}
+			
+			if(!userJoinService.reConfirmPassword(password, confirmPassword))
+				model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
+			
+			model.addAttribute("confirmPassword",confirmPassword);
 			
 			return "join";
 		}
