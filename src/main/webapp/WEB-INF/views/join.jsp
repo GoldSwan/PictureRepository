@@ -17,7 +17,7 @@
 	<div class="layer">
 		<div class="layer_inner">
 			<div class="content">
-				 <sf:form action="${pageContext.request.contextPath}/join.do" method="post" name="join" modelAttribute="user">
+				 <sf:form action="${pageContext.request.contextPath}/join.do" method="get" name="join" modelAttribute="user">
  					<input type="hidden" name="${_csrf.parameterName }"
 						value="${_csrf.token }" />
 					<table>
@@ -30,7 +30,7 @@
 						<tr>
 							<td><sf:input class="input_join" placeholder="이메일"
 								maxLength="100" type="text" id="email" name="email"
-								path = "email" value="${email }" tabindex="2"/><br>
+								path = "email" value="${email }" onchange="onchangeEmailField(this)" tabindex="2"/><br>
 								<sf:errors path="email" class="error"/></td>
 						</tr>						
 						<tr>
@@ -54,7 +54,7 @@
 						</tr>
 						<tr>
 							<td><input class="Button-JOIN" type="submit" id="join"
-								name="join" value="회원가입" tabindex="5" /></td>
+								name="join" value="회원가입" tabindex="5" /></td>							
 						</tr>
 						<tr>
 						</tr>
@@ -64,4 +64,28 @@
 		</div>
 	</div>
 </body>
+<script>
+function onchangeEmailField(obj){
+		var xhttp = new XMLHttpRequest();
+		//var username = document.getElementById('username').value;	
+		var email =  document.getElementById('email').value;
+		//var password =  document.getElementById('password').value;
+		//var confirmPassword =  document.getElementById('confirmPassword').value;
+		console.log(xhttp.readyState);        
+		xhttp.open('POST', 'http://localhost:8106/picturerepository/async-email-valid.do', true);
+		//onreadystatechange : XMLHttpRequest 객체의 readyState 프로퍼티 값이 변할 때 자동으로 호출되는 함수.
+		xhttp.onreadystatechange = function(){        
+			if (xhttp.readyState == xhttp.DONE) {           
+				if (xhttp.status == 200 || xhttp.status == 201) {            
+					console.log(xhttp.responseText);            
+				} else {          
+					console.error(xhttp.responseText);          
+				}
+        	}       
+		}
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.send("email=" + email);
+        //xhttp.send("username=" + username + "&email=" + email+"&password="+password+"&confirmPassword="+confirmPassword);
+	}
+</script>
 </html>
