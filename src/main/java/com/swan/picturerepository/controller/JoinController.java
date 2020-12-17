@@ -55,11 +55,10 @@ public class JoinController {
 	}
 	
 	@RequestMapping(value = "/async-email-valid.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public @ResponseBody Map<String, List<Map<String, String>>> asyncEmailValidDo(HttpServletRequest req, Model model,@Valid User user, BindingResult result) {
-		Map<String, List<Map<String, String>>> results = new HashMap<>();
-		List<Map<String, String>> errorList = new ArrayList<>();
+	public @ResponseBody Map<String, String> asyncEmailValidDo(HttpServletRequest req, Model model,@Valid User user, BindingResult result) {
 		Map<String, String> map = new HashMap<>();
-		errorList.add(map);		
+		
+		map.put("emailError", "");
 		
 		if(result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
@@ -67,13 +66,11 @@ public class JoinController {
 			for(ObjectError error:errors) {
 				System.out.println(error.getDefaultMessage());
 				if(error.getDefaultMessage().equals("이메일을 입력해주세요.") || error.getDefaultMessage().equals("이메일 주소가 유효하지 않습니다.")) {
-					map.put("email_error", error.getDefaultMessage());
+					map.put("emailError", error.getDefaultMessage());
 				}
 			}
 		}
 		
-		results.put("errorlist", errorList);
-		
-		return results;
+		return map;
 	}
 }
