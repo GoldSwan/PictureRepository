@@ -70,14 +70,30 @@ function onchangeEmailField(obj){
 		//var username = document.getElementById('username').value;	
 		var email =  document.getElementById('email').value;
 		//var password =  document.getElementById('password').value;
-		//var confirmPassword =  document.getElementById('confirmPassword').value;
-		console.log(xhttp.readyState);        
+		//var confirmPassword =  document.getElementById('confirmPassword').value;     
 		xhttp.open('POST', 'http://localhost:8106/picturerepository/async-email-valid.do', true);
 		//onreadystatechange : XMLHttpRequest 객체의 readyState 프로퍼티 값이 변할 때 자동으로 호출되는 함수.
 		xhttp.onreadystatechange = function(){        
 			if (xhttp.readyState == xhttp.DONE) {           
 				if (xhttp.status == 200 || xhttp.status == 201) {            
-					console.log(xhttp.responseText);            
+					var param = JSON.parse(xhttp.responseText);
+					console.log(param.emailError);
+					if( document.getElementById('email.errors')){
+						document.getElementById('email.errors').innerHTML = param.emailError;//이미 에러메세지가 존재한다면 메세지 업데이트
+					}						
+					else{
+						//구현중...
+						/*
+						//에러메세지가 존재하지 않는 경우 삽입
+						console.log("TEST");
+						var newSPAN = document.createElement('span');
+						newSPAN.setAttribute('id','email.errors');
+						newSPAN.innerHTML = param.emailError;
+						//newSPAN.setAttribute('class','error');				​					
+						var parentInput = document.getElementById('email');						
+						parentInput.appendChild(newSPAN);
+						*/
+					}
 				} else {          
 					console.error(xhttp.responseText);          
 				}
