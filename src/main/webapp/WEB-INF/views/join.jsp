@@ -9,8 +9,7 @@
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token }" />
 <meta name="_csrf_header" content="${_csrf.headerName }" />
-<link rel="stylesheet"
-	href="<c:url value="/resources/assets/css/join.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/assets/css/join.css"/>">
 <title>Join</title>
 </head>
 <body>
@@ -22,26 +21,26 @@
 						value="${_csrf.token }" />
 					<table>
 						<tr>
-							<td><sf:input class="input_join" placeholder="아이디"
+							<td id = td_username><sf:input class="input_join" placeholder="아이디"
 								maxLength="20" type="text" id="username" name="username"
 								path = "username" value="${username }" tabindex="1"/><br>
 								<sf:errors path="username" class="error"/></td>
 						</tr>
 						<tr>
-							<td><sf:input class="input_join" placeholder="이메일"
+							<td id = td_email><sf:input class="input_join" placeholder="이메일"
 								maxLength="100" type="text" id="email" name="email"
 								path = "email" value="${email }" onchange="onchangeEmailField(this)" tabindex="2"/><br>
 								<sf:errors path="email" class="error"/></td>
 						</tr>						
 						<tr>
-							<td><sf:input class="input_join" placeholder="비밀번호"
+							<td id = td_password><sf:input class="input_join" placeholder="비밀번호"
 								maxLength="20" type="password" id="password" name="password"
 								path = "password" value="${password }" tabindex="3"/><br>
 								<sf:errors path="password" class="error"/></td>
 						</tr>
 						 
  						<tr>
-							<td><input class="input_join" placeholder="비밀번호 확인"
+							<td id = td_confirmPassword><input class="input_join" placeholder="비밀번호 확인"
 								maxLength="20" type="password" id="confirmPassword" name="confirmPassword" value="${confirmPassword }" tabindex="4"/>
 							</td>
 						</tr> 
@@ -82,17 +81,12 @@ function onchangeEmailField(obj){
 						document.getElementById('email.errors').innerHTML = param.emailError;//이미 에러메세지가 존재한다면 메세지 업데이트
 					}						
 					else{
-						//구현중...
-						/*
-						//에러메세지가 존재하지 않는 경우 삽입
-						console.log("TEST");
-						var newSPAN = document.createElement('span');
-						newSPAN.setAttribute('id','email.errors');
-						newSPAN.innerHTML = param.emailError;
-						//newSPAN.setAttribute('class','error');				​					
-						var parentInput = document.getElementById('email');						
-						parentInput.appendChild(newSPAN);
-						*/
+						//에러메세지가 존재하지 않는 경우 동적 삽입
+						var errorSpan = document.createElement('span');
+						errorSpan.setAttribute('id','email.errors');
+						errorSpan.innerHTML = param.emailError;									
+						document.getElementById('td_email').appendChild(errorSpan);
+						document.getElementById('email.errors').setAttribute('class','error');			
 					}
 				} else {          
 					console.error(xhttp.responseText);          
