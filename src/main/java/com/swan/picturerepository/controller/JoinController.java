@@ -1,8 +1,6 @@
 package com.swan.picturerepository.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +33,7 @@ public class JoinController {
 		System.out.println(user.getUsername());
 		if(result.hasErrors()) {			
 			if(!userJoinService.reConfirmPassword(password, confirmPassword))
-				model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");			
+				model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");	
 			
 			model.addAttribute("confirmPassword",confirmPassword);		
 			
@@ -64,10 +62,15 @@ public class JoinController {
 			List<ObjectError> errors = result.getAllErrors();
 			
 			for(ObjectError error:errors) {
-				System.out.println(error.getDefaultMessage());
-				if(error.getDefaultMessage().equals("이메일을 입력해주세요.") || error.getDefaultMessage().equals("이메일 주소가 유효하지 않습니다.")) {
+				String[] errorContentArray =  error.getArguments()[0].toString().split(";");
+				if(errorContentArray.length<3)
+					continue;
+				String[] errorContentDetailArray = errorContentArray[2].split(" ");
+				if(errorContentDetailArray.length< 3)
+					continue;
+				String errorId = errorContentDetailArray[3].replace("[", "").replace("]","");
+				if(errorId.equals("email"))
 					map.put("emailError", error.getDefaultMessage());
-				}
 			}
 		}
 		
