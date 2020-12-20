@@ -52,13 +52,20 @@ public class JoinController {
 		return "join";
 	}
 	
-	@RequestMapping(value = "/async-email-valid.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public @ResponseBody Map<String, String> asyncEmailValidDo(HttpServletRequest req, Model model,@Valid User user, BindingResult result) {
+	@RequestMapping(value = "/async-valid.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody Map<String, String> asyncValidDo(HttpServletRequest req, Model model,@Valid User user, BindingResult result) {
 		Map<String, String> map = new HashMap<>();
+		String modelMemberVar = req.getParameter("modelMemberVar");
+		String password = user.getPassword();
+		String confirmPassword = req.getParameter("confirmPassword");
 		
-		map.put("emailError", "");
+		map.put("validErrorMessage", "");
 		
-		if(result.hasErrors()) {
+		if(modelMemberVar.equals("confirmPassword")) {
+			if(!userJoinService.reConfirmPassword(password, confirmPassword))
+				map.put("validErrorMessage", "비밀번호가 일치하지 않습니다.");
+		}		
+		else if(result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			
 			for(ObjectError error:errors) {
@@ -69,8 +76,8 @@ public class JoinController {
 				if(errorContentDetailArray.length< 3)
 					continue;
 				String errorId = errorContentDetailArray[3].replace("[", "").replace("]","");
-				if(errorId.equals("email"))
-					map.put("emailError", error.getDefaultMessage());
+				if(errorId.equals(modelMemberVar))
+					map.put("validErrorMessage", error.getDefaultMessage());
 			}
 		}
 		
