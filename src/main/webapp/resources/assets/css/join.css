@@ -87,8 +87,6 @@ table {
 
 .Button-JOIN {
 	background-color: #ffffff;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	border: 2px solid #0080ff;
 	display: inline-block;
@@ -98,8 +96,8 @@ table {
 	font-weight: bold;
 	text-decoration: none;
 	outline: none;
-	width: 300px;
-	height: 40px;
+	width: 304px;
+	height: 43px;
 }
 
 .Button-LOGIN:hover {
@@ -134,4 +132,22 @@ table {
 	color: blue;
 	width: 300px;
 	text-align: center;
+}
+
+.a-blue {
+	background-color: #ffffff;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 2px solid #0080ff;
+	display: inline-block;
+	cursor: pointer;
+	color: #0080ff;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	outline: none;
+	width: 300px;
+	height: 40px;
+	line-height: 40px;
 }
