@@ -25,12 +25,12 @@
 						</tr>
 						<tr>
 							<td><h3>
-									<span class="intro_span">짤 저장소에 오신 것을 환영합니다!</span>
+									<span class="intro_span">나의 사진 저장소에 오신것을 환영합니다!</span>
 								</h3></td>
 						</tr>
 						<tr>
 							<td><h3>
-									<span class="intro_span">언제 어디서든 자신이 원하는 짤을 접해보세요!!</span>
+									<span class="intro_span">언제 어디서든 저장해둔 사진을 가져올 수 있습니다!!</span>
 								</h3></td>
 						</tr>
 						<tr>
@@ -42,8 +42,6 @@
 							<td><input class="input_login" placeholder="비밀번호"
 								maxLength="20" type="password" id="password" name="password"
 								value="${password }" tabindex="2"></td>
-						</tr>
-						<tr>
 						</tr>
 						<c:if test="${not empty errorMsg }">
 							<tr>
@@ -57,20 +55,14 @@
 							</tr>
 						</c:if>
 						<tr>
-						</tr>
-						<tr>
 							<td><input class="Button-LOGIN" type="submit" id="login"
 								name="login" value="로그인" tabindex="3" /></td>
 						</tr>
 						<tr>
-						</tr>
-					</table>
-				</form>
-					<table>
-						<tr>
 							<td><a class="a-JOIN" href= "<c:url value="/join" />">회원가입</a></td>
 						</tr>
 					</table>
+				</form>
 			</div>
 		</div>
 	</div>
