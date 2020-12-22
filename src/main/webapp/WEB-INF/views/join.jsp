@@ -24,7 +24,7 @@
 							<td id = td_username><sf:input class="input_join" placeholder="아이디"
 								maxLength="20" type="text" id="username" name="username"
 								path = "username" value="${username }" onchange="onchangeUsernameField(this)" tabindex="1"/><br>
-								<sf:errors path="username" class="error"/></td>
+								<sf:errors path="username" class="error"/>								
 						</tr>
 						<tr>
 							<td id = td_email><sf:input class="input_join" placeholder="이메일"

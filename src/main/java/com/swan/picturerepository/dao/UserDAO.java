@@ -17,6 +17,11 @@ public class UserDAO {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
+	public boolean isExistUserName(String username) {
+		String sqlStatement = "SELECT COUNT(1) FROM USER WHERE USERNAME = (?) LIMIT 1";
+		return jdbcTemplate.queryForObject(sqlStatement, new Object[] {username}, Integer.class)>0 ? true : false;
+	}
+	
 	public boolean insertUser(User user) {
 		
 	    String authority = "ROLE_USER";

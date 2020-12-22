@@ -15,11 +15,11 @@ public class UserJoinService {
 		userDAO.insertUser(user);
 	}
 	
-	public boolean reConfirmPassword(String password, String confirmPassword) {
-		
-		if(password.equals(confirmPassword))
-			return true;
-		
-		return false;
+	public boolean reConfirmPassword(String password, String confirmPassword) {	
+		return password.equals(confirmPassword) ? true : false; 
+	}
+	
+	public boolean isDuplicateUsername(String username) {
+		return userDAO.isExistUserName(username) ? true : false;
 	}
 }

@@ -30,7 +30,7 @@
 						</tr>
 						<tr>
 							<td><h3>
-									<span class="intro_span">언제 어디서든 저장해둔 사진을 가져올 수 있습니다!!</span>
+									<span class="intro_span">언제 어디서든 나만의 사진을 접해보세요!!</span>
 								</h3></td>
 						</tr>
 						<tr>

@@ -27,19 +27,16 @@ public class JoinController {
 	
 	@RequestMapping(value = "/join.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String doJoin(HttpServletRequest req, Model model,@Valid User user, BindingResult result) {
-		
 		String password = user.getPassword();
-		String confirmPassword = req.getParameter("confirmPassword");
-		System.out.println(user.getUsername());
-		if(result.hasErrors()) {			
-			if(!userJoinService.reConfirmPassword(password, confirmPassword))
-				model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");	
-			
-			model.addAttribute("confirmPassword",confirmPassword);		
-			
+		String confirmPassword = req.getParameter("confirmPassword");	
+		model.addAttribute("confirmPassword",confirmPassword);
+		if(result.hasErrors()) {					
 			return "join";
 		}
-		
+		if(!userJoinService.reConfirmPassword(password, confirmPassword)) {
+			model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");	
+			return "join";
+		}
 		userJoinService.createUser(user);
 		return "joinSuccess";
 	}
@@ -55,6 +52,7 @@ public class JoinController {
 	@RequestMapping(value = "/async-valid.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public @ResponseBody Map<String, String> asyncValidDo(HttpServletRequest req, Model model,@Valid User user, BindingResult result) {
 		Map<String, String> map = new HashMap<>();
+		String username = user.getUsername();
 		String modelMemberVar = req.getParameter("modelMemberVar");
 		String password = user.getPassword();
 		String confirmPassword = req.getParameter("confirmPassword");
@@ -64,7 +62,12 @@ public class JoinController {
 		if(modelMemberVar.equals("confirmPassword")) {
 			if(!userJoinService.reConfirmPassword(password, confirmPassword))
 				map.put("validErrorMessage", "비밀번호가 일치하지 않습니다.");
-		}		
+		}
+		else if(modelMemberVar.equals("username")) {
+			if(userJoinService.isDuplicateUsername(username)) {
+				map.put("validErrorMessage", "이미 존재하는 아이디입니다.");
+			}
+		}
 		else if(result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			
