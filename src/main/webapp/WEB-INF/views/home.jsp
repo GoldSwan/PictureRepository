@@ -16,7 +16,10 @@
 			<div id="wrapper">
 					<c:if test="${pageContext.request.userPrincipal.name != null }">
 						<div>
-							<a href="javascript:document.getElementById('logout').submit()"><b>Log out</b></a>
+							<a href="javascript:document.getElementById('logout').submit()"><b>로그아웃</b></a>
+						</div>
+						<div>
+							<b>${pageContext.request.userPrincipal.name}</b>
 						</div>
 					</c:if>
 					<form id="logout" action="<c:url value="/logout" />" method="post">
