@@ -21,6 +21,14 @@
 			value="/login?error" />
 	</bean>
 
+	<bean id="loginSucessHandler"
+		class="com.swan.picturerepository.security.LoginSucessHandler">
+		<property name="loginUsername" value="username" />
+		<!--<property name="loginPassword" value="password" />  -->
+		<property name="defaultSucessUrl"
+			value="/" />
+	</bean>
+	
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:jdbc-user-service
