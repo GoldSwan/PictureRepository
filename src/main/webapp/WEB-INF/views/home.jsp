@@ -13,21 +13,24 @@
 	<body>
 
 		<!-- Wrapper -->
-			<div id="wrapper">
-					<c:if test="${pageContext.request.userPrincipal.name != null }">
-						<div>
-							<a href="javascript:document.getElementById('logout').submit()"><b>로그아웃</b></a>
-						</div>
-						<div>
-							<b>${pageContext.request.userPrincipal.name}</b>
-						</div>
-					</c:if>
-					<form id="logout" action="<c:url value="/logout" />" method="post">
-						<input type="hidden" name="${_csrf.parameterName }"
-					value="${_csrf.token }" />
-					</form>			
+			<div id="wrapper">		
 		<!-- Header -->
 					<header id="header">
+							<div>
+							<form method="get" action="<c:url value="/search" />">
+								<input type="text" name="keyword" size = 5 />
+​​​​​​​ 								<button type="submit"><b>검색</b></button>
+							</form>							
+							</div>
+							<c:if test="${pageContext.request.userPrincipal.name != null }">
+							<div style = "float:right;">
+							<b>${pageContext.request.userPrincipal.name}</b>
+							<a href="javascript:document.getElementById('logout').submit()"><b>로그아웃</b></a><br>
+							<form id="logout" action="<c:url value="/logout" />" method="post">
+								<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+							</form>								
+							</div>	
+							</c:if>								
 						<span class="avatar"><img src="resources/images/avatar.jpg" alt="" /></span>
 						<h1>This is <strong>Visualize</strong>, a responsive site template designed by <a href="http://templated.co">TEMPLATED</a><br />
 						and released for free under the Creative Commons License.</h1>
