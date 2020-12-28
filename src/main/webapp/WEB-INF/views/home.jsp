@@ -20,7 +20,7 @@
 			<div class="container">
 				<div class="row">
 					<c:if test="${pageContext.request.userPrincipal.name != null }">
-						<div class="col-sm-8">
+						<div class="col-sm-6">
 								<form class="form-inline" method="get"
 									action="<c:url value="/search" />">
 									<input class="form-control mr-sm-2 search-input" type="search"
@@ -30,7 +30,7 @@
 									</button>
 								</form>
 						</div>						
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<div style="float: right;">
 								<form id="logout" action="<c:url value="/logout" />"
 									method="post">
@@ -40,7 +40,10 @@
 										<i><b>로그아웃</b></i>
 									</button>
 								</form>
-							</div>						
+							</div>
+							<div style="float: right;margin-right: 10px;">
+							<a class="btn btn-lg btn-primary" href= "<c:url value="/move/imageFileUpload" />">업로드</a>
+							</div>													
 							<div style="float: right;margin-right: 10px;">
 							<a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a>
 							</div>	
