@@ -42,7 +42,7 @@
 								</form>
 							</div>
 							<div style="float: right;margin-right: 10px;">
-							<a class="btn btn-lg btn-primary" href= "<c:url value="/move/imageFileUpload" />">업로드</a>
+							<a class="btn btn-lg btn-primary" href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}" />">업로드</a>
 							</div>													
 							<div style="float: right;margin-right: 10px;">
 							<a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a>
