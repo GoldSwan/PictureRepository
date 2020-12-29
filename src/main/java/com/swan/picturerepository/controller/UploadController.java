@@ -1,44 +1,40 @@
 package com.swan.picturerepository.controller;
 
-import java.io.File;
-import java.util.UUID;
-
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.swan.picturerepository.service.FileUploadService;
 
 @Controller
 public class UploadController {
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
-
+	@Autowired FileUploadService fileUploadService;
+	
 	@RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
-	public String uploadForm(Model model, @RequestParam("file") MultipartFile file) throws Exception {
-
-		String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
-
-		model.addAttribute("savedImageName", savedName);
+	public String uploadForm(Model model, @RequestParam("username") String username, @RequestParam("file") MultipartFile file) throws Exception {
+		 
+		String fileName = file.getOriginalFilename();
+		String fileId = fileUploadService.uploadFile(uploadPath, file.getBytes(), fileName);
+		
+		
+		fileUploadService.createFileData(username, fileId, fileName);
+		model.addAttribute("savedImageName", fileName);
 
 		return "imageFileUploadResult";
 	}
-
-	private String uploadFile(String originalName, byte[] fileData) throws Exception {
-		UUID uid = UUID.randomUUID();
-		String savedName = uid.toString() + "_" + originalName;
-		File target = new File(uploadPath, savedName);
-		FileCopyUtils.copy(fileData, target);
-		return savedName;
-	}
 	
 	@RequestMapping(value = "/move/imageFileUpload")
-	public String moveUpload() {
+	public String moveUpload(Model model, @RequestParam("username") String username) {
+		model.addAttribute("username", username);
 		return "imageFileUpload";
 	}
 }

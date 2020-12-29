@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.swan.picturerepository.model.User;
 import com.swan.picturerepository.model.UserFileInfo;
 
 @Repository
@@ -37,5 +38,13 @@ public class UserFileInfoDAO {
 					}
 			
 		});
+	}
+	
+	public boolean insertUserFileInfo(String username, String fileId, String fileName) {
+	    
+		String sqlStatement = "insert into userfileinfo (username, fileId, fileName, isrtDt) values(?,?,?,SYSDATE())";
+
+		return (jdbcTemplate.update(sqlStatement,
+				new Object[] { username, fileId, fileName }) == 1);
 	}
 }

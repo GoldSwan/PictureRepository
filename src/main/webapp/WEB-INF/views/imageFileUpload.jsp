@@ -9,7 +9,9 @@
 </head>
 <body>
 <form action="<c:url value="/uploadForm" />" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" placeholder="파일 선택" /><input type="submit" value="업로드">
+    <input type="file" name="file" placeholder="파일 선택"/>
+    <input type="submit" value="업로드"/>
+    <input type="text" name="username" value = "${username}"/>
 </form>
 </body>
 </html>
