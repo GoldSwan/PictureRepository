@@ -1,6 +1,8 @@
 package com.swan.picturerepository.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,17 +20,20 @@ public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
 	List<UserFileInfo> fileList = null;
-	
+	Map<String, String> searchData = new HashMap<>();
 	@RequestMapping(value = "/search", method = {RequestMethod.GET})
 	public String doJoin(HttpServletRequest req, Model model) {
 		
 		String strSearch = req.getParameter("search");	
 		fileList = fileSearchService.getSearchFileList(strSearch);
 		
+		int index = 0;
 		for(UserFileInfo userFileInfo : fileList) {
-			System.out.println(userFileInfo.getFileId());
+			searchData.put(Integer.toString(index), userFileInfo.getFileId());
+			index++;
 		}
-		//model.addAttribute("confirmPassword",confirmPassword);
+
+		model.addAttribute("searchData", searchData);
 		 
 		return "home";
 	}
