@@ -76,9 +76,9 @@
 		<section id="main">
 			<!-- Thumbnails -->
 			<section class="thumbnails">
-				<div>
-					<a href="resources/images/fulls/01.jpg"> <img
-						src="resources/images/thumbs/01.jpg" alt="" />
+				<div id = "div1">
+					<a href="resources/images/fulls/4848eb41-50ba-4716-b2ef-8a781fd081da1597060791.jpg"> <img
+						src="resources/images/fulls/4848eb41-50ba-4716-b2ef-8a781fd081da1597060791.jpg" alt="" />
 						<h3>Lorem ipsum dolor sit amet1</h3>
 					</a> <a href="resources/images/fulls/02.jpg"> <img
 						src="resources/images/thumbs/02.jpg" alt="" />
@@ -154,6 +154,18 @@
 	<script src="resources/assets/js/jquery.poptrox.min.js"></script>
 	<script src="resources/assets/js/skel.min.js"></script>
 	<script src="resources/assets/js/main.js"></script>
-
+	<script>
+	window.addEventListener('DOMContentLoaded', function()
+	{
+		loadImage();
+	});
+	
+	function loadImage(){
+		var searchData = ${searchData};
+		//var searchData = "<c:out value='${searchData}'/>";
+		var param = searchData.image0;
+		console.log(param);
+	}
+	</script>
 </body>
 </html>
