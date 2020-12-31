@@ -22,14 +22,13 @@ public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
 	List<UserFileInfo> fileList = null;
-	Map<String, String> map = new HashMap<>();
 	
 	@RequestMapping(value = "/search", method = {RequestMethod.GET})
 	public ModelAndView doSearch(HttpServletRequest req) throws JsonProcessingException {	
 		ModelAndView mv = new ModelAndView();
 		String strSearch = req.getParameter("search");	
 		fileList = fileSearchService.getSearchFileList(strSearch);
-		
+		Map<String, String> map = new HashMap<>();
 		int index = 0;
 		for(UserFileInfo userFileInfo : fileList) {			
 			map.put("image"+Integer.toString(index), userFileInfo.getFileId());
