@@ -75,7 +75,7 @@
 		<!-- Main -->
 		<section id="main">
 			<!-- Thumbnails -->
-			<section class="thumbnails">
+			<section id= "imageSection" class="thumbnails">
 				<div id = "div1">
 					<a href="resources/images/fulls/4848eb41-50ba-4716-b2ef-8a781fd081da1597060791.jpg"> <img
 						src="resources/images/fulls/4848eb41-50ba-4716-b2ef-8a781fd081da1597060791.jpg" alt="" />
@@ -165,6 +165,28 @@
 		//var searchData = "<c:out value='${searchData}'/>";
 		var param = searchData.image0;
 		console.log(param);
+		
+		if(param==null || param=='' || param=='undefined')
+			return;
+		
+		//var div_1 = document.createElement('div');
+		var a_1 = document.createElement('a');
+		var img_1 = document.createElement('img');
+		var h3_1 = document.createElement('h3');
+		
+		//div_1.setAttribute('id', 'div_1');		
+		a_1.setAttribute('id', 'a_1');	
+		img_1.setAttribute('id', 'img_1');	
+		h3_1.setAttribute('id', 'h3_1');	
+		
+		a_1.setAttribute('href', 'resources/images/fulls'+searchData.image0);
+		img_1.setAttribute('src', 'resources/images/fulls/'+searchData.image0);
+		h3_1.innerHTML = '동적사진1 추가테스트';
+		
+		//document.getElementById('imageSection').appendChild(div_1);
+		document.getElementById('div1').appendChild(a_1);
+		document.getElementById('a_1').appendChild(img_1);
+		document.getElementById('a_1').appendChild(h3_1);
 	}
 	</script>
 </body>
