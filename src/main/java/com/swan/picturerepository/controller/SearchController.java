@@ -1,5 +1,6 @@
 package com.swan.picturerepository.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,14 +29,14 @@ public class SearchController {
 		ModelAndView mv = new ModelAndView();
 		String strSearch = req.getParameter("search");	
 		fileList = fileSearchService.getSearchFileList(strSearch);
-		Map<String, String> map = new HashMap<>();
-		int index = 0;
-		for(UserFileInfo userFileInfo : fileList) {			
-			map.put("image"+Integer.toString(index), userFileInfo.getFileId());
-			index++;
+		List<Map<String, String>> list = new ArrayList<>();
+		
+		for(UserFileInfo userFileInfo : fileList) {
+			Map<String, String> map = new HashMap<>();
+			map.put("image", userFileInfo.getFileId());
+			list.add(map);
 		}
-
-		String searchData = new Gson().toJson(map);
+		String searchData = new Gson().toJson(list);
 		System.out.println(searchData);
 		
 		mv.addObject("searchData",searchData);
