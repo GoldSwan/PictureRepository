@@ -76,16 +76,7 @@
 		<section id="main">
 			<!-- Thumbnails -->
 			<section id= "imageSection" class="thumbnails">
-				<div id = "div1">
-					<a href="resources/images/fulls/4848eb41-50ba-4716-b2ef-8a781fd081da1597060791.jpg"> <img
-						src="resources/images/fulls/4848eb41-50ba-4716-b2ef-8a781fd081da1597060791.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet1</h3>
-					</a> <a href="resources/images/fulls/02.jpg"> <img
-						src="resources/images/thumbs/02.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet2</h3>
-					</a>
-				</div>
-				<div>
+<!-- 				<div>
 					<a href="resources/images/fulls/01.jpg"> <img
 						src="resources/images/thumbs/01.jpg" alt="" />
 						<h3>Lorem ipsum dolor sit amet1</h3>
@@ -136,7 +127,7 @@
 						src="resources/images/thumbs/07.jpg" alt="" />
 						<h3>Lorem ipsum dolor sit amet7</h3>
 					</a>
-				</div>
+				</div> -->
 			</section>
 		</section>
 		<!-- Footer -->
@@ -163,13 +154,42 @@
 	function loadImage(){
 		var searchData = ${searchData};
 		//var searchData = "<c:out value='${searchData}'/>";
-		var param = searchData.image0;
-		console.log(param);
+		//var param = searchData[0].image;
+		//console.log(param);
 		
-		if(param==null || param=='' || param=='undefined')
+		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
 			return;
 		
-		//var div_1 = document.createElement('div');
+		for(var i = 0 ; i < 4 ; i++){
+			var dynamic_div = document.createElement('div');
+			dynamic_div.setAttribute('id', 'div_'+i);
+			document.getElementById('imageSection').appendChild(dynamic_div);
+		}
+		for(var i = 0 ; i < searchData.length ; i++){
+			console.log(searchData[i].image);
+			var divIndex = i%4;			
+			var dynamic_a = document.createElement('a');
+			var dynamic_img = document.createElement('img');
+			var dynamic_h3 = document.createElement('h3');
+			dynamic_a.setAttribute('id', 'a_'+i);	
+			dynamic_img.setAttribute('id', 'img_'+i);	
+			dynamic_h3.setAttribute('id', 'h3_'+i);			
+			dynamic_a.setAttribute('href', 'resources/images/fulls/'+searchData[i].image);
+			dynamic_img.setAttribute('src', 'resources/images/thumbs/'+searchData[i].image);
+			dynamic_h3.innerHTML = '동적사진'+(i+1)+' 추가테스트';
+			
+			document.getElementById('div_'+divIndex).appendChild(dynamic_a);
+			document.getElementById('a_'+i).appendChild(dynamic_img);
+			document.getElementById('a_'+i).appendChild(dynamic_h3);
+		}
+		
+/* 		for(var i = 0 ; i < 4 ; i++){
+			var DynamicDiv = document.createElement('div');
+			DynamicDiv.setAttribute('id', 'div_'+i);
+			document.getElementById('imageSection').appendChild(DynamicDiv);
+		} */
+		
+/* 		//var div_1 = document.createElement('div');
 		var a_1 = document.createElement('a');
 		var img_1 = document.createElement('img');
 		var h3_1 = document.createElement('h3');
@@ -179,14 +199,14 @@
 		img_1.setAttribute('id', 'img_1');	
 		h3_1.setAttribute('id', 'h3_1');	
 		
-		a_1.setAttribute('href', 'resources/images/fulls'+searchData.image0);
-		img_1.setAttribute('src', 'resources/images/fulls/'+searchData.image0);
+		a_1.setAttribute('href', 'resources/images/fulls/'+searchData.image0);
+		img_1.setAttribute('src', 'resources/images/thumbs/'+searchData.image0);
 		h3_1.innerHTML = '동적사진1 추가테스트';
 		
 		//document.getElementById('imageSection').appendChild(div_1);
-		document.getElementById('div1').appendChild(a_1);
+		document.getElementById('div_1').appendChild(a_1);
 		document.getElementById('a_1').appendChild(img_1);
-		document.getElementById('a_1').appendChild(h3_1);
+		document.getElementById('a_1').appendChild(h3_1); */
 	}
 	</script>
 </body>
