@@ -132,6 +132,9 @@
 		</section>
 		<!-- Footer -->
 		<footer id="footer">
+			<button class="btn btn-lg btn-primary" type="button" style = "height:47px;" onclick="changeImage()">
+				<i><b>전환테스트</b></i>
+			</button>
 			<p>
 				&copy; Untitled. All rights reserved. Design: <a
 					href="http://templated.co">TEMPLATED</a>. Demo Images: <a
@@ -207,6 +210,19 @@
 		document.getElementById('div_1').appendChild(a_1);
 		document.getElementById('a_1').appendChild(img_1);
 		document.getElementById('a_1').appendChild(h3_1); */
+	}
+	
+	function changeImage(){
+		var img_0= document.getElementById('img_0');
+		var searchData = ${searchData};
+		img_0.setAttribute('src', 'resources/images/thumbs/'+searchData[7].image);
+		var imageSection = document.getElementById('imageSection');
+		var a_7= document.getElementById('a_7');
+		var img_7= document.getElementById('img_7');
+		var h3_7= document.getElementById('h3_7');
+		a_7.remove();
+		img_7.remove();
+		h3_7.remove();
 	}
 	</script>
 </body>

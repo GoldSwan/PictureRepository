@@ -26,7 +26,8 @@ public class FileUploadService {
 		File imageThumbnailFile = new File(uploadPath, savedName);
 		if (imageFile.exists()) {
 			imageThumbnailFile.getParentFile().mkdirs();
-			Thumbnails.of(imageFile).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(imageThumbnailFile);
+			//Thumbnails.of(imageFile).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(imageThumbnailFile);
+			Thumbnails.of(imageFile).forceSize(THUMB_WIDTH, THUMB_HEIGHT).toFile(imageThumbnailFile);
 		}
 	}
 	
