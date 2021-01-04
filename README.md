@@ -1,6 +1,7 @@
 # Picture Repository(사진저장소)
 
-TO DO LIST를 작성하며 진행하고 있는 Spring Web 프로젝트 입니다.
+TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트 입니다.
+
 - <b>[TO DO LIST]</b>
 - 로그인 화면(login.jsp)
     - [x]  로그인 기능 구현 - 로그인 성공시 home.jsp 로 이동
