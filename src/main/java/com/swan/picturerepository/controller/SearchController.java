@@ -23,19 +23,36 @@ public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
 	List<UserFileInfo> fileList = null;
+	final int MAX_IMAGE_CNT = 16;//페이지 당 있을 수 있는 MAX 이미지 수
 	
 	@RequestMapping(value = "/search", method = {RequestMethod.GET})
 	public ModelAndView doSearch(HttpServletRequest req) throws JsonProcessingException {	
 		ModelAndView mv = new ModelAndView();
-		String strSearch = req.getParameter("search");	
+		String strSearch = req.getParameter("search");
+		String strPage = req.getParameter("page");
+		int page = 1;
+		
+		try {
+			page = Integer.parseInt(strPage);
+		}catch(NumberFormatException e){
+			mv.setViewName("home");
+			return mv;
+		}
+		
 		fileList = fileSearchService.getSearchFileList(strSearch);
 		List<Map<String, String>> list = new ArrayList<>();
-		
-		for(UserFileInfo userFileInfo : fileList) {
+		int pageIndex = MAX_IMAGE_CNT * (page-1);
+		int maxRange = MAX_IMAGE_CNT * page <= fileList.size() ? MAX_IMAGE_CNT * page : fileList.size();
+		//페이지별 16개씩만 짤라서 전송
+		for(int i = pageIndex; i<maxRange;i++) {
 			Map<String, String> map = new HashMap<>();
-			map.put("image", userFileInfo.getFileId());
+			map.put("image", fileList.get(i).getFileId());
 			list.add(map);
-		}
+		}		
+		/*
+		 * for(UserFileInfo userFileInfo : fileList) { Map<String, String> map = new
+		 * HashMap<>(); map.put("image", userFileInfo.getFileId()); list.add(map); }
+		 */	
 		String searchData = new Gson().toJson(list);
 		System.out.println(searchData);
 		
