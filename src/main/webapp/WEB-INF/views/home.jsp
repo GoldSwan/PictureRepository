@@ -24,7 +24,8 @@
 								<form class="form-inline" method="get"
 									action="<c:url value="/search" />">
 									<input class="form-control mr-sm-2 search-input" type="search"
-										placeholder="검색" name="search" style="width:50%;"> ​​​​​​​
+										placeholder="검색" name="search" style="width:50%;">
+									<input type="hidden" name="page" value='1'>	​​​​​​​
 									<button class="btn btn-search my-2 my-sm-0" type="submit">
 										<i class="fa fa-search"></i>
 									</button>
