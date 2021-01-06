@@ -24,7 +24,8 @@
 								<form class="form-inline" method="get"
 									action="<c:url value="/search" />">
 									<input class="form-control mr-sm-2 search-input" type="search"
-										placeholder="검색" name="search" style="width:50%;"> ​​​​​​​
+										placeholder="검색" name="search" style="width:50%;">
+									<input type="hidden" name="page" value='1'>	​​​​​​​
 									<button class="btn btn-search my-2 my-sm-0" type="submit">
 										<i class="fa fa-search"></i>
 									</button>
@@ -76,6 +77,9 @@
 		<section id="main">
 			<!-- Thumbnails -->
 			<section id= "imageSection" class="thumbnails">
+					<c:if test="${not empty noData}">
+						<div style = "width: 100%;"><h3 id = "noData">${noData}</h3></div>
+					</c:if>
 <!-- 				<div>
 					<a href="resources/images/fulls/01.jpg"> <img
 						src="resources/images/thumbs/01.jpg" alt="" />
@@ -150,7 +154,7 @@
 	<script src="resources/assets/js/main.js"></script>
 	<script>
 	window.addEventListener('DOMContentLoaded', function()
-	{
+	{		
 		loadImage();
 	});
 	
@@ -158,11 +162,10 @@
 		var searchData = ${searchData};
 		//var searchData = "<c:out value='${searchData}'/>";
 		//var param = searchData[0].image;
-		//console.log(param);
-		
+		//console.log(param);		
 		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
 			return;
-		
+
 		for(var i = 0 ; i < 4 ; i++){
 			var dynamic_div = document.createElement('div');
 			dynamic_div.setAttribute('id', 'div_'+i);
@@ -223,6 +226,10 @@
 		a_7.remove();
 		img_7.remove();
 		h3_7.remove();
+	}
+	
+	function loadPageLink(){
+		
 	}
 	</script>
 </body>
