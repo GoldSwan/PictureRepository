@@ -40,6 +40,11 @@ public class SearchController {
 		}
 		
 		fileList = fileSearchService.getSearchFileList(strSearch);
+		
+		if(fileList.size()==0) {
+			mv.addObject("noData","검색된 데이터가 없습니다.");
+		}
+		
 		List<Map<String, String>> list = new ArrayList<>();
 		int pageIndex = MAX_IMAGE_CNT * (page-1);
 		int maxRange = MAX_IMAGE_CNT * page <= fileList.size() ? MAX_IMAGE_CNT * page : fileList.size();
@@ -49,10 +54,7 @@ public class SearchController {
 			map.put("image", fileList.get(i).getFileId());
 			list.add(map);
 		}		
-		/*
-		 * for(UserFileInfo userFileInfo : fileList) { Map<String, String> map = new
-		 * HashMap<>(); map.put("image", userFileInfo.getFileId()); list.add(map); }
-		 */	
+
 		String searchData = new Gson().toJson(list);
 		System.out.println(searchData);
 		
