@@ -134,6 +134,16 @@
 				</div> -->
 			</section>
 		</section>
+		<!-- nav -->
+		<nav id = "nav" aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+				<li class="page-item"><a class="page-link" href="<c:url value="/search?search=&page=1"/>">1</a></li>
+				<li class="page-item"><a class="page-link" href="<c:url value="/search?search=&page=2"/>">2</a></li>
+				<li class="page-item"><a class="page-link" href="<c:url value="/search?search=&page=3"/>">3</a></li>
+				<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+			</ul>
+		</nav>
 		<!-- Footer -->
 		<footer id="footer">
 			<button class="btn btn-lg btn-primary" type="button" style = "height:47px;" onclick="changeImage()">
