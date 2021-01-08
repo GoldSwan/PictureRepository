@@ -31,6 +31,7 @@ public class SearchController {
 		String strSearch = req.getParameter("search");
 		String strPage = req.getParameter("page");
 		int page = 1;
+		int endPage = 1;
 		
 		try {
 			page = Integer.parseInt(strPage);
@@ -40,7 +41,8 @@ public class SearchController {
 		}
 		
 		fileList = fileSearchService.getSearchFileList(strSearch);
-		
+		endPage = (int) Math.ceil((double) fileList.size() / MAX_IMAGE_CNT);//마지막 페이지 endPage = (검색 이미지수 / 페이지 당 있을 수 있는 MAX 이미지 수)를 올림처리 
+		System.out.println(endPage);
 		if(fileList.size()==0) {
 			mv.addObject("noData","검색된 데이터가 없습니다.");
 		}
@@ -59,6 +61,8 @@ public class SearchController {
 		System.out.println(searchData);
 		
 		mv.addObject("searchData",searchData);
+		mv.addObject("endPage",endPage);
+		mv.addObject("search",strSearch);
 		mv.setViewName("home");
 		 
 		return mv;
