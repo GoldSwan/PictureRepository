@@ -2612,9 +2612,19 @@
 
 		}
 
-/* Footer */
+/* nav    */
+#nav{
+  text-align:center;
+}
+#nav ul{
+  display: inline-block;
+}
+#nav ul li{
+  display: inline-block;
+}
 
-	#footer {
+/* Footer */
+#footer {
 		text-align: center;
 		padding: 4em 0 4em 0;
 	}
