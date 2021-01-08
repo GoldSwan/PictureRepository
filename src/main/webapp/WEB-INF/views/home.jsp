@@ -23,8 +23,8 @@
 						<div class="col-sm-6">
 								<form class="form-inline" method="get"
 									action="<c:url value="/search" />">
-									<input class="form-control mr-sm-2 search-input" type="search"
-										placeholder="검색" name="search" style="width:50%;">
+									<input id = "search" class="form-control mr-sm-2 search-input" type="search"
+										placeholder="검색" value="${search}" name="search" style="width:50%;">
 									<input type="hidden" name="page" value='1'>	​​​​​​​
 									<button class="btn btn-search my-2 my-sm-0" type="submit">
 										<i class="fa fa-search"></i>
@@ -136,13 +136,13 @@
 		</section>
 		<!-- nav -->
 		<nav id = "nav" aria-label="Page navigation example">
-			<ul class="pagination">
-				<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+ 			<ul id = "nav_ul" class="pagination">
+<%-- 				<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
 				<li class="page-item"><a class="page-link" href="<c:url value="/search?search=&page=1"/>">1</a></li>
 				<li class="page-item"><a class="page-link" href="<c:url value="/search?search=&page=2"/>">2</a></li>
 				<li class="page-item"><a class="page-link" href="<c:url value="/search?search=&page=3"/>">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-			</ul>
+				<li class="page-item"><a class="page-link" href="#">&gt;</a></li> --%>
+			</ul> 
 		</nav>
 		<!-- Footer -->
 		<footer id="footer">
@@ -166,6 +166,7 @@
 	window.addEventListener('DOMContentLoaded', function()
 	{		
 		loadImage();
+		loadPageLink();
 	});
 	
 	function loadImage(){
@@ -198,31 +199,6 @@
 			document.getElementById('a_'+i).appendChild(dynamic_img);
 			document.getElementById('a_'+i).appendChild(dynamic_h3);
 		}
-		
-/* 		for(var i = 0 ; i < 4 ; i++){
-			var DynamicDiv = document.createElement('div');
-			DynamicDiv.setAttribute('id', 'div_'+i);
-			document.getElementById('imageSection').appendChild(DynamicDiv);
-		} */
-		
-/* 		//var div_1 = document.createElement('div');
-		var a_1 = document.createElement('a');
-		var img_1 = document.createElement('img');
-		var h3_1 = document.createElement('h3');
-		
-		//div_1.setAttribute('id', 'div_1');		
-		a_1.setAttribute('id', 'a_1');	
-		img_1.setAttribute('id', 'img_1');	
-		h3_1.setAttribute('id', 'h3_1');	
-		
-		a_1.setAttribute('href', 'resources/images/fulls/'+searchData.image0);
-		img_1.setAttribute('src', 'resources/images/thumbs/'+searchData.image0);
-		h3_1.innerHTML = '동적사진1 추가테스트';
-		
-		//document.getElementById('imageSection').appendChild(div_1);
-		document.getElementById('div_1').appendChild(a_1);
-		document.getElementById('a_1').appendChild(img_1);
-		document.getElementById('a_1').appendChild(h3_1); */
 	}
 	
 	function changeImage(){
@@ -239,7 +215,48 @@
 	}
 	
 	function loadPageLink(){
+		var endPage = ${endPage};
+		console.log("endPage:"+endPage);
+		if(endPage==null || endPage=='' || endPage=='undefined')
+			return;
+		var start_li = document.createElement('li');
+		var start_a = document.createElement('a');
+		start_li.setAttribute('id','nav_start_li');
+		start_a.setAttribute('id','nav_start_a');	
+		document.getElementById('nav_ul').appendChild(start_li);
+		document.getElementById('nav_start_li').appendChild(start_a);
+		document.getElementById('nav_start_li').setAttribute('class','page-item');
+		document.getElementById('nav_start_a').setAttribute('class','page-link');
+		document.getElementById('nav_start_a').setAttribute('href','#none');
+		document.getElementById('nav_start_a').innerHTML = '<';
 		
+		for(var i = 0 ; i < endPage ; i++){
+			var dynamic_li = document.createElement('li');
+			var dynamic_a = document.createElement('a');
+			dynamic_li.setAttribute('id','nav_li'+i);
+			dynamic_a.setAttribute('id','nav_a'+i);
+			document.getElementById('nav_ul').appendChild(dynamic_li);
+			document.getElementById('nav_li'+i).appendChild(dynamic_a);
+			document.getElementById('nav_li' + i).setAttribute('class','page-item');
+			document.getElementById('nav_a' + i).setAttribute('class','page-link');
+			var search = document.getElementById('search').value;
+			var page = i+1;
+			sendParam = 'search=' + search + '&page=' + page;
+			var urlValue = '${pageContext.request.contextPath}/search?'+sendParam;
+			document.getElementById('nav_a' + i).setAttribute('href',urlValue);
+			document.getElementById('nav_a' + i).innerHTML = page;
+		}
+		
+		var end_li = document.createElement('li');
+		var end_a = document.createElement('a');
+		end_li.setAttribute('id','nav_end_li');
+		end_a.setAttribute('id','nav_end_a');	
+		document.getElementById('nav_ul').appendChild(end_li);
+		document.getElementById('nav_end_li').appendChild(end_a);
+		document.getElementById('nav_end_li').setAttribute('class','page-item');
+		document.getElementById('nav_end_a').setAttribute('class','page-link');
+		document.getElementById('nav_end_a').setAttribute('href','#none');
+		document.getElementById('nav_end_a').innerHTML = '>';
 	}
 	</script>
 </body>
