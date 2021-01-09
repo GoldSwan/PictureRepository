@@ -215,7 +215,12 @@
 	}
 	
 	function loadPageLink(){
+		var startPage = ${startPage};
 		var endPage = ${endPage};
+		var isPreviousPage = ${isPreviousPage};
+		var isNextPage = ${isNextPage};
+		var search = document.getElementById('search').value;
+		
 		console.log("endPage:"+endPage);
 		if(endPage==null || endPage=='' || endPage=='undefined')
 			return;
@@ -227,10 +232,11 @@
 		document.getElementById('nav_start_li').appendChild(start_a);
 		document.getElementById('nav_start_li').setAttribute('class','page-item');
 		document.getElementById('nav_start_a').setAttribute('class','page-link');
-		document.getElementById('nav_start_a').setAttribute('href','#none');
+		var previousUrlValue = (isPreviousPage == false) ? '#none' : '${pageContext.request.contextPath}/search?search='+search + '&page=' + (startPage-1);
+		document.getElementById('nav_start_a').setAttribute('href',previousUrlValue);
 		document.getElementById('nav_start_a').innerHTML = '<';
 		
-		for(var i = 0 ; i < endPage ; i++){
+		for(var i = startPage ; i <= endPage ; i++){
 			var dynamic_li = document.createElement('li');
 			var dynamic_a = document.createElement('a');
 			dynamic_li.setAttribute('id','nav_li'+i);
@@ -239,9 +245,8 @@
 			document.getElementById('nav_li'+i).appendChild(dynamic_a);
 			document.getElementById('nav_li' + i).setAttribute('class','page-item');
 			document.getElementById('nav_a' + i).setAttribute('class','page-link');
-			var search = document.getElementById('search').value;
-			var page = i+1;
-			sendParam = 'search=' + search + '&page=' + page;
+			var page = i;
+			var sendParam = 'search=' + search + '&page=' + page;
 			var urlValue = '${pageContext.request.contextPath}/search?'+sendParam;
 			document.getElementById('nav_a' + i).setAttribute('href',urlValue);
 			document.getElementById('nav_a' + i).innerHTML = page;
@@ -255,7 +260,8 @@
 		document.getElementById('nav_end_li').appendChild(end_a);
 		document.getElementById('nav_end_li').setAttribute('class','page-item');
 		document.getElementById('nav_end_a').setAttribute('class','page-link');
-		document.getElementById('nav_end_a').setAttribute('href','#none');
+		var nextUrlValue = (isNextPage == false) ? '#none' : '${pageContext.request.contextPath}/search?search='+search + '&page=' + (endPage+1);
+		document.getElementById('nav_end_a').setAttribute('href',nextUrlValue);
 		document.getElementById('nav_end_a').innerHTML = '>';
 	}
 	</script>
