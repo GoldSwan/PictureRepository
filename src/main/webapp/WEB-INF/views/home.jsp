@@ -80,16 +80,21 @@
 					<c:if test="${not empty noData}">
 						<div style = "width: 100%;"><h3 id = "noData">${noData}</h3></div>
 					</c:if>
-<!-- 				<div>
+				<div>
+					<div  style = "position:relative">
 					<a href="resources/images/fulls/01.jpg"> <img
-						src="resources/images/thumbs/01.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet1</h3>
-					</a> <a href="resources/images/fulls/02.jpg"> <img
-						src="resources/images/thumbs/02.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet2</h3>
-					</a>
-
-				</div>
+						src="resources/images/thumbs/01.jpg" alt="" />						
+					</a>					
+					<div style = "position:absolute;right:0px;bottom:25.74px"><button type = "button"><i class="fa fa-heart" aria-hidden="true" style = "color:red"></i></button></div>
+					</div>
+					<div  style = "position:relative">
+					<a href="resources/images/fulls/01.jpg"> <img
+						src="resources/images/thumbs/01.jpg" alt="" />						
+					</a>					
+					<div style = "position:absolute;right:0px;bottom:0px"><button type = "button"><i class="fa fa-heart" aria-hidden="true" style = "color:red"></i></button></div>
+					</div>
+				</div>			
+<!-- 
 				<div>
 					<a href="resources/images/fulls/03.jpg"> <img
 						src="resources/images/thumbs/03.jpg" alt="" />
