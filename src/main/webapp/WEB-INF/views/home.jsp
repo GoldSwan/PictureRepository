@@ -10,6 +10,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="resources/assets/css/main.css" />
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css" />
+<style>
+div.like-btn-parent {position:relative;}
+div.like-btn-child {position:absolute;right:0px;bottom:23.99px;}
+</style>
 </head>
 <body>
 
@@ -80,62 +84,16 @@
 					<c:if test="${not empty noData}">
 						<div style = "width: 100%;"><h3 id = "noData">${noData}</h3></div>
 					</c:if>
-				<div>
-					<div  style = "position:relative">
+<!-- 				<div>
+					<div  class = "like-btn-parent">
 					<a href="resources/images/fulls/01.jpg"> <img
 						src="resources/images/thumbs/01.jpg" alt="" />						
 					</a>					
-					<div style = "position:absolute;right:0px;bottom:25.74px"><button type = "button"><i class="fa fa-heart" aria-hidden="true" style = "color:red"></i></button></div>
+					<div class = "like-btn-child">
+						<button type = "button">
+						<i class="fa fa-heart" aria-hidden="true" style = "color:red"></i></button>
 					</div>
-					<div  style = "position:relative">
-					<a href="resources/images/fulls/01.jpg"> <img
-						src="resources/images/thumbs/01.jpg" alt="" />						
-					</a>					
-					<div style = "position:absolute;right:0px;bottom:0px"><button type = "button"><i class="fa fa-heart" aria-hidden="true" style = "color:red"></i></button></div>
 					</div>
-				</div>			
-<!-- 
-				<div>
-					<a href="resources/images/fulls/03.jpg"> <img
-						src="resources/images/thumbs/03.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet3</h3>
-					</a> <a href="resources/images/fulls/04.jpg"> <img
-						src="resources/images/thumbs/04.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet4</h3>
-					</a> <a href="resources/images/fulls/05.jpg"> <img
-						src="resources/images/thumbs/05.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet5</h3>
-					</a> <a href="resources/images/fulls/06.jpg"> <img
-						src="resources/images/thumbs/06.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet6</h3>
-					</a> <a href="resources/images/fulls/07.jpg"> <img
-						src="resources/images/thumbs/07.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet7</h3>
-					</a> <a href="resources/images/fulls/01.jpg"> <img
-						src="resources/images/thumbs/01.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet1</h3>
-					</a> <a href="resources/images/fulls/02.jpg"> <img
-						src="resources/images/thumbs/02.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet2</h3>
-					</a> <a href="resources/images/fulls/03.jpg"> <img
-						src="resources/images/thumbs/03.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet3</h3>
-					</a>
-				</div>
-				<div>
-					<a href="resources/images/fulls/04.jpg"> <img
-						src="resources/images/thumbs/04.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet4</h3>
-					</a> <a href="resources/images/fulls/05.jpg"> <img
-						src="resources/images/thumbs/05.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet5</h3>
-					</a> <a href="resources/images/fulls/06.jpg"> <img
-						src="resources/images/thumbs/06.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet6</h3>
-					</a> <a href="resources/images/fulls/07.jpg"> <img
-						src="resources/images/thumbs/07.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet7</h3>
-					</a>
 				</div> -->
 			</section>
 		</section>
@@ -189,20 +147,40 @@
 		}
 		for(var i = 0 ; i < searchData.length ; i++){
 			console.log(searchData[i].image);
-			var divIndex = i%4;			
+			var divIndex = i%4;		
+			var dynamic_div_parent = document.createElement('div');
+			var dynamic_div_child = document.createElement('div');	
 			var dynamic_a = document.createElement('a');
 			var dynamic_img = document.createElement('img');
 			var dynamic_h3 = document.createElement('h3');
+			var dynamic_btn = document.createElement('button');
+			var dynamic_i = document.createElement('i');
+			dynamic_i.style.color = 'red';
+			dynamic_i.style.fontSize = '30px';
+			dynamic_div_parent.setAttribute('id', 'div_parent_'+i);
+			dynamic_div_child.setAttribute('id', 'div_child_'+i);
 			dynamic_a.setAttribute('id', 'a_'+i);	
-			dynamic_img.setAttribute('id', 'img_'+i);	
-			dynamic_h3.setAttribute('id', 'h3_'+i);			
+			dynamic_img.setAttribute('id', 'img_'+i);
+			dynamic_btn.setAttribute('id', 'btn_like_'+i);
+			dynamic_i.setAttribute('id', 'i_like_'+i);
+			//dynamic_h3.setAttribute('id', 'h3_'+i);			
 			dynamic_a.setAttribute('href', 'resources/images/fulls/'+searchData[i].image);
 			dynamic_img.setAttribute('src', 'resources/images/thumbs/'+searchData[i].image);
-			dynamic_h3.innerHTML = '동적사진'+(i+1)+' 추가테스트';
+			//dynamic_h3.innerHTML = '동적사진'+(i+1)+' 추가테스트';
+			dynamic_btn.setAttribute('type', 'button');
 			
-			document.getElementById('div_'+divIndex).appendChild(dynamic_a);
+			document.getElementById('div_'+divIndex).appendChild(dynamic_div_parent);
+			document.getElementById('div_parent_'+i).appendChild(dynamic_a);
 			document.getElementById('a_'+i).appendChild(dynamic_img);
-			document.getElementById('a_'+i).appendChild(dynamic_h3);
+			document.getElementById('div_parent_'+i).appendChild(dynamic_div_child);
+			document.getElementById('div_child_'+i).appendChild(dynamic_btn);
+			document.getElementById('btn_like_'+i).appendChild(dynamic_i);
+			document.getElementById('div_parent_'+i).setAttribute('class', 'like-btn-parent');	
+			document.getElementById('div_child_'+i).setAttribute('class', 'like-btn-child');	
+			//document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart-o');	
+			document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
+			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'true');	
+			//document.getElementById('a_'+i).appendChild(dynamic_h3);
 		}
 	}
 	
