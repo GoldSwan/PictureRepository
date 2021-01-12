@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="resources/assets/css/main.css" />
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css" />
 <style>
-div.like-btn-parent {position:relative;}
-div.like-btn-child {position:absolute;right:0px;bottom:23.99px;}
+/* div.like-btn-parent {position:relative;} */
+/* div.like-btn-child {position:absolute;right:0px;bottom:23.99px;} */
 </style>
 </head>
 <body>
@@ -84,7 +84,7 @@ div.like-btn-child {position:absolute;right:0px;bottom:23.99px;}
 					<c:if test="${not empty noData}">
 						<div style = "width: 100%;"><h3 id = "noData">${noData}</h3></div>
 					</c:if>
-<!-- 				<div>
+<!-- 			<div>
 					<div  class = "like-btn-parent">
 					<a href="resources/images/fulls/01.jpg"> <img
 						src="resources/images/thumbs/01.jpg" alt="" />						
@@ -175,8 +175,8 @@ div.like-btn-child {position:absolute;right:0px;bottom:23.99px;}
 			document.getElementById('div_parent_'+i).appendChild(dynamic_div_child);
 			document.getElementById('div_child_'+i).appendChild(dynamic_btn);
 			document.getElementById('btn_like_'+i).appendChild(dynamic_i);
-			document.getElementById('div_parent_'+i).setAttribute('class', 'like-btn-parent');	
-			document.getElementById('div_child_'+i).setAttribute('class', 'like-btn-child');	
+			//document.getElementById('div_parent_'+i).setAttribute('class', 'like-btn-parent');	
+			//document.getElementById('div_child_'+i).setAttribute('class', 'like-btn-child');	
 			//document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart-o');	
 			document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
 			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'true');	
