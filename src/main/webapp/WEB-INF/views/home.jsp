@@ -109,9 +109,9 @@
 		</nav>
 		<!-- Footer -->
 		<footer id="footer">
-			<button class="btn btn-lg btn-primary" type="button" style = "height:47px;" onclick="changeImage()">
+<!-- 			<button class="btn btn-lg btn-primary" type="button" style = "height:47px;" onclick="changeImage()">
 				<i><b>전환테스트</b></i>
-			</button>
+			</button> -->
 			<p>
 				&copy; Untitled. All rights reserved. Design: <a
 					href="http://templated.co">TEMPLATED</a>. Demo Images: <a
@@ -167,24 +167,21 @@
 			dynamic_a.setAttribute('href', 'resources/images/fulls/'+searchData[i].image);
 			dynamic_img.setAttribute('src', 'resources/images/thumbs/'+searchData[i].image);
 			//dynamic_h3.innerHTML = '동적사진'+(i+1)+' 추가테스트';
-			dynamic_btn.setAttribute('type', 'button');
-			
+			dynamic_btn.setAttribute('type', 'button');		
 			document.getElementById('div_'+divIndex).appendChild(dynamic_div_parent);
 			document.getElementById('div_parent_'+i).appendChild(dynamic_a);
 			document.getElementById('a_'+i).appendChild(dynamic_img);
 			document.getElementById('div_parent_'+i).appendChild(dynamic_div_child);
 			document.getElementById('div_child_'+i).appendChild(dynamic_btn);
 			document.getElementById('btn_like_'+i).appendChild(dynamic_i);
-			//document.getElementById('div_parent_'+i).setAttribute('class', 'like-btn-parent');	
-			//document.getElementById('div_child_'+i).setAttribute('class', 'like-btn-child');	
-			//document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart-o');	
 			document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
 			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'true');	
+			document.getElementById('btn_like_'+i).addEventListener( "click", onClickLike);
 			//document.getElementById('a_'+i).appendChild(dynamic_h3);
 		}
 	}
 	
-	function changeImage(){
+/* 	function changeImage(){
 		var img_0= document.getElementById('img_0');
 		var searchData = ${searchData};
 		img_0.setAttribute('src', 'resources/images/thumbs/'+searchData[7].image);
@@ -195,7 +192,7 @@
 		a_7.remove();
 		img_7.remove();
 		h3_7.remove();
-	}
+	} */
 	
 	function loadPageLink(){
 		var startPage = ${startPage};
@@ -247,6 +244,11 @@
 		document.getElementById('nav_end_a').setAttribute('href',nextUrlValue);
 		document.getElementById('nav_end_a').innerHTML = '>';
 	}
+	
+	function onClickLike(){
+		console.log(this.id);		
+	}
+	
 	</script>
 </body>
 </html>
