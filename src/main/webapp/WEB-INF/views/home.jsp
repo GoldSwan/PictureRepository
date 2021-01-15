@@ -126,6 +126,7 @@
 	<script src="resources/assets/js/skel.min.js"></script>
 	<script src="resources/assets/js/main.js"></script>
 	<script>
+	var imageLikeMap = new Map();//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 	window.addEventListener('DOMContentLoaded', function()
 	{		
 		loadImage();
@@ -177,6 +178,7 @@
 			document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
 			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'true');	
 			document.getElementById('btn_like_'+i).addEventListener( "click", onClickLike);
+			imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 			//document.getElementById('a_'+i).appendChild(dynamic_h3);
 		}
 	}
@@ -246,7 +248,9 @@
 	}
 	
 	function onClickLike(){
-		console.log(this.id);		
+		//console.log(this.id);	
+		console.log(imageLikeMap.get(this.id));
+		console.log(${_csrf.parameterName });	
 	}
 	
 	</script>
