@@ -84,14 +84,16 @@
 					<c:if test="${not empty noData}">
 						<div style = "width: 100%;"><h3 id = "noData">${noData}</h3></div>
 					</c:if>
-<!-- 			<div>
+<!-- 	 			<div>
 					<div  class = "like-btn-parent">
 					<a href="resources/images/fulls/01.jpg"> <img
 						src="resources/images/thumbs/01.jpg" alt="" />						
 					</a>					
 					<div class = "like-btn-child">
 						<button type = "button">
-						<i class="fa fa-heart" aria-hidden="true" style = "color:red"></i></button>
+						<i class="fa fa-heart-o" aria-hidden="true" style = "color:white;background-color:black">		
+						</i>
+						</i></button>
 					</div>
 					</div>
 				</div> -->
@@ -176,8 +178,8 @@
 			document.getElementById('div_child_'+i).appendChild(dynamic_btn);
 			document.getElementById('btn_like_'+i).appendChild(dynamic_i);
 			document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
-			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'true');	
-			document.getElementById('btn_like_'+i).addEventListener( "click", onClickLike);
+			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'false');	
+			document.getElementById('btn_like_'+i).addEventListener( "click", onClickAsyncLike);
 			imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 			//document.getElementById('a_'+i).appendChild(dynamic_h3);
 		}
@@ -247,10 +249,34 @@
 		document.getElementById('nav_end_a').innerHTML = '>';
 	}
 	
-	function onClickLike(){
-		//console.log(this.id);	
-		console.log(imageLikeMap.get(this.id));
-		console.log(${_csrf.parameterName });	
+	function onClickAsyncLike(){
+		var xhttp = new XMLHttpRequest();
+		var username = '${pageContext.request.userPrincipal.name}';
+		var fileId = imageLikeMap.get(this.id);
+		var strArray = (this.id).split('_');
+		var likeHeart = document.getElementById('i_'+strArray[1]+'_'+strArray[2]);
+		
+		//btn_like_
+		//i_like_
+		xhttp.open('POST','${pageContext.request.contextPath}/async-like.do', true);
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == xhttp.DONE) {
+				if (xhttp.status == 200 || xhttp.status == 201) {
+					var param = JSON.parse(xhttp.responseText);
+					//console.log(xhttp.responseText);
+					if (param.like == 'Y') {
+						likeHeart.style.color = 'red';
+					} else {
+						likeHeart.style.color = 'black';
+					}
+				} else {
+					console.error(xhttp.responseText);
+				}
+			}
+		}
+		var sendParam = "username=" + username + "&fileId=" + fileId;
+		xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		xhttp.send(sendParam);
 	}
 	
 	</script>
