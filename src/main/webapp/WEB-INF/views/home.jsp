@@ -157,8 +157,8 @@
 			var dynamic_img = document.createElement('img');
 			var dynamic_h3 = document.createElement('h3');
 			var dynamic_btn = document.createElement('button');
-			var dynamic_i = document.createElement('i');
-			dynamic_i.style.color = 'red';
+			var dynamic_i = document.createElement('i');		
+			dynamic_i.style.color = (searchData[i].like == 'Y') ? 'red' : 'black';
 			dynamic_i.style.fontSize = '30px';
 			dynamic_div_parent.setAttribute('id', 'div_parent_'+i);
 			dynamic_div_child.setAttribute('id', 'div_child_'+i);

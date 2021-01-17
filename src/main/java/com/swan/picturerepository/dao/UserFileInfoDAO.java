@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.swan.picturerepository.model.User;
 import com.swan.picturerepository.model.UserFileInfo;
 
 @Repository
@@ -25,18 +24,17 @@ public class UserFileInfoDAO {
 	}
 	
 	public List<UserFileInfo> selectFileName(String strSearch) {
-		String sqlStatement = "SELECT fileId FROM userFileInfo WHERE fileName LIKE CONCAT('%', (?),'%')";
+		String sqlStatement = "SELECT fileId, likeFlag FROM userFileInfo WHERE fileName LIKE CONCAT('%', (?),'%')";
 		 return jdbcTemplate.query(sqlStatement, new Object[] {strSearch}, 
 				new RowMapper<UserFileInfo>() {
-
 					@Override
 					public UserFileInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 						// TODO Auto-generated method stub						
 						UserFileInfo userFileInfo = new UserFileInfo();
 						userFileInfo.setFileId(rs.getString("fileId"));
+						userFileInfo.setLikeFlag(rs.getString("likeFlag"));
 						return userFileInfo;
-					}
-			
+					}		
 		});
 	}
 	
@@ -46,5 +44,24 @@ public class UserFileInfoDAO {
 
 		return (jdbcTemplate.update(sqlStatement,
 				new Object[] { username, fileId, fileName }) == 1);
+	}
+	
+	public List<String> selectLikeFlag(String username, String fileId) {
+		String sqlStatement = "select likeFlag from userFileInfo where username = ? and fileId = ?";
+		 
+		return jdbcTemplate.query(sqlStatement, new Object[] {username, fileId}, 
+					new RowMapper<String>() {
+						@Override
+						public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+							return rs.getString("likeFlag");
+						}				
+			});
+	}
+	
+	public boolean updateLikeFlag(String username, String fileId) {
+		String sqlStatement = "update userfileinfo set likeFlag = case when likeFlag='Y' THEN 'N' ELSE 'Y' END where username = ? and fileId = ?";
+
+		return (jdbcTemplate.update(sqlStatement,
+				new Object[] { username, fileId }) == 1);
 	}
 }
