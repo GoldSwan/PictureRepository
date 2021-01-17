@@ -60,8 +60,8 @@ public class SearchController {
 		isPreviousPage = startPage==1 ? false : true;
 		isNextPage = maxPage==endPage ? false : true;
 		
-		System.out.println("startPage:"+startPage);
-		System.out.println("endPage:"+endPage);
+		//System.out.println("startPage:"+startPage);
+		//System.out.println("endPage:"+endPage);
 		
 		if(fileList.size()==0) {
 			mv.addObject("noData","검색된 데이터가 없습니다.");
@@ -74,11 +74,12 @@ public class SearchController {
 		for(int i = pageIndex; i<maxRange;i++) {
 			Map<String, String> map = new HashMap<>();
 			map.put("image", fileList.get(i).getFileId());
+			map.put("like", fileList.get(i).getLikeFlag());
 			list.add(map);
 		}		
 
 		String searchData = new Gson().toJson(list);
-		System.out.println(searchData);
+		//System.out.println(searchData);
 		
 		mv.addObject("searchData",searchData);
 		mv.addObject("startPage",startPage);
