@@ -27,4 +27,6 @@ public class UserFileInfo implements Serializable {
 	private String fileName;
 	@Column
 	private LocalTime isrtDt;
+	@Column(length=1)
+	private String likeFlag;
 }
