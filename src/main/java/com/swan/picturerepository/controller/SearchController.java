@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +24,9 @@ public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
 	List<UserFileInfo> fileList = null;
-	final int MAX_IMAGE_CNT = 16;//페이지 당 있을 수 있는 MAX 이미지 수
-	final int MAX_NAV_LINK_CNT = 5;//하단 네비게이션 링크의  MAX 수
+	@Value("${constant.max_image_cnt}") private int MAX_IMAGE_CNT;//페이지 당 있을 수 있는 MAX 이미지 수
+	@Value("${constant.max_nav_link_cnt}") private int MAX_NAV_LINK_CNT;//하단 네비게이션 링크의  MAX 수
+	
 	@RequestMapping(value = "/search", method = {RequestMethod.GET})
 	public ModelAndView doSearch(HttpServletRequest req) throws JsonProcessingException {	
 		ModelAndView mv = new ModelAndView();
@@ -36,7 +38,7 @@ public class SearchController {
 		int maxPage = 1;
 		boolean isPreviousPage = false;
 		boolean isNextPage = false;
-		
+
 		try {
 			page = Integer.parseInt(strPage);
 		}catch(NumberFormatException e){
