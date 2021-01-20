@@ -18,70 +18,63 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.swan.picturerepository.model.UserFileInfo;
 import com.swan.picturerepository.service.FileSearchService;
+import com.swan.picturerepository.service.PageNavicationService;
 
 @Controller
 public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
+	@Autowired private PageNavicationService pageNavicationService;
 	List<UserFileInfo> fileList = null;
-	@Value("${constant.max_image_cnt}") private int MAX_IMAGE_CNT;//페이지 당 있을 수 있는 MAX 이미지 수
-	@Value("${constant.max_nav_link_cnt}") private int MAX_NAV_LINK_CNT;//하단 네비게이션 링크의  MAX 수
 	
 	@RequestMapping(value = "/search", method = {RequestMethod.GET})
 	public ModelAndView doSearch(HttpServletRequest req) throws JsonProcessingException {	
 		ModelAndView mv = new ModelAndView();
 		String strSearch = req.getParameter("search");
 		String strPage = req.getParameter("page");
-		int page = 1;
-		int startPage = 1;
-		int endPage = 1;
-		int maxPage = 1;
+		int page = 0;
+		int startPage = 0;//요청 page 기준으로 하단 네이게이션의 처음 순번의 페이지
+		int endPage = 0;//요청 page 기준으로 하단 네이게이션의  마지막 순번의 페이지
+		int maxPage = 0;//조회한 데이터의 마지막 페이지
+		int searchCnt = 0;//검색 데이터 갯수
+		int dataIndex = 0;
+		int dataMaxRange = 0;
 		boolean isPreviousPage = false;
 		boolean isNextPage = false;
 
+		//page가 숫자가 아닌 요청이 들어왔을 때 exception 처리
 		try {
 			page = Integer.parseInt(strPage);
 		}catch(NumberFormatException e){
 			mv.setViewName("home");
 			return mv;
 		}
-		startPage = page;
-		endPage = page;
 		
-		//요청온 page가 어느범위에 속해있는지 구한다. startPage ~ endPage
-		while (startPage%MAX_NAV_LINK_CNT != 1) {
-			startPage -= 1;
-		}
-		while (endPage%MAX_NAV_LINK_CNT != 0) {
-			endPage += 1;
-		}
-
 		fileList = fileSearchService.getSearchFileList(strSearch);
-		maxPage = (int) Math.ceil((double) fileList.size() / MAX_IMAGE_CNT);
-		endPage = endPage > maxPage ? maxPage : endPage;//마지막 페이지 endPage = (검색 이미지수 / 페이지 당 있을 수 있는 MAX 이미지 수)를 올림처리 
-		isPreviousPage = startPage==1 ? false : true;
-		isNextPage = maxPage==endPage ? false : true;
-		
-		//System.out.println("startPage:"+startPage);
-		//System.out.println("endPage:"+endPage);
-		
-		if(fileList.size()==0) {
-			mv.addObject("noData","검색된 데이터가 없습니다.");
-		}
+		searchCnt = fileList.size();
+		maxPage = pageNavicationService.getMaxPage(searchCnt);
+		startPage = pageNavicationService.getStartPage(page);
+		endPage =pageNavicationService.getEndPage(page, maxPage);	
+		isPreviousPage = pageNavicationService.getIsPreviousPage(startPage);		
+		isNextPage = pageNavicationService.getIsNextPage(maxPage, endPage);
+		dataIndex = pageNavicationService.getDataIndex(page);
+		dataMaxRange = pageNavicationService.getDataMaxRange(page, searchCnt);
 		
 		List<Map<String, String>> list = new ArrayList<>();
-		int pageIndex = MAX_IMAGE_CNT * (page-1);
-		int maxRange = MAX_IMAGE_CNT * page <= fileList.size() ? MAX_IMAGE_CNT * page : fileList.size();
+
 		//페이지별 16개씩만 짤라서 전송
-		for(int i = pageIndex; i<maxRange;i++) {
+		for(int i = dataIndex; i<dataMaxRange;i++) {
 			Map<String, String> map = new HashMap<>();
 			map.put("image", fileList.get(i).getFileId());
 			map.put("like", fileList.get(i).getLikeFlag());
 			list.add(map);
-		}		
+		}	
 
+		if(searchCnt==0) {
+			mv.addObject("noData","검색된 데이터가 없습니다.");
+		}
+		
 		String searchData = new Gson().toJson(list);
-		//System.out.println(searchData);
 		
 		mv.addObject("searchData",searchData);
 		mv.addObject("startPage",startPage);
