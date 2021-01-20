@@ -1,11 +1,23 @@
 package com.swan.picturerepository.service;
 
+import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.stereotype.Service;
+
+import com.swan.picturerepository.property.ConstantProperty;
 
 @Service
 public class PageNavicationService {
-	private int MAX_IMAGE_CNT = 16;//페이지 당 있을 수 있는 MAX 이미지 수
-	private int MAX_NAV_LINK_CNT = 5;//하단 네비게이션 링크의  MAX 수
+	private int MAX_IMAGE_CNT;//페이지 당 있을 수 있는 MAX 이미지 수
+	private int MAX_NAV_LINK_CNT;//하단 네비게이션 링크의  MAX 수
+	private GenericXmlApplicationContext ctx;
+	public PageNavicationService(){
+		 this.ctx = new GenericXmlApplicationContext();
+		 ctx.load("classpath:constant.xml");
+		 ctx.refresh();
+		 ConstantProperty constantProperty = (ConstantProperty)ctx.getBean("constantProperty");
+		 this.MAX_IMAGE_CNT =constantProperty.getMax_image_cnt();
+		 this.MAX_NAV_LINK_CNT =constantProperty.getMax_nav_link_cnt();
+	}
 	public int getStartPage(int page) {
 		int startPage = page;
 		while (startPage%MAX_NAV_LINK_CNT != 1) {

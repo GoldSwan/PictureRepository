@@ -41,5 +41,4 @@
 	</beans:constructor-arg>
 	</beans:bean>
 	
-	<context:property-placeholder location="/WEB-INF/props/constant.properties"/>
 </beans:beans>
