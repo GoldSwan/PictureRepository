@@ -26,8 +26,8 @@ public class FileUploadService {
 		File imageThumbnailFile = new File(uploadPath, savedName);
 		if (imageFile.exists()) {
 			imageThumbnailFile.getParentFile().mkdirs();
-			//Thumbnails.of(imageFile).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(imageThumbnailFile);
-			Thumbnails.of(imageFile).forceSize(THUMB_WIDTH, THUMB_HEIGHT).toFile(imageThumbnailFile);
+			//Thumbnails.of(imageFile).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(imageThumbnailFile);//사진 원본 비율 그대로 썸네일 생성. 지정 크기가 원본 비율이 안된다면 자동 조정
+			Thumbnails.of(imageFile).forceSize(THUMB_WIDTH, THUMB_HEIGHT).toFile(imageThumbnailFile);//사진 사이즈를 지정한 크기로만 썸네일 생성
 		}
 	}
 	
