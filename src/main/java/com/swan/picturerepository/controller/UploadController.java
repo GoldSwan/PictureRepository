@@ -1,6 +1,7 @@
 package com.swan.picturerepository.controller;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -27,6 +28,10 @@ public class UploadController {
 	@RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
 	public String uploadForm(Model model, @RequestParam("username") String username, @RequestParam("file") MultipartFile file) throws Exception {
 		 
+		if(file.isEmpty()) {
+			model.addAttribute("uploadErrorMsg", "선택한 파일이 없습니다.");
+			return "imageFileUpload";
+		}
 		UUID uid = UUID.randomUUID();
 		String fileName = file.getOriginalFilename();
 		String fileId = uid.toString() + fileName;
@@ -35,6 +40,27 @@ public class UploadController {
 		fileUploadService.createFileData(username, fileId, fileName);
 		model.addAttribute("savedImageName", fileName);
 
+		return "imageFileUploadResult";
+	}
+
+	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
+	public String uploadFormMulti(Model model, @RequestParam("username") String username, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
+		for (MultipartFile file : fileList) {
+			if (file.isEmpty()) {
+				model.addAttribute("uploadMultiErrorMsg", "선택한 파일이 없습니다.");
+				return "imageFileUpload";
+			}
+		}
+
+		for (MultipartFile file : fileList) {
+			UUID uid = UUID.randomUUID();
+			String fileName = file.getOriginalFilename();
+			String fileId = uid.toString() + fileName;
+			File imageFile = fileUploadService.uploadImageFile(imageUploadPath, fileId, file.getBytes(), fileName);
+			fileUploadService.uploadThumbnailFile(thumbnailUploadPath, fileId, imageFile, fileName);
+			fileUploadService.createFileData(username, fileId, fileName);
+			model.addAttribute("savedImageName", fileName);
+		}
 		return "imageFileUploadResult";
 	}
 	
