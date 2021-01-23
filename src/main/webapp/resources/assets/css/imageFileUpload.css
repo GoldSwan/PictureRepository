@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+.error {
+	font-size: 0.8em;
+	color: red;
+	width: 300px;
+	text-align: center;
+}
