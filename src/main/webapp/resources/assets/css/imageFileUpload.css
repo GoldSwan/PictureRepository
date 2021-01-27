@@ -6,3 +6,37 @@
 	width: 300px;
 	text-align: center;
 }
+
+body {
+	background-color: #000;
+	background-image: url("../../images/bg.jpg");
+	background-size: cover;
+	background-position: top center;
+}
+
+#wrapper {
+	max-width: 68em;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 2em;
+	opacity: 1;
+	filter: none;
+	-moz-transition: opacity 1s ease, -moz-filter 1s ease;
+	-webkit-transition: opacity 1s ease, -webkit-filter 1s ease;
+	-ms-transition: opacity 1s ease, -ms-filter 1s ease;
+	transition: opacity 1s ease, filter 1s ease;
+}
+
+header {
+	text-align: center;
+}
+
+#uploadSection {
+	display: block;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+#uploadForm div {
+	text-align: center;
+}
