@@ -20,7 +20,7 @@
 				<!-- <div class="form-group"> -->
 				<div>
 					<input type="file" class="form-control-file" multiple="multiple"
-						name="file" />
+						name="file" accept = "image/gif, image.jpeg, image/png, image/jpg"/>
 				</div>
 				<!-- placeholder="파일 선택" /> -->
 				<div>
