@@ -1,12 +1,8 @@
 @charset "UTF-8";
 
-.error {
-	font-size: 0.8em;
-	color: red;
-	width: 300px;
-	text-align: center;
-}
+@import url(font-awesome.min.css);
 
+/* Reset */
 body {
 	background-color: #000;
 	background-image: url("../../images/bg.jpg");
@@ -27,16 +23,73 @@ body {
 	transition: opacity 1s ease, filter 1s ease;
 }
 
-header {
+.error {
+	font-size: 0.8em;
+	color: red;
+	width: 300px;
 	text-align: center;
 }
 
+h1, h2, h3, h4, h5, h6 {
+		color: #ffffff;
+		font-weight: 200;
+		line-height: 1.5;
+		margin: 0 0 1em 0;
+}
+
+/* Header */
+#header {
+	text-align: center;
+	padding: 6em 0 4em 0;
+}
+
+/* Section */
 #uploadSection {
-	display: block;
+	display: flex;
+	padding: 0 6em 0 6em;
+	width: 80%;
+	height: 100px;
+	color: #FFFFFF;
+	background-color: #6E6E6E;
+	align-items:center;
+	justify-content: center;
 	margin-left: 10%;
-	margin-right: 10%;
 }
 
-#uploadForm div {
+#uploadSection div {
+	width: 100%;
+}
+
+#uploadSection div #fileDiv{
+	display: block;
+	border: 1px solid black;
+}
+
+#uploadSection div div{
+	display: block;
+}
+
+
+#inputSection {
+	display: block;
+}
+
+#inputSection div {
 	text-align: center;
+}
+
+#inputSection div input{
+	width : 80%;
+	height : 40px;
+}
+
+#inputSection div textarea{
+	width : 80%;
+	height : 300px;
+}
+
+/* footer */
+#header {
+	text-align: center;
+	padding: 6em 0 4em 0;
 }
