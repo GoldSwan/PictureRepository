@@ -28,6 +28,8 @@ public class UploadController {
 	@RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
 	public String uploadForm(Model model, @RequestParam("username") String username, @RequestParam("file") MultipartFile file) throws Exception {
 		 
+		model.addAttribute("username", username);
+		
 		if(file.isEmpty()) {
 			model.addAttribute("uploadErrorMsg", "선택한 파일이 없습니다.");
 			return "imageFileUpload";
@@ -45,6 +47,9 @@ public class UploadController {
 
 	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
 	public String uploadFormMulti(Model model, @RequestParam("username") String username, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
+		
+		model.addAttribute("username", username);
+		
 		for (MultipartFile file : fileList) {
 			if (file.isEmpty()) {
 				model.addAttribute("uploadMultiErrorMsg", "선택한 파일이 없습니다.");

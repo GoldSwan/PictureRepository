@@ -10,10 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="resources/assets/css/main.css" />
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css" />
-<style>
-/* div.like-btn-parent {position:relative;} */
-/* div.like-btn-child {position:absolute;right:0px;bottom:23.99px;} */
-</style>
 </head>
 <body>
 
@@ -59,9 +55,8 @@
 			<span class="avatar"><img src="resources/images/avatar.jpg"
 				alt="" /></span>
 			<h1>
-				This is <strong>Visualize</strong>, a responsive site template
-				designed by <a href="http://templated.co">TEMPLATED</a><br /> and
-				released for free under the Creative Commons License.
+				<strong>원하는 사진을 검색하세요!</strong><br/>
+				<strong>자신만의 개성있는 사진을 올려보세요!</strong>
 			</h1>
 			<ul class="icons">
 				<li><a href="#" class="icon style2 fa-twitter"><span
