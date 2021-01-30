@@ -29,4 +29,14 @@ public class UserFileInfo implements Serializable {
 	private LocalTime isrtDt;
 	@Column(length=1)
 	private String likeFlag;
+	@Column
+	private long likeCnt;
+	@Column(length=36)
+	private String title;
+	@Column(length=500)
+	private String content;
+	@Column
+	private String tag;
+	@Column(length=1)//A : all, C : Close
+	private String publicRange;
 }
