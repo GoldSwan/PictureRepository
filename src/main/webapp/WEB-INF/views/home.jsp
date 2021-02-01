@@ -18,9 +18,7 @@
 		<!-- Header -->
 		<header id="header">
 			<div class="container">
-				<div class="row">
 					<c:if test="${pageContext.request.userPrincipal.name != null }">
-						<div class="col-sm-6">
 								<form class="form-inline" method="get"
 									action="<c:url value="/search" />">
 									<input id = "search" class="form-control mr-sm-2 search-input" type="search"
@@ -30,27 +28,15 @@
 										<i class="fa fa-search"></i>
 									</button>
 								</form>
-						</div>						
-						<div class="col-sm-6">
-							<div style="float: right;">
 								<form id="logout" action="<c:url value="/logout" />"
-									method="post">
+									method="post" style = "margin:0 0 0 0;height:0">
 									<input type="hidden" name="${_csrf.parameterName }"
 										value="${_csrf.token }" /> ​​​​​​​
-									<button class="btn btn-lg btn-primary" type="submit" style = "height:47px;">
-										<i><b>로그아웃</b></i>
-									</button>
 								</form>
-							</div>
-							<div style="float: right;margin-right: 10px;">
+								<a class="btn btn-lg btn-primary" href= "javascript:document.getElementById('logout').submit()">로그아웃</a>
 							<a class="btn btn-lg btn-primary" href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}" />">업로드</a>
-							</div>													
-							<div style="float: right;margin-right: 10px;">
-							<a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a>
-							</div>	
-						</div>					
+							<a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a>				
 					</c:if>
-				</div>
 			</div>
 			<span class="avatar"><img src="resources/images/avatar.jpg"
 				alt="" /></span>
