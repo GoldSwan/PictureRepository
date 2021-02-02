@@ -2,6 +2,7 @@ package com.swan.picturerepository.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -38,12 +39,13 @@ public class UserFileInfoDAO {
 		});
 	}
 	
-	public boolean insertUserFileInfo(String username, String fileId, String fileName) {
+	public boolean insertUserFileInfo(ArrayList<String> userInfoList) {
 	    
-		String sqlStatement = "insert into userfileinfo (username, fileId, fileName, isrtDt) values(?,?,?,SYSDATE())";
+		String sqlStatement = "insert into userfileinfo (username, fileId, fileName, isrtDt, title, content, tag, publicRange) values(?,?,?,SYSDATE(),?,?,?,?)";
 
 		return (jdbcTemplate.update(sqlStatement,
-				new Object[] { username, fileId, fileName }) == 1);
+				new Object[] { userInfoList.get(0), userInfoList.get(1), userInfoList.get(2), userInfoList.get(3), 
+							   userInfoList.get(4), userInfoList.get(5), userInfoList.get(6)}) == 1);
 	}
 	
 	public List<String> selectLikeFlag(String username, String fileId) {

@@ -1,6 +1,8 @@
 package com.swan.picturerepository.service;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -31,7 +33,8 @@ public class FileUploadService {
 		}
 	}
 	
-	public void createFileData(String username, String fileId, String fileName) {
-		userFileInfoDAO.insertUserFileInfo(username, fileId, fileName);
+	//public void createFileData(String username, String fileId, String fileName) {
+	public void createFileData(ArrayList<String> userInfoList) {
+		userFileInfoDAO.insertUserFileInfo(userInfoList);
 	}
 }

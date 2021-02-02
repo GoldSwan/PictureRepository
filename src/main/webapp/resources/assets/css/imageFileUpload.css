@@ -30,7 +30,7 @@ body {
 	text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, span {
 		color: #ffffff;
 		font-weight: 200;
 		line-height: 1.5;
@@ -78,18 +78,23 @@ h1, h2, h3, h4, h5, h6 {
 	text-align: center;
 }
 
-#inputSection div input{
+#inputSection > .inputText > input{
 	width : 80%;
 	height : 40px;
 }
 
-#inputSection div textarea{
+#inputSection > .inputText > textarea{
 	width : 80%;
 	height : 300px;
 }
 
+#inputSection > .radio > input{
+	height : 20px;
+	width : 20px;
+}
+
 /* footer */
-#header {
+#footer {
 	text-align: center;
 	padding: 6em 0 4em 0;
 }

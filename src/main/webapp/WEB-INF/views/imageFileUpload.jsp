@@ -20,38 +20,41 @@
 			method="post" enctype="multipart/form-data">
 			<!-- <div class="form-group"> -->
 			<section id="uploadSection">
-			<div>
-				<div id = fileDiv>
-					<input type="file" class="form-control-file" multiple="multiple"
-						name="file" accept="image/gif, image.jpeg, image/png, image/jpg" />
-				</div>
 				<div>
-					<c:if test="${not empty uploadMultiErrorMsg }">
-						<span id="uploadFormMulti.errors" class="error">${uploadMultiErrorMsg }</span>
-					</c:if>
+					<div id=fileDiv>
+						<input type="file" class="form-control-file" multiple="multiple"
+							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" />
+					</div>
+					<div>
+						<c:if test="${not empty uploadMultiErrorMsg }">
+							<span id="uploadFormMulti.errors" class="error">${uploadMultiErrorMsg }</span>
+						</c:if>
+					</div>
 				</div>
-			</div>
 			</section>
 			<section id="inputSection">
-				<div>
+				<div class = "inputText">
 					<input type="text" name="title" placeholder="제목" value="${title}" />
 				</div>
-				<div>
+				<div class = "inputText">
 					<textarea placeholder="내용" name="content">${content}</textarea>
 				</div>
-				<div>
-					<input type="text" name="title" placeholder="태그" value="${tag}" />
+				<div class = "inputText">
+					<input type="text" name="tag" placeholder="태그" value="${tag}" />
 				</div>
-				<div>
+				<div class = "inputText">
 					<input type="hidden" name="username" value="${username}" />
 				</div>
-				<div>
+				<div class = "radio">
+					<input type="radio" name="publicRange" value="A"><span>전체 공개</span> 
+					<input type="radio" name="publicRange" value="C"><span>비공개</span>
+				</div>
+				<div class = "inputText">
 					<input type="submit" class="btn btn-primary" value="다중 업로드" />
 				</div>
 			</section>
 		</form>
-		<footer id="footer">
-		</footer>
+		<footer id="footer"> </footer>
 	</div>
 </body>
 </html>
