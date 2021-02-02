@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="resources/assets/css/main.css" />
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css" />
 </head>
-<body>
+<body>javascript:document.getElementById('logout').submit()
 
 	<!-- Wrapper -->
 	<div id="wrapper">
@@ -19,12 +19,13 @@
 		<header id="header">
 			<div class="container">
 					<c:if test="${pageContext.request.userPrincipal.name != null }">
+							<div style = "text-align:center">
 								<form class="form-inline" method="get"
 									action="<c:url value="/search" />">
 									<input id = "search" class="form-control mr-sm-2 search-input" type="search"
-										placeholder="검색" value="${search}" name="search" style="width:50%;">
+										placeholder="검색" value="${search}" name="search" style="width:85%;">
 									<input type="hidden" name="page" value='1'>	​​​​​​​
-									<button class="btn btn-search my-2 my-sm-0" type="submit">
+									<button class="btn btn-search my-2 my-sm-0" type="submit" style = "background-color:white">
 										<i class="fa fa-search"></i>
 									</button>
 								</form>
@@ -33,9 +34,12 @@
 									<input type="hidden" name="${_csrf.parameterName }"
 										value="${_csrf.token }" /> ​​​​​​​
 								</form>
+							</div>
+							<div style = "text-align:right">
 								<a class="btn btn-lg btn-primary" href= "javascript:document.getElementById('logout').submit()">로그아웃</a>
-							<a class="btn btn-lg btn-primary" href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}" />">업로드</a>
-							<a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a>				
+								<a class="btn btn-lg btn-primary" href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}" />">업로드</a>
+								<a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a>	
+							</div>			
 					</c:if>
 			</div>
 			<span class="avatar"><img src="resources/images/avatar.jpg"
