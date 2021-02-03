@@ -38,7 +38,9 @@
 							<div style = "text-align:right">
 								<a class="btn btn-lg btn-primary" href= "javascript:document.getElementById('logout').submit()">로그아웃</a>
 								<a class="btn btn-lg btn-primary" href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}" />">업로드</a>
-								<a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a>	
+								<%-- <a href="javascript:document.getElementById('btnLoginUserInfo').onclick()" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">${pageContext.request.userPrincipal.name}</a> --%>\
+								<a class="btn btn-lg btn-primary" href="javascript:document.getElementById('btnLoginUserInfo').onclick()">${pageContext.request.userPrincipal.name}</a>	
+								<button id = 'btnLoginUserInfo' onclick="openLoginUserPopup()" style = "display:none"></button>
 							</div>			
 					</c:if>
 			</div>
@@ -121,7 +123,7 @@
 	});
 	
 	function loadImage(){
-		var searchData = ${searchData};
+		var searchData = ${searchData};			
 		//var searchData = "<c:out value='${searchData}'/>";
 		//var param = searchData[0].image;
 		//console.log(param);		
@@ -262,6 +264,10 @@
 		var sendParam = "username=" + username + "&fileId=" + fileId;
 		xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		xhttp.send(sendParam);
+	}
+	
+	function openLoginUserPopup(){
+		window.open('${pageContext.request.contextPath}/loginUserinfoPopup', 'popup01', 'width=300, height=400, scrollbars= 0, toolbar=0, menubar=no, status=no,  location=no');
 	}
 	
 	</script>
