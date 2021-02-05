@@ -51,12 +51,13 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
     - [x]  다중으로 파일이 업로드 되도록 개선
     - [x]  상수 값을 .propertes 파일로 따로 관리할 수 있도록 개선
     - [ ]  모바일 환경에서도 홈화면 header부분 UI가 최적화 될 수 있도록 개선 - 크롬처럼 로그인시 오른쪽에 아이디 버튼만 존재하고 클릭시 업로드, 로그아웃 버튼을 포함한 팝업띄우기
-
+    - [ ]  javascript에서 빈 값의 EL 표현식 에러 개선
+    
 - 사용 기술
     - Front-End
       - CSS
       - Javascript 1.7
-      - jQuery v2.2.1
+      - jQuery 2.2.1
       - Bootstrap 4.4.1      
     - Back-End
       - Java 1.8
