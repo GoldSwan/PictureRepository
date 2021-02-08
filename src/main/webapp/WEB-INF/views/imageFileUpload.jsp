@@ -8,6 +8,11 @@
 	href="<c:url value="/resources/assets/css/imageFileUpload.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
+<style>
+.items a:before{
+	content: "#"
+}
+</style>
 <meta charset="UTF-8">
 <title>Image File Upload</title>
 </head>
@@ -42,6 +47,10 @@
 				<div class = "inputText">
 					<input type="text" name="tag" placeholder="태그" value="${tag}" />
 				</div>
+				<div>
+				<span>#</span><span>샘플태그</span><span>#</span><span>샘플태그</span><span class = "items"><a href="${pageContext.request.contextPath}/" rel="tag">샘플태그</a></span>
+				</div>
+				
 				<div class = "inputText">
 					<input type="hidden" name="username" value="${username}" />
 				</div>
