@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,15 +72,19 @@ public class SearchController {
 		if(searchCnt==0) {
 			mv.addObject("noData","검색된 데이터가 없습니다.");
 		}
+
+		Map<String, Object> searchDataMap = new HashMap<>();
 		
-		String searchData = new Gson().toJson(list);
+		searchDataMap.put("imageData", list);
+		searchDataMap.put("startPage",startPage);
+		searchDataMap.put("endPage",endPage);
+		searchDataMap.put("isPreviousPage",isPreviousPage);
+		searchDataMap.put("isNextPage",isNextPage);		
 		
-		mv.addObject("searchData",searchData);
-		mv.addObject("startPage",startPage);
-		mv.addObject("endPage",endPage);
+		String strSearchDataMap = new Gson().toJson(searchDataMap);
+		mv.addObject("searchDataMap",strSearchDataMap);
 		mv.addObject("search",strSearch);
-		mv.addObject("isPreviousPage",isPreviousPage);
-		mv.addObject("isNextPage",isNextPage);
+		
 		mv.setViewName("home");
 		 
 		return mv;
