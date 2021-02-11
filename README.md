@@ -58,7 +58,9 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
     - [x]  상수 값을 .propertes 파일로 따로 관리할 수 있도록 개선
     - [ ]  모바일 환경에서도 홈화면 header부분 UI가 최적화 될 수 있도록 개선 - 크롬처럼 로그인시 오른쪽에 아이디 버튼만 존재하고 클릭시 업로드, 로그아웃 버튼을 포함한 팝업띄우기
     - [x]  javascript에서 빈 값의 EL 표현식 에러 개선
-    - [ ]  REST API 도입
+    
+- 도입 검토 사항
+    - [ ] REST API
     
 - 사용 기술
     - Front-End
@@ -72,7 +74,6 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
       - MySQL 5.7.19
 
 - 개발 환경
-    - Chrome 88.0.4324.146
     - OpenJDK 1.8
     - Tomcat 8.5
 
