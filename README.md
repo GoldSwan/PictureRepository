@@ -61,6 +61,7 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
     
 - 도입 검토 사항
     - [ ] REST API
+    - [ ] AWS
     
 - 사용 기술
     - Front-End
