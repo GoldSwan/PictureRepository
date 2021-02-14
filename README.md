@@ -65,26 +65,26 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
     - [ ]  사진 렌더링 기능 구현 - 스크롤을 내리면 아래 공간에 사진이 추가되어 계속 보여지도록 구현
  
 ***
-- [도입 기술 검토 사항]
-    - REST API
-    - AWS
+## 도입 기술 검토 사항
+- REST API
+- AWS
 ***
-- [사용 기술]
-    - Front-End
-      - CSS3
-      - HTML5
-      - Javascript ES6
-      - jQuery 2.2.1
-      - Bootstrap 4.4.1      
-      
-    - Back-End
-      - Java 1.8
-      - Spring Framework 4.3.12
-      - MySQL 5.7.19
+## 사용 기술
+- [Front-End]
+  - CSS3
+  - HTML5
+  - Javascript ES6
+  - jQuery 2.2.1
+  - Bootstrap 4.4.1      
+
+- [Back-End]
+  - Java 1.8
+  - Spring Framework 4.3.12
+  - MySQL 5.7.19
 ***
-- [개발 환경]
-    - OpenJDK 1.8
-    - Tomcat 8.5
-    - Maven
+## 개발 환경
+- OpenJDK 1.8
+- Tomcat 8.5
+- Maven
 
       
