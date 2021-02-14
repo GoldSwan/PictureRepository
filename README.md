@@ -64,10 +64,6 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
     - [x]  javascript에서 빈 값의 EL 표현식 에러 개선
     - [ ]  사진 렌더링 기능 구현 - 스크롤을 내리면 아래 공간에 사진이 추가되어 계속 보여지도록 구현
  
-## 도입 기술 검토 사항
-- REST API
-- AWS
-
 ## 사용 기술
 - [Front-End]
   - CSS3
@@ -80,6 +76,10 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
   - Java 1.8
   - Spring Framework 4.3.12
   - MySQL 5.7.19
+  
+## 도입 예정 기술
+- REST API
+- AWS
 
 ## 개발 환경
 - OpenJDK 1.8
