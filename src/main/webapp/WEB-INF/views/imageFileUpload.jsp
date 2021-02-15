@@ -26,9 +26,12 @@
 			<!-- <div class="form-group"> -->
 			<section id="uploadSection">
 				<div>
+					<div>
+						<span>파일 용량/갯수 : </span><span id = "fileStatusSpan"></span>
+					</div>
 					<div id=fileDiv>
 						<input type="file" class="form-control-file" multiple="multiple"
-							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" />
+							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this)"/>
 					</div>
 					<div>
 						<c:if test="${not empty uploadMultiErrorMsg }">
@@ -65,5 +68,18 @@
 		</form>
 		<footer id="footer"> </footer>
 	</div>
+	<script>	
+		function changeFileStatus(file){
+			let totalFileSize = 0;
+			let browser=navigator.appName;
+			
+	    	for(let iFile of file.files){
+	    		totalFileSize += iFile.size;
+	    	}
+	    		        
+	        totalFileSize = Math.round(totalFileSize / 1024 / 1024 * 100) / 100 + 'MB';//소수점 2째 자리까지 나오도록 바이트(Byte) -> 메가바이트(MB) 변환 처리
+	        document.getElementById('fileStatusSpan').innerHTML = totalFileSize + ' / ' + file.files.length+'개';
+		}
+	</script>
 </body>
 </html>
