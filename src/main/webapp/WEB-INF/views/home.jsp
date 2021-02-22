@@ -93,15 +93,14 @@
 	<script src="resources/assets/js/skel.min.js"></script>
 	<script src="resources/assets/js/main.js"></script>
 	<script>
-	var jsonParam = '<c:out value='${searchDataMap}'/>';
+	var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>';
 	var imageLikeMap = new Map();//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
-	
-	window.addEventListener('DOMContentLoaded', function()
-	{		
+	console.log(jsonParam);
+	window.addEventListener('DOMContentLoaded', ()=>{		
 		if(jsonParam=='')
 			return;
 		
-		jsonParam = jsonParam.replace(/&#034;/g,'"');
+		//jsonParam = jsonParam.replace(/&#034;/g,'"');
 		if(jsonParam!=''){
 			jsonParam = JSON.parse(jsonParam);
 		}
@@ -128,7 +127,9 @@
 			var dynamic_a = document.createElement('a');
 			var dynamic_img = document.createElement('img');
 			var dynamic_btn = document.createElement('button');
-			var dynamic_i = document.createElement('i');		
+			var dynamic_i = document.createElement('i');
+			var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?fileId='+searchData[i].image+'&username=${pageContext.request.userPrincipal.name}';
+			console.log("imageViewURL:"+imageViewURL);
 			dynamic_i.style.color = (searchData[i].like == 'Y') ? 'red' : 'black';
 			dynamic_i.style.fontSize = '30px';
 			dynamic_div_parent.setAttribute('id', 'div_parent_'+i);
@@ -137,7 +138,8 @@
 			dynamic_img.setAttribute('id', 'img_'+i);
 			dynamic_btn.setAttribute('id', 'btn_like_'+i);
 			dynamic_i.setAttribute('id', 'i_like_'+i);		
-			dynamic_a.setAttribute('href', 'resources/images/fulls/'+searchData[i].image);
+			//dynamic_a.setAttribute('href', 'resources/images/fulls/'+searchData[i].image);
+			//dynamic_a.setAttribute('href', imageViewURL);//Image View 이동 추가
 			dynamic_img.setAttribute('src', 'resources/images/thumbs/'+searchData[i].image);
 			dynamic_btn.setAttribute('type', 'button');		
 			document.getElementById('div_'+divIndex).appendChild(dynamic_div_parent);
@@ -149,6 +151,9 @@
 			document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
 			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'false');	
 			document.getElementById('btn_like_'+i).addEventListener( "click", onClickAsyncLike);
+			document.getElementById('a_'+i).href = imageViewURL;
+			document.getElementById('a_'+i).target = "_blank";
+			document.getElementById('a_'+i).rel = "noopener";
 			imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 		}
 	}

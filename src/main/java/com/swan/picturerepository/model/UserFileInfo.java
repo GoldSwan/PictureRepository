@@ -1,7 +1,7 @@
 package com.swan.picturerepository.model;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ public class UserFileInfo implements Serializable {
 	@Column
 	private String fileName;
 	@Column
-	private LocalTime isrtDt;
+	private LocalDate isrtDt;
 	@Column(length=1)
 	private String likeFlag;
 	@Column

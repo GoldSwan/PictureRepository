@@ -28,7 +28,7 @@ $(function() {
 		});
 
 	// Poptrox.
-		$window.on('load', function() {
+/*		$window.on('load', function() {
 
 			$('.thumbnails').poptrox({
 				onPopupClose: function() { $body.removeClass('is-covered'); },
@@ -44,6 +44,6 @@ $(function() {
 				windowMargin: (skel.breakpoint('small').active ? 5 : 50)
 			});
 
-		});
+		});*/
 
 });

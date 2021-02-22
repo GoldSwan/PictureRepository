@@ -2,6 +2,9 @@ package com.swan.picturerepository.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,27 @@ public class UserFileInfoDAO {
 						UserFileInfo userFileInfo = new UserFileInfo();
 						userFileInfo.setFileId(rs.getString("fileId"));
 						userFileInfo.setLikeFlag(rs.getString("likeFlag"));
+						return userFileInfo;
+					}		
+		});
+	}
+	
+	public List<UserFileInfo> selectFileId(String strFileId) {
+		String sqlStatement = "SELECT fileId, fileName, isrtDt, likeFlag, likeCnt, content, tag, title FROM userFileInfo WHERE fileId = (?)";
+		 return jdbcTemplate.query(sqlStatement, new Object[] {strFileId}, 
+				new RowMapper<UserFileInfo>() {
+					@Override
+					public UserFileInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+						// TODO Auto-generated method stub						
+						UserFileInfo userFileInfo = new UserFileInfo();
+						userFileInfo.setFileId(rs.getString("fileId"));
+						userFileInfo.setFileName(rs.getString("fileName"));
+						userFileInfo.setIsrtDt(LocalDate.parse(rs.getString("isrtDt"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")));
+						userFileInfo.setLikeFlag(rs.getString("likeFlag"));
+						userFileInfo.setLikeCnt(rs.getLong("likeCnt"));
+						userFileInfo.setContent(rs.getString("content"));
+						userFileInfo.setTag(rs.getString("tag"));
+						userFileInfo.setTitle(rs.getString("title"));
 						return userFileInfo;
 					}		
 		});

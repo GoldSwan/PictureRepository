@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+@import url(font-awesome.min.css);
+
+/* Reset */
+body {
+	background-color: #000;
+	background-image: url("../../images/bg.jpg");
+	background-size: cover;
+	background-position: top center;
+}
+
+#wrapper {
+	max-width: 68em;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 2em;
+	opacity: 1;
+	filter: none;
+	-moz-transition: opacity 1s ease, -moz-filter 1s ease;
+	-webkit-transition: opacity 1s ease, -webkit-filter 1s ease;
+	-ms-transition: opacity 1s ease, -ms-filter 1s ease;
+	transition: opacity 1s ease, filter 1s ease;
+}
+
+.error {
+	font-size: 0.8em;
+	color: red;
+	width: 300px;
+	text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6, span {
+		color: #ffffff;
+		font-weight: 200;
+		line-height: 1.5;
+		margin: 0 0 1em 0;
+}
+
+/* Header */
+#header {
+	text-align: center;
+	padding: 6em 0 4em 0;
+}
+
+/* Section */
+
+#imageDataSection div {
+	text-align: center;
+}
+
+#imageDataSection div > img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* footer */
+#footer {
+	text-align: center;
+	padding: 6em 0 4em 0;
+}

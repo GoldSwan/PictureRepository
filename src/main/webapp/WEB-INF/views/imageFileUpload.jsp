@@ -8,6 +8,11 @@
 	href="<c:url value="/resources/assets/css/imageFileUpload.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
+<style>
+.items a:before{
+	content: "#"
+}
+</style>
 <meta charset="UTF-8">
 <title>Image File Upload</title>
 </head>
@@ -21,9 +26,12 @@
 			<!-- <div class="form-group"> -->
 			<section id="uploadSection">
 				<div>
+					<div>
+						<span>파일 용량/갯수 : </span><span id = "fileStatusSpan"></span>
+					</div>
 					<div id=fileDiv>
 						<input type="file" class="form-control-file" multiple="multiple"
-							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" />
+							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this)"/>
 					</div>
 					<div>
 						<c:if test="${not empty uploadMultiErrorMsg }">
@@ -42,6 +50,10 @@
 				<div class = "inputText">
 					<input type="text" name="tag" placeholder="태그" value="${tag}" />
 				</div>
+				<div>
+				<span>#</span><span>샘플태그</span><span>#</span><span>샘플태그</span><span class = "items"><a href="${pageContext.request.contextPath}/" rel="tag">샘플태그</a></span>
+				</div>
+				
 				<div class = "inputText">
 					<input type="hidden" name="username" value="${username}" />
 				</div>
@@ -56,5 +68,18 @@
 		</form>
 		<footer id="footer"> </footer>
 	</div>
+	<script>	
+		function changeFileStatus(file){
+			let totalFileSize = 0;
+			let browser=navigator.appName;
+			
+	    	for(let iFile of file.files){
+	    		totalFileSize += iFile.size;
+	    	}
+	    		        
+	        totalFileSize = Math.round(totalFileSize / 1024 / 1024 * 100) / 100 + 'MB';//소수점 2째 자리까지 나오도록 바이트(Byte) -> 메가바이트(MB) 변환 처리
+	        document.getElementById('fileStatusSpan').innerHTML = totalFileSize + ' / ' + file.files.length+'개';
+		}
+	</script>
 </body>
 </html>
