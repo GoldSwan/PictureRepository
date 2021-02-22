@@ -20,4 +20,11 @@ public class FileSearchService {
 		
 		return fileList; 
 	}
+	
+	public List<UserFileInfo> getSearchFileListByFileId(String strFileId) {	
+		
+		List<UserFileInfo> fileList = userFileInfoDAO.selectFileId(strFileId);
+		
+		return fileList; 
+	}
 }
