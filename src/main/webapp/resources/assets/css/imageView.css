@@ -44,53 +44,14 @@ h1, h2, h3, h4, h5, h6, span {
 }
 
 /* Section */
-#uploadSection {
-	display: flex;
-	padding: 0 6em 0 6em;
-	width: 80%;
-	height: 100px;
-	color: #FFFFFF;
-	background-color: #6E6E6E;
-	align-items:center;
-	justify-content: center;
-	margin-left: 10%;
-}
 
-#uploadSection div {
-	width: 100%;
-}
-
-#uploadSection div #fileDiv{
-	display: block;
-	border: 1px solid black;
-}
-
-#uploadSection div div{
-	display: block;
-}
-
-
-#inputSection {
-	display: block;
-}
-
-#inputSection div {
+#imageDataSection div {
 	text-align: center;
 }
 
-#inputSection > .inputText > input{
-	width : 80%;
-	height : 40px;
-}
-
-#inputSection > .inputText > textarea{
-	width : 80%;
-	height : 300px;
-}
-
-#inputSection > .radio > input{
-	height : 20px;
-	width : 20px;
+#imageDataSection div > img {
+	max-width: 100%;
+	height: auto;
 }
 
 /* footer */
