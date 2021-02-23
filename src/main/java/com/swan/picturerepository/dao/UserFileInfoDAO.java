@@ -3,28 +3,34 @@ package com.swan.picturerepository.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
-
 import com.swan.picturerepository.model.UserFileInfo;
 
 @Repository
 public class UserFileInfoDAO {
 
 	private JdbcTemplate jdbcTemplate;
+	private SimpleJdbcCall procReadAllSearchFile;
 	
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
+		procReadAllSearchFile = new SimpleJdbcCall(dataSource)
+				.withProcedureName("SEARCH_FILE")
+				.returningResultSet("UserFileInfo",BeanPropertyRowMapper.newInstance(UserFileInfo.class));
 	}
 	
 	public List<UserFileInfo> selectFileName(String strSearch) {
@@ -40,6 +46,14 @@ public class UserFileInfoDAO {
 						return userFileInfo;
 					}		
 		});
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UserFileInfo> selectFileNameByProcedure(String strSearch) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("SEARCH", strSearch);
+		Map<String, Object> m = procReadAllSearchFile.execute(param);
+		return (List<UserFileInfo>)m.get("UserFileInfo");
 	}
 	
 	public List<UserFileInfo> selectFileId(String strFileId) {
