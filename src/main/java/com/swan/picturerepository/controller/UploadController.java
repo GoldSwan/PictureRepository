@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.swan.picturerepository.service.FileUploadService;
 
@@ -66,26 +68,28 @@ public class UploadController {
 	}
 
 	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
-	public String uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
+	public ModelAndView uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
 		
 		String strUsername = req.getParameter("username");
 		String strTitle = req.getParameter("title");
 		String strContent = req.getParameter("content");
 		String strTag = req.getParameter("tag");
 		String strPublicRange = req.getParameter("publicRange");
-		
+		String strUploadFileNames = "";
+		StringBuffer sb = new StringBuffer();
 		model.addAttribute("username", strUsername);
 		model.addAttribute("title", strTitle);
 		model.addAttribute("content", strContent);
 		model.addAttribute("tag", strTag);
-		
+		ModelAndView mav = new ModelAndView();
 		for (MultipartFile file : fileList) {
 			if (file.isEmpty()) {
 				model.addAttribute("uploadMultiErrorMsg", "선택한 파일이 없습니다.");
-				return "imageFileUpload";
+				mav.setViewName("imageFileUpload");				
+				return mav;
 			}
 		}
-
+		
 		for (MultipartFile file : fileList) {
 			UUID uid = UUID.randomUUID();
 			String strFileName = file.getOriginalFilename();
@@ -102,16 +106,33 @@ public class UploadController {
 			userInfoList.add(strContent);
 			userInfoList.add(strTag);
 			userInfoList.add(strPublicRange);
-			
+			sb.append(strFileName).append(",");
 			fileUploadService.createFileData(userInfoList);
-			model.addAttribute("savedImageName", strFileName);
 		}
-		return "imageFileUploadResult";
+		//redirect	
+		strUploadFileNames = sb.toString();
+		if(strUploadFileNames.length() > 0 ) {
+			strUploadFileNames = strUploadFileNames.substring(0,strUploadFileNames.length()-1);
+		}
+		
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl(req.getContextPath()+"/move/imageFileUploadResult");
+		mav.setView(redirectView);
+		mav.addObject("username", strUsername);
+		mav.addObject("uploadFileNames", strUploadFileNames);
+		return mav;
 	}
 	
 	@RequestMapping(value = "/move/imageFileUpload")
 	public String moveUpload(Model model, @RequestParam("username") String username) {
 		model.addAttribute("username", username);
 		return "imageFileUpload";
+	}
+	
+	@RequestMapping(value = "/move/imageFileUploadResult")
+	public String moveUploadResult(Model model, @RequestParam("uploadFileNames") String uploadFileNames, @RequestParam("username") String username) {
+		model.addAttribute("username", username);
+		model.addAttribute("uploadFileNames", uploadFileNames);
+		return "imageFileUploadResult";
 	}
 }
