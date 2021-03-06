@@ -9,6 +9,7 @@
 	href="<c:url value="/resources/assets/css/imageView.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
+<link rel="icon" href="<c:url value="/favicon.ico"/>">
 <style>
 </style>
 <meta charset="UTF-8">
