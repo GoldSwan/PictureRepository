@@ -11,7 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="resources/assets/css/main.css" />
 <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css" />
-<link rel="icon" href="<c:url value="/favicon.ico"/>">
+<link rel="icon" href="resources/images/favicon.ico"> 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
 	<!-- Wrapper -->
@@ -19,37 +20,37 @@
 		<!-- Header -->
 		<header id="header">
 			<div class="container">
-					<c:if test="${pageContext.request.userPrincipal.name != null }">
-							<div style = "text-align:center">
-								<form class="form-inline" method="get"
+					<c:if test="${pageContext.request.userPrincipal.name != null }">					
+									<nav id = "headerNav">
+										<ul class="nav-links">
+											<li><a href= "javascript:document.getElementById('logout').submit()">로그아웃</a></li>		
+											<li><a href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">업로드</a></li>	
+											<li><a href= "#none">${pageContext.request.userPrincipal.name}</a></li>	
+										</ul>
+										    <div class="burger">
+        										<div class="line1"></div>
+        										<div class="line2"></div>
+        										<div class="line3"></div>
+      										</div>
+									 </nav>				
+								<div style = "text-align:center;display:inline-block;width:100%;">
+								<form class="" method="get"
 									action="<c:url value="/search" />">
-									<input id = "search" class="form-control mr-sm-2 search-input" type="search"
-										placeholder="검색" value="${search}" name="search" style="width:85%;">
-									<input type="hidden" name="page" value='1'>	​​​​​​​
-									<button class="btn btn-search my-2 my-sm-0" type="submit" style = "background-color:white">
-										<i class="fa fa-search"></i>
-									</button>
-								</form>
+											<input id = "search" class="form-control" type="search" placeholder="검색" value="${search}" name="search" style = "display:inline-block;width:80%">
+											<input type="hidden" name="page" value='1'>	​​​​​​​
+											<button class="btn btn-search my-2" type="submit" style = "background-color:white">
+												<i class="fa fa-search"></i>
+											</button>
+								</form>	
+								</div>								
 								<form id="logout" action="<c:url value="/logout" />"
-									method="post" style = "margin:0 0 0 0;height:0">
-									<input type="hidden" name="${_csrf.parameterName }"
-										value="${_csrf.token }" /> ​​​​​​​
-								</form>
-							</div>
-							<div style = "text-align:right">
-								<a class="btn btn-lg btn-primary" style = "width:115px" href= "javascript:document.getElementById('logout').submit()">로그아웃</a>
-								<a class="btn btn-lg btn-primary" style = "width:115px" href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">업로드</a>
-								<a class="btn btn-lg btn-primary" style = "width:115px" href="javascript:document.getElementById('btnLoginUserInfo').onclick()">${pageContext.request.userPrincipal.name}</a>	
-								<button id = 'btnLoginUserInfo' onclick="openLoginUserPopup()" style = "display:none"></button>
-							</div>			
+										method="post" style = "margin:0 0 0 0;height:0">
+										<input type="hidden" name="${_csrf.parameterName }"
+											value="${_csrf.token }" /> ​​​​​​​
+								</form>																
+						 
 					</c:if>
 			</div>
-			<span class="avatar"><img src="resources/images/avatar.jpg"
-				alt="" /></span>
- 			<h1>
-				<strong>원하는 사진을 검색하세요!</strong><br/>
-				<strong>자신만의 개성있는 사진을 올려보세요!</strong>
-			</h1>
 			<ul class="icons">
 				<li><a href="#" class="icon style2 fa-twitter"><span
 						class="label">Twitter</span></a></li>
@@ -73,18 +74,9 @@
 					</c:if>
 			</section>
 		</section>
-		<!-- nav -->
-		<nav id = "nav" aria-label="Page navigation example">
- 			<ul id = "nav_ul" class="pagination">
-			</ul> 
-		</nav>
 		<!-- Footer -->
-		<footer id="footer">
-			<p>
-				&copy; Untitled. All rights reserved. Design: <a
-					href="http://templated.co">TEMPLATED</a>. Demo Images: <a
-					href="http://unsplash.com">Unsplash</a>.
-			</p>
+ 		<footer id="footer">
+ 			<p>Picture Repository</p>
 		</footer>
 
 	</div>
@@ -96,8 +88,50 @@
 	<script>
 	var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>';
 	var imageLikeMap = new Map();//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
-	console.log(jsonParam);
-	window.addEventListener('DOMContentLoaded', ()=>{		
+	const burger = document.querySelector(".burger");
+	const nav = document.querySelector(".nav-links");
+	const navlinks = document.querySelectorAll(".nav-links li");
+	const navAnimation = () => {
+		  navlinks.forEach((link, index) => {
+		    if (link.style.animation) {
+		      link.style.animation = "";
+		    } else {
+		      link.style.animation = `navLinkFade 0.5s ease forwards ${
+		        index / 7 + 0.5
+		      }s`;
+		    }
+		  });
+		};
+		const handleNav = () => {
+		  nav.classList.toggle("nav-active");
+		  navAnimation();
+		  burger.classList.toggle("toggle");
+		};
+		const navSlide = () => {
+		  burger.addEventListener("click", handleNav);
+		};
+
+		const setNavTransition = (width) => {
+		  if (width > 768) {
+		    nav.style.transition = "";
+		  } else {
+		    nav.style.transition = "transform 0.5s ease-in";
+		  }
+		};
+
+		const handleResize = () => {
+		  const width = event.target.innerWidth;
+		  setNavTransition(width);
+		};
+
+		const init = () => {
+		  window.addEventListener("resize", handleResize);
+		  navSlide();
+		};
+
+		init();   
+		
+	window.addEventListener('DOMContentLoaded', function(){		
 		if(jsonParam=='')
 			return;
 		
@@ -105,11 +139,11 @@
 		if(jsonParam!=''){
 			jsonParam = JSON.parse(jsonParam);
 		}
-		
+	
 		loadImage();
 		loadPageLink();
 	});
-	
+		
 	function loadImage(){
 		var searchData = jsonParam.imageData;		
 		
@@ -234,10 +268,6 @@
 		var sendParam = "username=" + username + "&fileId=" + fileId;
 		xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		xhttp.send(sendParam);
-	}
-	
-	function openLoginUserPopup(){
-		window.open('${pageContext.request.contextPath}/loginUserinfoPopup', 'popup01', 'width=300, height=400, scrollbars= 0, toolbar=0, menubar=no, status=no,  location=no');
 	}
 	
 	</script>
