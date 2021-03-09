@@ -10,6 +10,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName }" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/assets/css/login.css"/>">
+<link rel="icon" href="<c:url value="/favicon.ico"/>">	
 <title>Login</title>
 </head>
 <body>
