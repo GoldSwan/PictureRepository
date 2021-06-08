@@ -38,7 +38,7 @@
 									action="<c:url value="/search" />">
 											<input id = "search" class="form-control" type="search" placeholder="검색" value="${search}" name="search" style = "display:inline-block;width:80%">
 											<input type="hidden" name="page" value='1'>	​​​​​​​
-											<button class="btn btn-search my-2" type="submit" style = "background-color:white">
+											<button class="btn btn-search my-2" type="submit" style = "background-color:white;margin-bottom:.8rem!important">
 												<i class="fa fa-search"></i>
 											</button>
 								</form>	
