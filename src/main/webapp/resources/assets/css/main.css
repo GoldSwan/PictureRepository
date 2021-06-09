@@ -2729,6 +2729,7 @@
     align-items: center;
     width: 50%;
     transform: translateX(100%);
+    z-index: 100;
   }
   .nav-links li {
     opacity: 0;
