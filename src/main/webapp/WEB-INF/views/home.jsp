@@ -51,7 +51,8 @@
 						 
 					</c:if>
 			</div>
-			<ul class="icons">
+			<!--
+ 			<ul class="icons">
 				<li><a href="#" class="icon style2 fa-twitter"><span
 						class="label">Twitter</span></a></li>
 				<li><a href="#" class="icon style2 fa-facebook"><span
@@ -62,7 +63,7 @@
 						class="label">500px</span></a></li>
 				<li><a href="#" class="icon style2 fa-envelope-o"><span
 						class="label">Email</span></a></li>
-			</ul>
+			</ul> -->
 		</header>
 
 		<!-- Main -->
