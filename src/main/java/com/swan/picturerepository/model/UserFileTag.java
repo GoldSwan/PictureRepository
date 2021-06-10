@@ -7,7 +7,7 @@ import javax.persistence.Id;
 @Entity
 public class UserFileTag {
 	@Id
-	@Column(length=36)
+	@Column(length=50)
 	private String fileId;
 	@Column(length=10)
 	private String tag;
