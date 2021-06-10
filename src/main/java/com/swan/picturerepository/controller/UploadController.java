@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,7 +94,8 @@ public class UploadController {
 		for (MultipartFile file : fileList) {
 			UUID uid = UUID.randomUUID();
 			String strFileName = file.getOriginalFilename();
-			String strFileId = uid.toString() + strFileName;
+			String strFileExtension = FilenameUtils.getExtension(strFileName);
+			String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
 			File imageFile = fileUploadService.uploadImageFile(imageUploadPath, strFileId, file.getBytes(), strFileName);
 			fileUploadService.uploadThumbnailFile(thumbnailUploadPath, strFileId, imageFile, strFileName);
 			
