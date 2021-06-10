@@ -18,11 +18,10 @@ import lombok.ToString;
 public class UserFileInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(length=20)
-	private String username;
-	@Id
-	@Column(length=36)
+	@Column(length=50)
 	private String fileId;
+	@Column(length=20)
+	private String username;	
 	@Column
 	private String fileName;
 	@Column
