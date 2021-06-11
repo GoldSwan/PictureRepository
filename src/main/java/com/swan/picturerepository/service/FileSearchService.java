@@ -14,9 +14,9 @@ public class FileSearchService {
 	List<UserFileInfo> fileList = null;
 	@Autowired UserFileInfoDAO userFileInfoDAO;
 	
-	public List<UserFileInfo> getSearchFileList(String strSearch) {		
+	public List<UserFileInfo> getSearchFileList(String strSearch, int page, int maxPage) {		
 		//List<UserFileInfo> fileList = userFileInfoDAO.selectFileName(strSearch);
-		List<UserFileInfo> fileList = (List<UserFileInfo>)userFileInfoDAO.selectFileNameByProcedure(strSearch);
+		List<UserFileInfo> fileList = (List<UserFileInfo>)userFileInfoDAO.selectFileNameByProcedure(strSearch, page, maxPage);
 		return fileList; 
 	}
 	

@@ -48,10 +48,10 @@ public class SearchController {
 			mv.setViewName("home");
 			return mv;
 		}
-		
-		fileList = fileSearchService.getSearchFileList(strSearch);
-		searchCnt = fileList.size();
-		maxPage = pageNavicationService.getMaxPage(searchCnt);
+		maxPage = pageNavicationService.getMAX_IMAGE_CNT();
+		fileList = fileSearchService.getSearchFileList(strSearch, page, maxPage);
+		searchCnt = fileList.size();	
+		//maxPage = pageNavicationService.getMaxPage(searchCnt);
 		startPage = pageNavicationService.getStartPage(page);
 		endPage =pageNavicationService.getEndPage(page, maxPage);	
 		isPreviousPage = pageNavicationService.getIsPreviousPage(startPage);		
@@ -61,14 +61,23 @@ public class SearchController {
 		
 		List<Map<String, String>> list = new ArrayList<>();
 
+		//2021-06-11 KSW : 페이징 처리된 데이터를 그대로 보여주는 것으로 수정
+		for(int i = 0; i<fileList.size();i++) {
+			Map<String, String> map = new HashMap<>();
+			map.put("image", fileList.get(i).getFileId());
+			map.put("like", fileList.get(i).getLikeFlag());
+			list.add(map);
+		}
 		//페이지별 16개씩만 짤라서 전송
+		//2021-06-11 KSW : 주석치리
+		/*
 		for(int i = dataIndex; i<dataMaxRange;i++) {
 			Map<String, String> map = new HashMap<>();
 			map.put("image", fileList.get(i).getFileId());
 			map.put("like", fileList.get(i).getLikeFlag());
 			list.add(map);
 		}	
-
+        */
 		if(searchCnt==0) {
 			mv.addObject("noData","검색된 데이터가 없습니다.");
 		}

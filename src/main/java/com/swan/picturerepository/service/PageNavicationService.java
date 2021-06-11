@@ -5,6 +5,11 @@ import org.springframework.stereotype.Service;
 
 import com.swan.picturerepository.property.ConstantProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Service
 public class PageNavicationService {
 	private int MAX_IMAGE_CNT;//페이지 당 있을 수 있는 MAX 이미지 수

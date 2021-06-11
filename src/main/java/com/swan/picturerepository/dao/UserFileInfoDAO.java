@@ -49,9 +49,11 @@ public class UserFileInfoDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<UserFileInfo> selectFileNameByProcedure(String strSearch) {
+	public List<UserFileInfo> selectFileNameByProcedure(String strSearch, int page, int maxPage) {
 		Map<String, Object> param = new HashMap<>();
-		param.put("SEARCH", strSearch);
+		param.put("search", strSearch);
+		param.put("pagesize", maxPage);
+		param.put("start", (page-1)*maxPage);
 		Map<String, Object> m = procReadAllSearchFile.execute(param);
 		return (List<UserFileInfo>)m.get("UserFileInfo");
 	}
