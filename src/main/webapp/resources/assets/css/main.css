@@ -2628,6 +2628,17 @@
 
 		}
 
+/* nav    */
+#nav{
+  text-align:center;
+}
+#nav ul{
+  display: inline-block;
+}
+#nav ul li{
+  display: inline-block;
+}
+
 /* Footer */
 #footer {
 		text-align: center;

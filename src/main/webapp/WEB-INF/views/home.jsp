@@ -75,6 +75,11 @@
 					</c:if>
 			</section>
 		</section>
+		<!-- nav -->
+		<nav id = "nav" aria-label="Page navigation example">
+ 			<ul id = "nav_ul" class="pagination">
+			</ul> 
+		</nav>		
 		<!-- Footer -->
  		<footer id="footer">
  			<p>Picture Repository</p>
