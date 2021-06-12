@@ -24,13 +24,16 @@ public class UserFileInfoDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall procReadAllSearchFile;
+	private SimpleJdbcCall procReadAllSearchFileCnt;
 	
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		procReadAllSearchFile = new SimpleJdbcCall(dataSource)
-				.withProcedureName("SEARCH_FILE")
+				.withProcedureName("USP_SEARCH_FILE")
 				.returningResultSet("UserFileInfo",BeanPropertyRowMapper.newInstance(UserFileInfo.class));
+		procReadAllSearchFileCnt = new SimpleJdbcCall(dataSource)
+				.withProcedureName("USP_SEARCH_FILE_CNT");	
 	}
 	
 	public List<UserFileInfo> selectFileName(String strSearch) {
@@ -49,13 +52,21 @@ public class UserFileInfoDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<UserFileInfo> selectFileNameByProcedure(String strSearch, int page, int maxPage) {
+	public List<UserFileInfo> selectFileNameByProcedure(String strSearch, int page, int maxImageCnt) {
 		Map<String, Object> param = new HashMap<>();
+		param.put("search_flg", "T");
 		param.put("search", strSearch);
-		param.put("pagesize", maxPage);
-		param.put("start", (page-1)*maxPage);
+		param.put("pagesize", maxImageCnt);
+		param.put("start", (page-1)*maxImageCnt);
 		Map<String, Object> m = procReadAllSearchFile.execute(param);
 		return (List<UserFileInfo>)m.get("UserFileInfo");
+	}
+	
+	public int selectFileCntByProcedure(String strSearch) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("search", strSearch);
+		Map<String, Object> m = procReadAllSearchFileCnt.execute(param);
+		return Integer.parseInt(m.get("out_cnt").toString());
 	}
 	
 	public List<UserFileInfo> selectFileId(String strFileId) {

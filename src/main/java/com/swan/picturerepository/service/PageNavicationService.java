@@ -41,12 +41,6 @@ public class PageNavicationService {
 	public int getMaxPage(int searchCnt) { 
 		return (int) Math.ceil((double) searchCnt / MAX_IMAGE_CNT); 
 	}
-	public int getDataIndex(int page) {
-		return MAX_IMAGE_CNT * (page-1); 
-	}
-	public int getDataMaxRange(int page, int searchCnt) {
-		return MAX_IMAGE_CNT * page <= searchCnt ? MAX_IMAGE_CNT * page : searchCnt;
-	}
 	public boolean getIsPreviousPage(int startPage) {
 		return startPage==1 ? false : true;
 	}

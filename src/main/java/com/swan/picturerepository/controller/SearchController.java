@@ -32,12 +32,11 @@ public class SearchController {
 		String strSearch = req.getParameter("search");
 		String strPage = req.getParameter("page");
 		int page = 0;
+		int maxImageCnt = 0;//한 페이지에 나올 수 있는 최대 이미지 갯수
 		int startPage = 0;//요청 page 기준으로 하단 네이게이션의 처음 순번의 페이지
 		int endPage = 0;//요청 page 기준으로 하단 네이게이션의  마지막 순번의 페이지
 		int maxPage = 0;//조회한 데이터의 마지막 페이지
 		int searchCnt = 0;//검색 데이터 갯수
-		int dataIndex = 0;
-		int dataMaxRange = 0;
 		boolean isPreviousPage = false;
 		boolean isNextPage = false;
 
@@ -48,16 +47,15 @@ public class SearchController {
 			mv.setViewName("home");
 			return mv;
 		}
-		maxPage = pageNavicationService.getMAX_IMAGE_CNT();
-		fileList = fileSearchService.getSearchFileList(strSearch, page, maxPage);
-		searchCnt = fileList.size();	
-		//maxPage = pageNavicationService.getMaxPage(searchCnt);
+		maxImageCnt = pageNavicationService.getMAX_IMAGE_CNT();
+		fileList = fileSearchService.getSearchFileList(strSearch, page, maxImageCnt);
+		//searchCnt = fileList.size();	
+		searchCnt = fileSearchService.getSearchFileCnt(strSearch);
+		maxPage = pageNavicationService.getMaxPage(searchCnt);
 		startPage = pageNavicationService.getStartPage(page);
 		endPage =pageNavicationService.getEndPage(page, maxPage);	
 		isPreviousPage = pageNavicationService.getIsPreviousPage(startPage);		
 		isNextPage = pageNavicationService.getIsNextPage(maxPage, endPage);
-		dataIndex = pageNavicationService.getDataIndex(page);
-		dataMaxRange = pageNavicationService.getDataMaxRange(page, searchCnt);
 		
 		List<Map<String, String>> list = new ArrayList<>();
 
