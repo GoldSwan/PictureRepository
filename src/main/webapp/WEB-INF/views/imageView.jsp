@@ -24,6 +24,7 @@
         	<div><span>제목 : <c:out value = "${title}"/></span></div>
         	<div><span>내용 : <c:out value = "${content}"/></span></div>
         	<div><span>태그 : <c:out value = "${tag}"/></span></div>
+        	<div><span>시간 : <c:out value = "${isrtDt}"/></span></div>
         </section>
 		<footer id="footer"> 
 		</footer>

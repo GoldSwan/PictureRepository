@@ -1,5 +1,6 @@
 package com.swan.picturerepository.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +24,12 @@ public class ImageViewController {
 	String strTitle = "";
 	String strContent = "";
 	String strTag = "";
+	String strIsrtDt = "";
 	@RequestMapping(value = "/move/imageView", method = {RequestMethod.GET})
 	public ModelAndView showImageView(HttpServletRequest req, Model model) {	
 		
 		ModelAndView mv = new ModelAndView();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		mv.setViewName("imageView");
 		strFileId = req.getParameter("fileId");	
 		strUsername = req.getParameter("username");
@@ -35,6 +38,7 @@ public class ImageViewController {
 			strTitle = fileList.get(0).getTitle();
 			strContent = fileList.get(0).getContent();
 			strTag = fileList.get(0).getTag();
+			strIsrtDt = sdf.format(fileList.get(0).getIsrtDt());
 		}
 		
 		mv.addObject("fileId",strFileId);
@@ -42,7 +46,7 @@ public class ImageViewController {
 		mv.addObject("title",strTitle);
 		mv.addObject("content",strContent);
 		mv.addObject("tag",strTag);
-		
+		mv.addObject("isrtDt",strIsrtDt);
 		return mv;
 	}
 }
