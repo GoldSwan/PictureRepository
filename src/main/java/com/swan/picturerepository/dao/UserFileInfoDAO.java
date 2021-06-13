@@ -2,8 +2,7 @@ package com.swan.picturerepository.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,17 +74,19 @@ public class UserFileInfoDAO {
 				new RowMapper<UserFileInfo>() {
 					@Override
 					public UserFileInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-						// TODO Auto-generated method stub						
+
 						UserFileInfo userFileInfo = new UserFileInfo();
+						Timestamp dtIsrtDt = Timestamp.valueOf(rs.getString("isrtDt"));
 						userFileInfo.setFileId(rs.getString("fileId"));
 						userFileInfo.setFileName(rs.getString("fileName"));
-						userFileInfo.setIsrtDt(LocalDate.parse(rs.getString("isrtDt"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")));
+						userFileInfo.setIsrtDt(dtIsrtDt);
 						userFileInfo.setLikeFlag(rs.getString("likeFlag"));
 						userFileInfo.setLikeCnt(rs.getLong("likeCnt"));
 						userFileInfo.setContent(rs.getString("content"));
 						userFileInfo.setTag(rs.getString("tag"));
 						userFileInfo.setTitle(rs.getString("title"));
-						return userFileInfo;
+						
+						return userFileInfo;											
 					}		
 		});
 	}
