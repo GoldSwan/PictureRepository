@@ -73,11 +73,23 @@
 		function changeFileStatus(file){
 			let totalFileSize = 0;
 			let browser=navigator.appName;
-			
+			let FileFilter = '/\.(jpeg|gif|png|jpg)$/i';
+			 
 	    	for(let iFile of file.files){
+	    		if(/\.(jpeg|gif|png|jpg)$/i.test(iFile.name) == false){
+	    			alert('jpeg, gif, png, jpg 이미지 확장자 파일만 업로드 가능합니다.');
+		    		file.value = '';
+		    		document.getElementById('fileStatusSpan').innerHTML = '';    			
+	    			return;
+	    		}
 	    		totalFileSize += iFile.size;
 	    	}
-	    		        
+	    	if(totalFileSize>50000000){//50MB까지 제한
+	    		alert('최대 업로드 용량을 초과했습니다.');
+	    		file.value = '';
+	    		document.getElementById('fileStatusSpan').innerHTML = '';
+	    		return;
+	    	}
 	        totalFileSize = Math.round(totalFileSize / 1024 / 1024 * 100) / 100 + 'MB';//소수점 2째 자리까지 나오도록 바이트(Byte) -> 메가바이트(MB) 변환 처리
 	        document.getElementById('fileStatusSpan').innerHTML = totalFileSize + ' / ' + file.files.length+'개';
 		}
