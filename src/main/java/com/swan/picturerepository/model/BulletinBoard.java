@@ -1,5 +1,6 @@
 package com.swan.picturerepository.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -16,7 +17,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class BulletinBoard {
+public class BulletinBoard implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long bulletinId;
