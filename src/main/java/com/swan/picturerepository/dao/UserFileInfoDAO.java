@@ -1,5 +1,7 @@
 package com.swan.picturerepository.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -12,8 +14,11 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 import com.swan.picturerepository.model.UserFileInfo;
@@ -91,13 +96,36 @@ public class UserFileInfoDAO {
 		});
 	}
 	
-	public boolean insertUserFileInfo(ArrayList<String> userInfoList) {
-	    
-		String sqlStatement = "insert into userfileinfo (username, fileId, fileName, isrtDt, title, content, tag, publicRange) values(?,?,?,SYSDATE(),?,?,?,?)";
-
+	public boolean insertUserFileInfo(final ArrayList<String> userInfoList) {	
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				// TODO Auto-generated method stub
+				String sqlStatement = "insert into bulletinboard (content, isrtDt, likeFlag, publicRange, title, username) values(?,SYSDATE(),?,?,?,?)";
+				/*
+				System.out.println(userInfoList.get(0));
+				System.out.println(userInfoList.get(1));
+				System.out.println(userInfoList.get(2));
+				System.out.println(userInfoList.get(3));
+				System.out.println(userInfoList.get(4));
+				*/
+				PreparedStatement pstmt = con.prepareStatement(sqlStatement, new String[] {"bulletinId"});
+				pstmt.setString(1, userInfoList.get(0));
+				pstmt.setString(2, userInfoList.get(1));
+				pstmt.setString(3, userInfoList.get(2));
+				pstmt.setString(4, userInfoList.get(3));
+				pstmt.setString(5, userInfoList.get(4));
+				return pstmt;
+			}}, keyHolder);
+		Number keyValue = keyHolder.getKey();
+		System.out.println("bulletinId:"+keyValue.longValue());
+		/*
 		return (jdbcTemplate.update(sqlStatement,
 				new Object[] { userInfoList.get(0), userInfoList.get(1), userInfoList.get(2), userInfoList.get(3), 
 							   userInfoList.get(4), userInfoList.get(5), userInfoList.get(6)}) == 1);
+		*/
+	    return true;
 	}
 	
 	public List<String> selectLikeFlag(String username, String fileId) {
