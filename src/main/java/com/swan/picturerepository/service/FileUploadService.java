@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import com.swan.picturerepository.dao.UserFileInfoDAO;
 
@@ -33,8 +34,8 @@ public class FileUploadService {
 		}
 	}
 	
-	//public void createFileData(String username, String fileId, String fileName) {
-	public void createFileData(ArrayList<String> userInfoList) {
-		userFileInfoDAO.insertUserFileInfo(userInfoList);
+	@Transactional
+	public void createFileData(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList) {
+		userFileInfoDAO.insertUserFileInfo(bulletinBoardInfoList, userFileInfoList);
 	}
 }

@@ -3,9 +3,13 @@ package com.swan.picturerepository.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,24 +22,13 @@ import lombok.ToString;
 public class UserFileInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
+	private Long bulletinId;
+	@Id
 	@Column(length=50)
 	private String fileId;
-	@Column(length=20)
-	private String username;	
-	@Column
-	private String fileName;
 	@Column
 	private Timestamp isrtDt;
-	@Column(length=1)
-	private String likeFlag;
-	@Column
-	private long likeCnt;
-	@Column(length=36)
-	private String title;
-	@Column(length=500)
-	private String content;
-	@Column
-	private String tag;
-	@Column(length=1)//A : all, C : Close
-	private String publicRange;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name ="bulletinId")
+	private BulletinBoard bulletinBoard;
 }

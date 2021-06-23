@@ -37,4 +37,6 @@ public class BulletinBoard implements Serializable {
 	private String username;		
 	@Column
 	private Timestamp isrtDt;
+	@Column(length=50)
+	private String representativeFileId;//대표 파일 아이디	
 }

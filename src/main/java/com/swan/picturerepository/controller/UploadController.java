@@ -29,45 +29,9 @@ public class UploadController {
 	@Resource(name = "thumbnailUploadPath")
 	private String thumbnailUploadPath;
 	@Autowired FileUploadService fileUploadService;
+	final ArrayList<String> bulletinBoardInfoList = new ArrayList<>();
+	final ArrayList<String> userFileInfoList = new ArrayList<>();
 	
-	@RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
-	public String uploadForm(Model model, HttpServletRequest req, @RequestParam("file") MultipartFile file) throws Exception {
-		 
-		String strUsername = req.getParameter("username");
-		String strTitle = req.getParameter("title");
-		String strContent = req.getParameter("content");
-		String strTag = req.getParameter("tag");
-		String strPublicRange = req.getParameter("publicRange");
-		
-		model.addAttribute("username", strUsername);
-		
-		if(file.isEmpty()) {
-			model.addAttribute("uploadErrorMsg", "선택한 파일이 없습니다.");
-			return "imageFileUpload";
-		}
-		
-		UUID uid = UUID.randomUUID();
-		String strFileName = file.getOriginalFilename();
-		String strFileId = uid.toString() + strFileName;
-		
-		ArrayList<String> userInfoList = new ArrayList<>();
-		
-		userInfoList.add(strUsername);
-		userInfoList.add(strFileId);
-		userInfoList.add(strFileName);
-		userInfoList.add(strTitle);
-		userInfoList.add(strContent);
-		userInfoList.add(strTag);
-		userInfoList.add(strPublicRange);
-		
-		File imageFile = fileUploadService.uploadImageFile(imageUploadPath, strFileId, file.getBytes(), strFileName);
-		fileUploadService.uploadThumbnailFile(thumbnailUploadPath, strFileId, imageFile, strFileName);
-		fileUploadService.createFileData(userInfoList);
-		model.addAttribute("savedImageName", strFileName);
-
-		return "imageFileUploadResult";
-	}
-
 	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
 	public ModelAndView uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
 		
@@ -83,6 +47,7 @@ public class UploadController {
 		model.addAttribute("content", strContent);
 		model.addAttribute("tag", strTag);
 		ModelAndView mav = new ModelAndView();
+		
 		for (MultipartFile file : fileList) {
 			if (file.isEmpty()) {
 				model.addAttribute("uploadMultiErrorMsg", "선택한 파일이 없습니다.");
@@ -91,26 +56,27 @@ public class UploadController {
 			}
 		}
 		
-		for (MultipartFile file : fileList) {
+		bulletinBoardInfoList.add(0, strContent);
+		bulletinBoardInfoList.add(1, "N");
+		bulletinBoardInfoList.add(2, strPublicRange);
+		bulletinBoardInfoList.add(3, strTitle);
+		bulletinBoardInfoList.add(4, strUsername);
+
+		for (int i = 0 ; i < fileList.size() ; i++) {
 			UUID uid = UUID.randomUUID();
-			String strFileName = file.getOriginalFilename();
+			String strFileName = fileList.get(i).getOriginalFilename();
 			String strFileExtension = FilenameUtils.getExtension(strFileName);
 			String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
-			File imageFile = fileUploadService.uploadImageFile(imageUploadPath, strFileId, file.getBytes(), strFileName);
+			File imageFile = fileUploadService.uploadImageFile(imageUploadPath, strFileId, fileList.get(i).getBytes(), strFileName);
 			fileUploadService.uploadThumbnailFile(thumbnailUploadPath, strFileId, imageFile, strFileName);
 			
-			ArrayList<String> userInfoList = new ArrayList<>();
+			userFileInfoList.add(i,strFileId);		
 			
-			userInfoList.add(strUsername);
-			userInfoList.add(strFileId);
-			userInfoList.add(strFileName);
-			userInfoList.add(strTitle);
-			userInfoList.add(strContent);
-			userInfoList.add(strTag);
-			userInfoList.add(strPublicRange);
 			sb.append(strFileName).append(",");
-			fileUploadService.createFileData(userInfoList);
 		}
+		
+		fileUploadService.createFileData(bulletinBoardInfoList, userFileInfoList);
+		
 		//redirect	
 		strUploadFileNames = sb.toString();
 		if(strUploadFileNames.length() > 0 ) {

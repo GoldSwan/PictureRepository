@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
-import com.swan.picturerepository.model.UserFileInfo;
+import com.swan.picturerepository.model.BulletinBoard;
 import com.swan.picturerepository.service.FileSearchService;
 import com.swan.picturerepository.service.PageNavicationService;
 
@@ -24,7 +24,7 @@ public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
 	@Autowired private PageNavicationService pageNavicationService;
-	List<UserFileInfo> fileList = null;
+	List<BulletinBoard> boardList = null;
 	
 	@RequestMapping(value = "/search", method = {RequestMethod.GET})
 	public ModelAndView doSearch(HttpServletRequest req) throws JsonProcessingException {	
@@ -48,7 +48,7 @@ public class SearchController {
 			return mv;
 		}
 		maxImageCnt = pageNavicationService.getMAX_IMAGE_CNT();
-		fileList = fileSearchService.getSearchFileList(strSearch, page, maxImageCnt);
+		boardList = fileSearchService.getSearchBoardList(strSearch, maxPage, maxImageCnt);
 		//searchCnt = fileList.size();	
 		searchCnt = fileSearchService.getSearchFileCnt(strSearch);
 		maxPage = pageNavicationService.getMaxPage(searchCnt);
@@ -60,10 +60,10 @@ public class SearchController {
 		List<Map<String, String>> list = new ArrayList<>();
 
 		//2021-06-11 KSW : 페이징 처리된 데이터를 그대로 보여주는 것으로 수정
-		for(int i = 0; i<fileList.size();i++) {
+		for(int i = 0; i<boardList.size();i++) {
 			Map<String, String> map = new HashMap<>();
-			map.put("image", fileList.get(i).getFileId());
-			map.put("like", fileList.get(i).getLikeFlag());
+			map.put("image", boardList.get(i).getRepresentativeFileId());
+			map.put("like", boardList.get(i).getLikeFlag());
 			list.add(map);
 		}
 		//페이지별 16개씩만 짤라서 전송

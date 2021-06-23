@@ -35,9 +35,12 @@ public class ImageViewController {
 		strUsername = req.getParameter("username");
 		fileList = fileSearchService.getSearchFileListByFileId(strFileId);	
 		if(fileList!=null && fileList.size()>0) {
-			strTitle = fileList.get(0).getTitle();
-			strContent = fileList.get(0).getContent();
-			strTag = fileList.get(0).getTag();
+			//strTitle = fileList.get(0).getTitle();
+			//strContent = fileList.get(0).getContent();
+			//strTag = fileList.get(0).getTag();
+			strTitle = "";
+			strContent = "";
+			strTag = "";
 			strIsrtDt = sdf.format(fileList.get(0).getIsrtDt());
 		}
 		

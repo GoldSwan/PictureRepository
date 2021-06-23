@@ -21,6 +21,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
+
+import com.swan.picturerepository.model.BulletinBoard;
 import com.swan.picturerepository.model.UserFileInfo;
 
 @Repository
@@ -35,11 +37,12 @@ public class UserFileInfoDAO {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		procReadAllSearchFile = new SimpleJdbcCall(dataSource)
 				.withProcedureName("USP_SEARCH_FILE")
-				.returningResultSet("UserFileInfo",BeanPropertyRowMapper.newInstance(UserFileInfo.class));
+				.returningResultSet("BulletinBoard",BeanPropertyRowMapper.newInstance(BulletinBoard.class));
 		procReadAllSearchFileCnt = new SimpleJdbcCall(dataSource)
 				.withProcedureName("USP_SEARCH_FILE_CNT");	
 	}
 	
+	/*
 	public List<UserFileInfo> selectFileName(String strSearch) {
 		String sqlStatement = "SELECT fileId, likeFlag FROM userFileInfo WHERE fileName LIKE CONCAT('%', (?),'%')";
 		 return jdbcTemplate.query(sqlStatement, new Object[] {strSearch}, 
@@ -49,21 +52,22 @@ public class UserFileInfoDAO {
 						// TODO Auto-generated method stub						
 						UserFileInfo userFileInfo = new UserFileInfo();
 						userFileInfo.setFileId(rs.getString("fileId"));
-						userFileInfo.setLikeFlag(rs.getString("likeFlag"));
+						//userFileInfo.setLikeFlag(rs.getString("likeFlag"));
 						return userFileInfo;
 					}		
 		});
 	}
+	*/
 	
 	@SuppressWarnings("unchecked")
-	public List<UserFileInfo> selectFileNameByProcedure(String strSearch, int page, int maxImageCnt) {
+	public List<BulletinBoard> selectBoardByProcedure(String strSearch, int page, int maxImageCnt) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("search_flg", "T");
 		param.put("search", strSearch);
 		param.put("pagesize", maxImageCnt);
 		param.put("start", (page-1)*maxImageCnt);
 		Map<String, Object> m = procReadAllSearchFile.execute(param);
-		return (List<UserFileInfo>)m.get("UserFileInfo");
+		return (List<BulletinBoard>)m.get("BulletinBoard");
 	}
 	
 	public int selectFileCntByProcedure(String strSearch) {
@@ -83,53 +87,54 @@ public class UserFileInfoDAO {
 						UserFileInfo userFileInfo = new UserFileInfo();
 						Timestamp dtIsrtDt = Timestamp.valueOf(rs.getString("isrtDt"));
 						userFileInfo.setFileId(rs.getString("fileId"));
-						userFileInfo.setFileName(rs.getString("fileName"));
+						//userFileInfo.setFileName(rs.getString("fileName"));
 						userFileInfo.setIsrtDt(dtIsrtDt);
-						userFileInfo.setLikeFlag(rs.getString("likeFlag"));
-						userFileInfo.setLikeCnt(rs.getLong("likeCnt"));
-						userFileInfo.setContent(rs.getString("content"));
-						userFileInfo.setTag(rs.getString("tag"));
-						userFileInfo.setTitle(rs.getString("title"));
+						//userFileInfo.setLikeFlag(rs.getString("likeFlag"));
+						//userFileInfo.setLikeCnt(rs.getLong("likeCnt"));
+						//userFileInfo.setContent(rs.getString("content"));
+						//userFileInfo.setTag(rs.getString("tag"));
+						//userFileInfo.setTitle(rs.getString("title"));
 						
 						return userFileInfo;											
 					}		
 		});
 	}
 	
-	public boolean insertUserFileInfo(final ArrayList<String> userInfoList) {	
+	public boolean insertUserFileInfo(final ArrayList<String> bulletinBoardInfoList, final ArrayList<String> userFileInfoList) {	
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		jdbcTemplate.update(new PreparedStatementCreator() {
+		if(jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				// TODO Auto-generated method stub
-				String sqlStatement = "insert into bulletinboard (content, isrtDt, likeFlag, publicRange, title, username) values(?,SYSDATE(),?,?,?,?)";
-				/*
-				System.out.println(userInfoList.get(0));
-				System.out.println(userInfoList.get(1));
-				System.out.println(userInfoList.get(2));
-				System.out.println(userInfoList.get(3));
-				System.out.println(userInfoList.get(4));
-				*/
+				String sqlStatement = "insert into bulletinboard (content, isrtDt, likeFlag, publicRange, title, username, representativeFileId) values(?,SYSDATE(),?,?,?,?,?)";
+
 				PreparedStatement pstmt = con.prepareStatement(sqlStatement, new String[] {"bulletinId"});
-				pstmt.setString(1, userInfoList.get(0));
-				pstmt.setString(2, userInfoList.get(1));
-				pstmt.setString(3, userInfoList.get(2));
-				pstmt.setString(4, userInfoList.get(3));
-				pstmt.setString(5, userInfoList.get(4));
+
+				pstmt.setString(1, bulletinBoardInfoList.get(0));
+				pstmt.setString(2, bulletinBoardInfoList.get(1));
+				pstmt.setString(3, bulletinBoardInfoList.get(2));
+				pstmt.setString(4, bulletinBoardInfoList.get(3));
+				pstmt.setString(5, bulletinBoardInfoList.get(4));
+				pstmt.setString(6, userFileInfoList.get(0));
 				return pstmt;
-			}}, keyHolder);
-		Number keyValue = keyHolder.getKey();
-		System.out.println("bulletinId:"+keyValue.longValue());
-		/*
-		return (jdbcTemplate.update(sqlStatement,
-				new Object[] { userInfoList.get(0), userInfoList.get(1), userInfoList.get(2), userInfoList.get(3), 
-							   userInfoList.get(4), userInfoList.get(5), userInfoList.get(6)}) == 1);
-		*/
-	    return true;
+			}}, keyHolder)!=1)
+			return false;
+		
+		String strBulletinId = keyHolder.getKey().toString();
+		
+		String sqlStatement = "insert into UserFileInfo (bulletinId, fileId, isrtDt) values(?, ?, SYSDATE())";
+
+		for(String strFileId : userFileInfoList) {
+			if(!(jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId, strFileId }) == 1)) {
+				return false;
+			}
+		}
+	
+		return true;
 	}
 	
 	public List<String> selectLikeFlag(String username, String fileId) {
-		String sqlStatement = "select likeFlag from userFileInfo where username = ? and fileId = ?";
+		String sqlStatement = "select likeFlag from bulletinboard where username = ? and representativeFileId = ?";
 		 
 		return jdbcTemplate.query(sqlStatement, new Object[] {username, fileId}, 
 					new RowMapper<String>() {
@@ -141,7 +146,7 @@ public class UserFileInfoDAO {
 	}
 	
 	public boolean updateLikeFlag(String username, String fileId) {
-		String sqlStatement = "update userfileinfo set likeFlag = case when likeFlag='Y' THEN 'N' ELSE 'Y' END where username = ? and fileId = ?";
+		String sqlStatement = "update bulletinboard set likeFlag = case when likeFlag='Y' THEN 'N' ELSE 'Y' END where username = ? and representativeFileId = ?";
 
 		return (jdbcTemplate.update(sqlStatement,
 				new Object[] { username, fileId }) == 1);
