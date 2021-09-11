@@ -54,7 +54,9 @@
 			<h3>사진을 업로드 할 수 있습니다.</h3>
 		</header>
 		<form id="uploadForm" action="<c:url value="/uploadForm/multi" />"
-			method="post" enctype="multipart/form-data" onsubmit="return false">
+			method="post" enctype="multipart/form-data">
+<%-- 		<form id="uploadForm" action="<c:url value="/uploadForm/multi" />"
+			method="post" enctype="multipart/form-data" onsubmit="return false"> --%>
 			<!-- <div class="form-group"> -->
 			<section id="uploadSection">
 				<div>
