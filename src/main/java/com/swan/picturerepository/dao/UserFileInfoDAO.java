@@ -77,9 +77,12 @@ public class UserFileInfoDAO {
 		return Integer.parseInt(m.get("out_cnt").toString());
 	}
 	
-	public List<UserFileInfo> selectFileId(String strFileId) {
-		String sqlStatement = "SELECT fileId, fileName, isrtDt, likeFlag, likeCnt, content, tag, title FROM userFileInfo WHERE fileId = (?)";
-		 return jdbcTemplate.query(sqlStatement, new Object[] {strFileId}, 
+	public List<UserFileInfo> selectFileId(String strbulletinId) {
+		String sqlStatement = "SELECT b.fileId, a.title, a.isrtDt"
+				+ " FROM bulletinboard a"
+				+ " inner join userfileinfo b on a.bulletinId = b.bulletinId"
+				+ " WHERE a.bulletinId = (?)";
+		 return jdbcTemplate.query(sqlStatement, new Object[] {strbulletinId}, 
 				new RowMapper<UserFileInfo>() {
 					@Override
 					public UserFileInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
