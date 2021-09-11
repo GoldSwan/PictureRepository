@@ -48,7 +48,7 @@ public class SearchController {
 			return mv;
 		}
 		maxImageCnt = pageNavicationService.getMAX_IMAGE_CNT();
-		boardList = fileSearchService.getSearchBoardList(strSearch, maxPage, maxImageCnt);
+		boardList = fileSearchService.getSearchBoardList(strSearch, page, maxImageCnt);
 		//searchCnt = fileList.size();	
 		searchCnt = fileSearchService.getSearchFileCnt(strSearch);
 		maxPage = pageNavicationService.getMaxPage(searchCnt);
@@ -62,6 +62,7 @@ public class SearchController {
 		//2021-06-11 KSW : 페이징 처리된 데이터를 그대로 보여주는 것으로 수정
 		for(int i = 0; i<boardList.size();i++) {
 			Map<String, String> map = new HashMap<>();
+			map.put("bulletinId", boardList.get(i).getBulletinId().toString());//2021-09-11 KSW : 게시판 ID(bulletinId) 추가
 			map.put("image", boardList.get(i).getRepresentativeFileId());
 			map.put("like", boardList.get(i).getLikeFlag());
 			list.add(map);

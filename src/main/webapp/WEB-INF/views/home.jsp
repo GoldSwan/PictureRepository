@@ -169,7 +169,8 @@
 			var dynamic_img = document.createElement('img');
 			var dynamic_btn = document.createElement('button');
 			var dynamic_i = document.createElement('i');
-			var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?fileId='+searchData[i].image+'&username=${pageContext.request.userPrincipal.name}';
+			//var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?fileId='+searchData[i].image+'&username=${pageContext.request.userPrincipal.name}';
+			var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?bulletinId='+searchData[i].bulletinId+'&username=${pageContext.request.userPrincipal.name}';
 			console.log("imageViewURL:"+imageViewURL);
 			dynamic_i.style.color = (searchData[i].like == 'Y') ? 'red' : 'black';
 			dynamic_i.style.fontSize = '30px';

@@ -21,9 +21,9 @@ public class FileSearchService {
 		return fileList; 
 	}
 	
-	public List<UserFileInfo> getSearchFileListByFileId(String strFileId) {	
+	public List<UserFileInfo> getSearchFileListByFileId(String strbulletinId) {	
 		
-		List<UserFileInfo> fileList = userFileInfoDAO.selectFileId(strFileId);
+		List<UserFileInfo> fileList = userFileInfoDAO.selectFileId(strbulletinId);
 		
 		return fileList; 
 	}
