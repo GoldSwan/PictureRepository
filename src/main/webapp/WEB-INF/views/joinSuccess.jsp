@@ -10,7 +10,8 @@
 <meta name="_csrf_header" content="${_csrf.headerName }" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/assets/css/joinSuccess.css"/>">
-<link rel="icon" href="<c:url value="/favicon.ico"/>">	
+<link rel="icon"
+	href="<c:url value="/resources/images/favicon.ico"/>" />
 <title>Join</title>
 </head>
 <body>

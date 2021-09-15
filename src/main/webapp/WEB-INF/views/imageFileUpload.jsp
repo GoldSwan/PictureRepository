@@ -8,7 +8,8 @@
 	href="<c:url value="/resources/assets/css/imageFileUpload.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
-<link rel="icon" href="<c:url value="/favicon.ico"/>">
+<link rel="icon"
+	href="<c:url value="/resources/images/favicon.ico"/>" />
 <style>
 .badge:before{
 	content: "#"

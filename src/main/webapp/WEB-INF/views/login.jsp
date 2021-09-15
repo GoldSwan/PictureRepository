@@ -10,8 +10,8 @@
 <meta name="_csrf_header" content="${_csrf.headerName }" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/assets/css/login.css"/>">
-<%-- <link rel="icon" href="<c:url value="/favicon.ico"/>">	 --%>
-<link rel="icon" href="resources/images/favicon.ico"> 
+<link rel="icon"
+	href="<c:url value="/resources/images/favicon.ico"/>" />
 <title>Login</title>
 </head>
 <body>
