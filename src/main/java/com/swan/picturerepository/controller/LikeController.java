@@ -19,9 +19,9 @@ public class LikeController {
 	LikeService likeService;
 	
 	@RequestMapping(value = "/async-like.do", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String> updateLike(Model model, @RequestParam("username") String username, @RequestParam("fileId") String fileId) throws Exception {
+	public @ResponseBody Map<String, String> updateLike(Model model, @RequestParam("fileId") String fileId) throws Exception {
 		Map<String, String> map = new HashMap<>();
-		String likeFlag = likeService.updateLike(username, fileId);
+		String likeFlag = likeService.updateLike(fileId);
 		map.put("like", likeFlag);
 		
 		return map;

@@ -272,7 +272,8 @@
 				}
 			}
 		}
-		var sendParam = "username=" + username + "&fileId=" + fileId;
+		/* var sendParam = "username=" + username + "&fileId=" + fileId; */
+		sendParam = "fileId=" + fileId;
 		xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		xhttp.send(sendParam);
 	}

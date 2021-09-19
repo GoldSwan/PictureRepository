@@ -13,9 +13,9 @@ public class LikeService {
 	UserFileInfoDAO userFileInfoDAO;
 	List<String> likeList = null;
 	
-	public String updateLike(String username, String fileId) {
-		userFileInfoDAO.updateLikeFlag(username, fileId);
-		likeList =  userFileInfoDAO.selectLikeFlag(username, fileId);
+	public String updateLike(String fileId) {
+		userFileInfoDAO.updateLikeFlag(fileId);
+		likeList =  userFileInfoDAO.selectLikeFlag(fileId);
 		return likeList.size() > 0 ? likeList.get(0) : "N";
 	}
 }
