@@ -136,10 +136,10 @@ public class UserFileInfoDAO {
 		return true;
 	}
 	
-	public List<String> selectLikeFlag(String username, String fileId) {
-		String sqlStatement = "select likeFlag from bulletinboard where username = ? and representativeFileId = ?";
+	public List<String> selectLikeFlag(String fileId) {
+		String sqlStatement = "select likeFlag from bulletinboard where representativeFileId = ?";
 		 
-		return jdbcTemplate.query(sqlStatement, new Object[] {username, fileId}, 
+		return jdbcTemplate.query(sqlStatement, new Object[] { fileId }, 
 					new RowMapper<String>() {
 						@Override
 						public String mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -148,10 +148,10 @@ public class UserFileInfoDAO {
 			});
 	}
 	
-	public boolean updateLikeFlag(String username, String fileId) {
-		String sqlStatement = "update bulletinboard set likeFlag = case when likeFlag='Y' THEN 'N' ELSE 'Y' END where username = ? and representativeFileId = ?";
+	public boolean updateLikeFlag(String fileId) {
+		String sqlStatement = "update bulletinboard set likeFlag = case when likeFlag='Y' THEN 'N' ELSE 'Y' END where representativeFileId = ?";
 
 		return (jdbcTemplate.update(sqlStatement,
-				new Object[] { username, fileId }) == 1);
+				new Object[] { fileId }) == 1);
 	}
 }
