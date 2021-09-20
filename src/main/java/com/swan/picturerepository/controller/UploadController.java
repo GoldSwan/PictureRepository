@@ -28,6 +28,8 @@ public class UploadController {
 	private String imageUploadPath;
 	@Resource(name = "thumbnailUploadPath")
 	private String thumbnailUploadPath;
+	@Resource(name = "fullUploadPath")
+	private String fullUploadPath;
 	@Autowired FileUploadService fileUploadService;
 	final ArrayList<String> bulletinBoardInfoList = new ArrayList<>();
 	final ArrayList<String> userFileInfoList = new ArrayList<>();
@@ -69,7 +71,7 @@ public class UploadController {
 			String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
 			File imageFile = fileUploadService.uploadImageFile(imageUploadPath, strFileId, fileList.get(i).getBytes(), strFileName);
 			fileUploadService.uploadThumbnailFile(thumbnailUploadPath, strFileId, imageFile, strFileName);
-			
+			fileUploadService.uploadFullThumbnailFile(fullUploadPath, strFileId, imageFile, strFileName);
 			userFileInfoList.add(i,strFileId);		
 			
 			sb.append(strFileName).append(",");

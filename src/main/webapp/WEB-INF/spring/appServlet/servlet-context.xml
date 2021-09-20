@@ -32,12 +32,17 @@
 	</beans:bean>
 
 	<beans:bean id = "imageUploadPath" class="java.lang.String">
-	<beans:constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\fulls">
+	<beans:constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\originals">
 	</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id = "thumbnailUploadPath" class="java.lang.String">
 	<beans:constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\thumbs">
+	</beans:constructor-arg>
+	</beans:bean>
+	
+	<beans:bean id = "fullUploadPath" class="java.lang.String">
+	<beans:constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\fulls">
 	</beans:constructor-arg>
 	</beans:bean>
 	
