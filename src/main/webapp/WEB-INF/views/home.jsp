@@ -92,7 +92,9 @@
 	<script src="resources/assets/js/skel.min.js"></script>
 	<script src="resources/assets/js/main.js"></script>
 	<script>
-	var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>';
+	var jsonParam = '${searchDataMap}';
+	/* var jsonParam = '${searchDataMap}'; */
+	/* var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>'; */
 	var imageLikeMap = new Map();//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 	const burger = document.querySelector(".burger");
 	const nav = document.querySelector(".nav-links");

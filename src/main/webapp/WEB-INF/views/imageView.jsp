@@ -31,7 +31,8 @@
 		</footer>
 	</div>
 	<script>
-	var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>';
+	var jsonParam = '${searchDataMap}';
+	/* var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>'; */
 	window.addEventListener('DOMContentLoaded', function(){		
 		if(jsonParam=='')
 			return;
@@ -63,7 +64,7 @@
 			var dynamic_img = document.createElement('img');
 			var dynamic_btn = document.createElement('button');
 			var dynamic_i = document.createElement('i');
-			var imageViewURL = '#';
+			var imageViewURL = '${pageContext.request.contextPath}/resources/images/originals/'+searchData[i].image;
 			dynamic_i.style.color = 'red';
 			dynamic_i.style.fontSize = '30px';
 			dynamic_div_parent.setAttribute('id', 'div_parent_'+i);
@@ -72,7 +73,7 @@
 			dynamic_img.setAttribute('id', 'img_'+i);
 			dynamic_btn.setAttribute('id', 'btn_like_'+i);
 			dynamic_i.setAttribute('id', 'i_like_'+i);		
-			dynamic_img.setAttribute('src', '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image);
+			dynamic_img.setAttribute('src', '${pageContext.request.contextPath}/resources/images/fulls/'+searchData[i].image);
 			dynamic_btn.setAttribute('type', 'button');		
 			document.getElementById('div_'+divIndex).appendChild(dynamic_div_parent);
 			document.getElementById('div_parent_'+i).appendChild(dynamic_a);
@@ -86,6 +87,7 @@
 			document.getElementById('a_'+i).target = "_blank";
 			document.getElementById('a_'+i).rel = "noopener";
 			imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
+			
 		}
 	}
 	</script>
