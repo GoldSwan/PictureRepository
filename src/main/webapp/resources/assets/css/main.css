@@ -1447,7 +1447,7 @@
 	a {
 		color: inherit;
 		text-decoration: none;
-		border-bottom: dotted 1px rgba(255, 255, 255, 0.35);
+		/* border-bottom: dotted 1px rgba(255, 255, 255, 0.35); */
 		-moz-transition: border-bottom-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		-webkit-transition: border-bottom-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		-ms-transition: border-bottom-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -2670,13 +2670,13 @@
 
 #headerNav {
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
   /* 요소의 최소 너비 지정, height 속성 무시
     vh단위는 브라우저 안쪽 높이(window.innerHeight)을 기준으로
     설정된다. 하지만 태블릿이나, 모바일의 경우에는 뷰 포트에 따라
     맞춰짐*/
-  min-height: 8vh;
+  /*min-height: 8vh;*/
   background-color: #504954;
   font-family: "Poppins", sans-serif;
 }
@@ -2692,7 +2692,8 @@
 .nav-links {
   width: 40%;
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
+  margin-bottom: auto;
 }
 
 .nav-links li {
