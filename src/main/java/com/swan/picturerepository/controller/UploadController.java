@@ -2,7 +2,9 @@ package com.swan.picturerepository.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.google.gson.Gson;
 import com.swan.picturerepository.service.FileUploadService;
 
 @Controller
@@ -31,8 +34,6 @@ public class UploadController {
 	@Resource(name = "fullUploadPath")
 	private String fullUploadPath;
 	@Autowired FileUploadService fileUploadService;
-	final ArrayList<String> bulletinBoardInfoList = new ArrayList<>();
-	final ArrayList<String> userFileInfoList = new ArrayList<>();
 	
 	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
 	public ModelAndView uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
@@ -42,27 +43,25 @@ public class UploadController {
 		String strContent = req.getParameter("content");
 		String strTag = req.getParameter("tag");
 		String strPublicRange = req.getParameter("publicRange");
-		String strUploadFileNames = "";
-		StringBuffer sb = new StringBuffer();
-		model.addAttribute("username", strUsername);
-		model.addAttribute("title", strTitle);
-		model.addAttribute("content", strContent);
-		model.addAttribute("tag", strTag);
-		ModelAndView mav = new ModelAndView();
 		
-		for (MultipartFile file : fileList) {
-			if (file.isEmpty()) {
-				model.addAttribute("uploadMultiErrorMsg", "선택한 파일이 없습니다.");
-				mav.setViewName("imageFileUpload");				
-				return mav;
-			}
-		}
+		StringBuffer sb = new StringBuffer();
+		ModelAndView mv = new ModelAndView();
+		ArrayList<String> bulletinBoardInfoList = new ArrayList<>();	
+		ArrayList<String> userFileInfoList = new ArrayList<>();
 		
 		bulletinBoardInfoList.add(0, strContent);
 		bulletinBoardInfoList.add(1, "N");
 		bulletinBoardInfoList.add(2, strPublicRange);
 		bulletinBoardInfoList.add(3, strTitle);
 		bulletinBoardInfoList.add(4, strUsername);
+		
+		for (MultipartFile file : fileList) {
+			if (file.isEmpty()) {
+				model.addAttribute("uploadMultiErrorMsg", "선택한 파일이 없습니다.");
+				mv.setViewName("imageFileUpload");				
+				return mv;
+			}
+		}
 
 		for (int i = 0 ; i < fileList.size() ; i++) {
 			UUID uid = UUID.randomUUID();
@@ -79,18 +78,32 @@ public class UploadController {
 		
 		fileUploadService.createFileData(bulletinBoardInfoList, userFileInfoList);
 		
-		//redirect	
-		strUploadFileNames = sb.toString();
-		if(strUploadFileNames.length() > 0 ) {
-			strUploadFileNames = strUploadFileNames.substring(0,strUploadFileNames.length()-1);
+		//redirect : 사진 업로드가 완료되면  imageFileUploadResult 화면으로 이동
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl(req.getContextPath()+"/move/imageViewResult");
+		mv.setView(redirectView);
+		
+		List<Map<String, String>> list = new ArrayList<>();
+		Map<String, Object> searchDataMap = new HashMap<>();	
+		
+		
+		for(int i = 0; i<userFileInfoList.size();i++) {
+			Map<String, String> map = new HashMap<>();
+			map.put("image", userFileInfoList.get(i));
+			list.add(map);
 		}
 		
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(req.getContextPath()+"/move/imageFileUploadResult");
-		mav.setView(redirectView);
-		mav.addObject("username", strUsername);
-		mav.addObject("uploadFileNames", strUploadFileNames);
-		return mav;
+		searchDataMap.put("imageData", list);
+		String strSearchDataMap = new Gson().toJson(searchDataMap);
+		
+		mv.addObject("searchDataMap",strSearchDataMap);
+		mv.addObject("username",strUsername);
+		mv.addObject("title",strTitle);
+		mv.addObject("content",strContent);
+		mv.addObject("tag",strTag);
+		mv.addObject("publicRange",strPublicRange);
+		
+		return mv;
 	}
 	
 	@RequestMapping(value = "/move/imageFileUpload")

@@ -29,6 +29,7 @@ public class ImageViewController {
 	String strContent = "";
 	String strTag = "";
 	String strIsrtDt = "";
+	String strSearchDataMap = "";
 	@RequestMapping(value = "/move/imageView", method = {RequestMethod.GET})
 	public ModelAndView showImageView(HttpServletRequest req, Model model) {	
 		
@@ -57,7 +58,30 @@ public class ImageViewController {
 		
 		Map<String, Object> searchDataMap = new HashMap<>();	
 		searchDataMap.put("imageData", list);
-		String strSearchDataMap = new Gson().toJson(searchDataMap);
+		strSearchDataMap = new Gson().toJson(searchDataMap);
+		
+		mv.addObject("searchDataMap",strSearchDataMap);
+		mv.addObject("username",strUsername);
+		mv.addObject("title",strTitle);
+		mv.addObject("content",strContent);
+		mv.addObject("tag",strTag);
+		mv.addObject("isrtDt",strIsrtDt);
+		
+		return mv;
+	}
+	@RequestMapping(value = "/move/imageViewResult", method = {RequestMethod.GET})
+	public ModelAndView showImageViewResult(HttpServletRequest req, Model model) {	
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("imageView");
+		
+		strUsername = req.getParameter("username");
+		strSearchDataMap = req.getParameter("searchDataMap");
+		strTitle = req.getParameter("title");
+		strContent =  req.getParameter("content");
+		strTag =  req.getParameter("tag");
+		strIsrtDt = req.getParameter("isrtDt");
+		
 		mv.addObject("searchDataMap",strSearchDataMap);
 		mv.addObject("username",strUsername);
 		mv.addObject("title",strTitle);
@@ -65,5 +89,5 @@ public class ImageViewController {
 		mv.addObject("tag",strTag);
 		mv.addObject("isrtDt",strIsrtDt);
 		return mv;
-	}
+	}	
 }

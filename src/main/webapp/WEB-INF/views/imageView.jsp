@@ -86,7 +86,7 @@
 			document.getElementById('a_'+i).href = imageViewURL;
 			document.getElementById('a_'+i).target = "_blank";
 			document.getElementById('a_'+i).rel = "noopener";
-			imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
+			//imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 			
 		}
 	}
