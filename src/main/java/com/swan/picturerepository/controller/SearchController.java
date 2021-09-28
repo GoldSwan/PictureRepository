@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+//import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+//import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,18 +20,19 @@ import com.swan.picturerepository.model.BulletinBoard;
 import com.swan.picturerepository.service.FileSearchService;
 import com.swan.picturerepository.service.PageNavicationService;
 
-@Controller
+@RestController
+//@RequestMapping("/api")
 public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
 	@Autowired private PageNavicationService pageNavicationService;
 	List<BulletinBoard> boardList = null;
 	
-	@RequestMapping(value = "/search", method = {RequestMethod.GET})
-	public ModelAndView doSearch(HttpServletRequest req) throws JsonProcessingException {	
+	@RequestMapping(value = "/bulletinboards", method = {RequestMethod.GET})
+	public ModelAndView doSearchBulletinboards(@RequestParam("search") String strSearch, @RequestParam("page") String strPage) throws JsonProcessingException {	
 		ModelAndView mv = new ModelAndView();
-		String strSearch = req.getParameter("search");
-		String strPage = req.getParameter("page");
+		//String strSearch = req.getParameter("search");
+		//String strPage = req.getParameter("page");
 		int page = 0;
 		int maxImageCnt = 0;//한 페이지에 나올 수 있는 최대 이미지 갯수
 		int startPage = 0;//요청 page 기준으로 하단 네이게이션의 처음 순번의 페이지
