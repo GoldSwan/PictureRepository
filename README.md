@@ -101,7 +101,7 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
 |:---|:---|:---|
 |GET|/bulletinboards|게시글 전체 조회|
 |GET|/bulletinboards/{bulletinboardid}|특정 게시글 조회|
-|GET|/bulletinboards/{type}/{content}|항목별(제목, 제목+내용, 태그) 게시글 검색 조회|
+|GET|/bulletinboards/{searchtype}|타입별(제목, 제목+내용, 태그) 게시글 검색 조회|
 
 ## **사용 기술**
 
