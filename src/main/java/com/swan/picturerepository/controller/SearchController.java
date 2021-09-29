@@ -1,5 +1,6 @@
 package com.swan.picturerepository.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,28 +8,30 @@ import java.util.Map;
 
 //import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.swan.picturerepository.model.BulletinBoard;
+import com.swan.picturerepository.model.UserFileInfo;
 import com.swan.picturerepository.service.FileSearchService;
 import com.swan.picturerepository.service.PageNavicationService;
 
-@RestController
-//@RequestMapping("/api")
+@Controller
+@RequestMapping("/bulletinboards")
 public class SearchController {
 	
 	@Autowired private FileSearchService fileSearchService;
 	@Autowired private PageNavicationService pageNavicationService;
 	List<BulletinBoard> boardList = null;
 	
-	@RequestMapping(value = "/bulletinboards", method = {RequestMethod.GET})
+	@RequestMapping(value = "", method = {RequestMethod.GET})
 	public ModelAndView doSearchBulletinboards(@RequestParam("search") String strSearch, @RequestParam("page") String strPage) throws JsonProcessingException {	
 		ModelAndView mv = new ModelAndView();
 		//String strSearch = req.getParameter("search");
@@ -97,6 +100,51 @@ public class SearchController {
 		
 		mv.setViewName("home");
 		 
+		return mv;
+	}
+	
+	@RequestMapping(value = "/{bulletinId}", method = {RequestMethod.GET})
+	public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId, @RequestParam("username") String strUsername) {	
+		
+		List<UserFileInfo> fileList = null;
+		String strTitle = "";
+		String strContent = "";
+		String strTag = "";
+		String strIsrtDt = "";
+		String strSearchDataMap = "";
+		
+		ModelAndView mv = new ModelAndView();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		mv.setViewName("imageView");
+		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
+		List<Map<String, String>> list = new ArrayList<>();
+		if(fileList!=null && fileList.size()>0) {
+			//strTitle = fileList.get(0).getTitle();
+			//strContent = fileList.get(0).getContent();
+			//strTag = fileList.get(0).getTag();
+			strTitle = "";
+			strContent = "";
+			strTag = "";
+			strIsrtDt = sdf.format(fileList.get(0).getIsrtDt());			
+
+			for(int i = 0; i<fileList.size();i++) {
+				Map<String, String> map = new HashMap<>();				
+				map.put("image", fileList.get(i).getFileId());
+				list.add(map);
+			}
+		}
+		
+		Map<String, Object> searchDataMap = new HashMap<>();	
+		searchDataMap.put("imageData", list);
+		strSearchDataMap = new Gson().toJson(searchDataMap);
+		
+		mv.addObject("searchDataMap",strSearchDataMap);
+		mv.addObject("username",strUsername);
+		mv.addObject("title",strTitle);
+		mv.addObject("content",strContent);
+		mv.addObject("tag",strTag);
+		mv.addObject("isrtDt",strIsrtDt);
+		
 		return mv;
 	}
 

@@ -172,7 +172,8 @@
 			var dynamic_btn = document.createElement('button');
 			var dynamic_i = document.createElement('i');
 			//var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?fileId='+searchData[i].image+'&username=${pageContext.request.userPrincipal.name}';
-			var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?bulletinId='+searchData[i].bulletinId+'&username=${pageContext.request.userPrincipal.name}';
+			//var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?bulletinId='+searchData[i].bulletinId+'&username=${pageContext.request.userPrincipal.name}';
+			var imageViewURL = '${pageContext.request.contextPath}/bulletinboards/'+searchData[i].bulletinId+'/?username=${pageContext.request.userPrincipal.name}';
 			console.log("imageViewURL:"+imageViewURL);
 			dynamic_i.style.color = (searchData[i].like == 'Y') ? 'red' : 'black';
 			dynamic_i.style.fontSize = '30px';
@@ -184,7 +185,7 @@
 			dynamic_i.setAttribute('id', 'i_like_'+i);		
 			//dynamic_a.setAttribute('href', 'resources/images/fulls/'+searchData[i].image);
 			//dynamic_a.setAttribute('href', imageViewURL);//Image View 이동 추가
-			dynamic_img.setAttribute('src', 'resources/images/thumbs/'+searchData[i].image);
+			dynamic_img.setAttribute('src', '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image);
 			dynamic_btn.setAttribute('type', 'button');		
 			document.getElementById('div_'+divIndex).appendChild(dynamic_div_parent);
 			document.getElementById('div_parent_'+i).appendChild(dynamic_a);
