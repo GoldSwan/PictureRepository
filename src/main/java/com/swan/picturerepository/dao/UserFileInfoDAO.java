@@ -22,6 +22,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.model.BulletinBoard;
 import com.swan.picturerepository.model.UserFileInfo;
 
@@ -77,21 +78,30 @@ public class UserFileInfoDAO {
 		return Integer.parseInt(m.get("out_cnt").toString());
 	}
 	
-	public List<UserFileInfo> selectFileId(String strbulletinId) {
-		String sqlStatement = "SELECT b.fileId, a.title, a.isrtDt"
+	public List<UserFileInfoDTO> selectFileId(String strbulletinId) {
+		String sqlStatement = "SELECT b.fileId, a.title, a.isrtDt, a.username, a.content, a.likeCnt, a.likeFlag"
 				+ " FROM bulletinboard a"
 				+ " inner join userfileinfo b on a.bulletinId = b.bulletinId"
 				+ " WHERE a.bulletinId = (?)";
 		 return jdbcTemplate.query(sqlStatement, new Object[] {strbulletinId}, 
-				new RowMapper<UserFileInfo>() {
+				new RowMapper<UserFileInfoDTO>() {
 					@Override
-					public UserFileInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+					public UserFileInfoDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-						UserFileInfo userFileInfo = new UserFileInfo();
+						
 						Timestamp dtIsrtDt = Timestamp.valueOf(rs.getString("isrtDt"));
-						userFileInfo.setFileId(rs.getString("fileId"));
-						//userFileInfo.setFileName(rs.getString("fileName"));
-						userFileInfo.setIsrtDt(dtIsrtDt);
+						
+						UserFileInfoDTO userFileInfo = new UserFileInfoDTO.Builder(rs.getString("title")
+								        , dtIsrtDt.toString()
+								        , rs.getString("username")
+										, rs.getString("content")
+										, rs.getString("fileId")
+										, rs.getString("likeCnt")
+										, rs.getString("likeFlag")).build();
+						//Timestamp dtIsrtDt = Timestamp.valueOf(rs.getString("isrtDt"));
+						//userFileInfo.setFileId(rs.getString("fileId"));
+						//userFileInfo.set(rs.getString("fileName"));
+						//userFileInfo.setIsrtDt(dtIsrtDt);
 						//userFileInfo.setLikeFlag(rs.getString("likeFlag"));
 						//userFileInfo.setLikeCnt(rs.getLong("likeCnt"));
 						//userFileInfo.setContent(rs.getString("content"));

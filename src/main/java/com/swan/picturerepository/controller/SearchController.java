@@ -18,8 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
+import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.model.BulletinBoard;
-import com.swan.picturerepository.model.UserFileInfo;
 import com.swan.picturerepository.service.FileSearchService;
 import com.swan.picturerepository.service.PageNavicationService;
 
@@ -104,13 +104,16 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "/{bulletinId}", method = {RequestMethod.GET})
-	public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId, @RequestParam("username") String strUsername) {	
-		
-		List<UserFileInfo> fileList = null;
+	//public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId, @RequestParam("username") String strUsername) {	
+	public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId) {	
+		List<UserFileInfoDTO> fileList = null;
 		String strTitle = "";
-		String strContent = "";
-		String strTag = "";
 		String strIsrtDt = "";
+		String strUsername = "";
+		String strContent = "";
+		String strLikeCnt = "";
+		String strLikeFlag = "";
+		
 		String strSearchDataMap = "";
 		
 		ModelAndView mv = new ModelAndView();
@@ -119,13 +122,12 @@ public class SearchController {
 		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
 		List<Map<String, String>> list = new ArrayList<>();
 		if(fileList!=null && fileList.size()>0) {
-			//strTitle = fileList.get(0).getTitle();
-			//strContent = fileList.get(0).getContent();
-			//strTag = fileList.get(0).getTag();
-			strTitle = "";
-			strContent = "";
-			strTag = "";
-			strIsrtDt = sdf.format(fileList.get(0).getIsrtDt());			
+			strTitle = fileList.get(0).getTitle();
+			strIsrtDt = fileList.get(0).getIsrtDt();
+			strUsername = fileList.get(0).getUsername();
+			strContent = fileList.get(0).getContent();
+			strLikeCnt = fileList.get(0).getLikeCnt();
+			strLikeFlag = fileList.get(0).getLikeFlag();
 
 			for(int i = 0; i<fileList.size();i++) {
 				Map<String, String> map = new HashMap<>();				
@@ -139,11 +141,12 @@ public class SearchController {
 		strSearchDataMap = new Gson().toJson(searchDataMap);
 		
 		mv.addObject("searchDataMap",strSearchDataMap);
-		mv.addObject("username",strUsername);
 		mv.addObject("title",strTitle);
-		mv.addObject("content",strContent);
-		mv.addObject("tag",strTag);
 		mv.addObject("isrtDt",strIsrtDt);
+		mv.addObject("username",strUsername);
+		mv.addObject("content",strContent);
+		mv.addObject("likeCnt",strLikeCnt);
+		mv.addObject("likeFlag",strLikeFlag);
 		
 		return mv;
 	}

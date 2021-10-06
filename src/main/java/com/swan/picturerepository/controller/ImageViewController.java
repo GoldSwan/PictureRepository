@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.swan.picturerepository.model.UserFileInfo;
+import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.service.FileSearchService;
 
 @Controller
 public class ImageViewController {
 	@Autowired private FileSearchService fileSearchService;
-	List<UserFileInfo> fileList = null;
+	List<UserFileInfoDTO> fileList = null;
 	String strbulletinId = "";//2021-09-11 KSW : 게시판 ID(bulletinId) 추가
 	String strUsername = "";
 	String strTitle = "";

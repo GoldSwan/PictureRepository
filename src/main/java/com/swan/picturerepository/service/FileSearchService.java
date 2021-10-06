@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swan.picturerepository.dao.UserFileInfoDAO;
+import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.model.BulletinBoard;
-import com.swan.picturerepository.model.UserFileInfo;
 
 @Service
 public class FileSearchService {
 
-	List<UserFileInfo> fileList = null;
 	@Autowired UserFileInfoDAO userFileInfoDAO;
 	
 	public List<BulletinBoard> getSearchBoardList(String strSearch, int page, int maxImageCnt) {		
@@ -21,9 +20,9 @@ public class FileSearchService {
 		return fileList; 
 	}
 	
-	public List<UserFileInfo> getSearchFileListByFileId(String strbulletinId) {	
+	public List<UserFileInfoDTO> getSearchFileListByFileId(String strbulletinId) {	
 		
-		List<UserFileInfo> fileList = userFileInfoDAO.selectFileId(strbulletinId);
+		List<UserFileInfoDTO> fileList = userFileInfoDAO.selectFileId(strbulletinId);
 		
 		return fileList; 
 	}
