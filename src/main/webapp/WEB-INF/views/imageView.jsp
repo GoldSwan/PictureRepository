@@ -23,9 +23,11 @@
         <section id="imageSection">
         	<%-- <div><img alt="" src="${pageContext.request.contextPath}/resources/images/fulls/${fileId}"></div> --%>
         	<div><span>제목 : <c:out value = "${title}"/></span></div>
+        	<div><span>작성시간 : <c:out value = "${isrtDt}"/></span></div>
+        	<div><span>작성자 : <c:out value = "${username}"/></span></div>
         	<div><span>내용 : <c:out value = "${content}"/></span></div>
-        	<div><span>태그 : <c:out value = "${tag}"/></span></div>
-        	<div><span>시간 : <c:out value = "${isrtDt}"/></span></div>
+        	<div><span>좋아요 횟수 : <c:out value = "${likeCnt}"/></span></div>       	
+        	<div><span>좋아요 여부 : <c:out value = "${likeFlag}"/></span></div>
         </section>
 		<footer id="footer"> 
 		</footer>
