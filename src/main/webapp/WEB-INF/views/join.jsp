@@ -54,7 +54,7 @@
 								name="join" value="회원가입" tabindex="5" /></td>							
 						</tr>
 						<tr>
-							<td><a class="a-blue" href= "<c:url value="/move/login" />">로그인 화면 이동</a></td>
+							<td><a class="a-move-login" href= "<c:url value="/move/login" />">로그인 화면 이동</a></td>
 						</tr>						
 					</table>
 				</sf:form>

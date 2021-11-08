@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-	background-color: #000;
+	background-color: black;
 	background-image: url("../../images/bg.jpg");
 	background-size: cover;
 	background-position: top center;
@@ -17,7 +17,7 @@ body {
 }
 
 .intro_span {
-	color : #ffffff; 
+	color : white; 
 }
 
 .layer .layer_inner {
@@ -44,20 +44,20 @@ table {
 }
 
 .input_login {
-	font-size: 14px;
+	font-size: 15px;
 	border: 0px;
-	background: #ffffff;
+	background: white;
 	outline: none;
 	width: 300px;
 	height: 40px;
-	border-bottom: 1px solid #808080;
+	border-bottom: 1px solid silver;
 	ime-mode: disabled;
 	size: 25;
 	text-align: left;
 }
 
 .input_msg {
-	font-size: 14px;
+	font-size: 15px;
 	padding: 1 3 0 2;
 	border: 0px;
 	background: #ffffff;
@@ -67,14 +67,14 @@ table {
 }
 
 .Button-LOGIN {
-	background-color: #ffffff;
+	background-color:white;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
-	border: 2px solid #ea1e69;
+	border: 2px solid silver;
 	display: inline-block;
 	cursor: pointer;
-	color: #ea1e69;
+	color: black;
 	font-size: 15px;
 	font-weight: bold;
 	padding: 8px 24px;
@@ -85,14 +85,14 @@ table {
 }
 
 .a-JOIN {
-	background-color: #ffffff;
+	background-color: white;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
-	border: 2px solid #0080ff;
+	border: 2px solid silver;
 	display: inline-block;
 	cursor: pointer;
-	color: #0080ff;
+	color: black;
 	font-size: 15px;
 	font-weight: bold;
 	text-decoration: none;
@@ -103,7 +103,7 @@ table {
 }
 
 .Button-LOGIN:hover {
-	background-color: #ea1e69;
+	background-color: silver;
 	color: white;
 }
 
@@ -112,26 +112,24 @@ table {
 	top: 1px;
 }
 
-.Button-JOIN:hover {
-	background-color: #0080ff;
+.a-JOIN:hover {
+	background-color: silver;
 	color: white;
 }
 
-.Button-JOIN:active {
+.a-JOIN:active {
 	position: relative;
 	top: 1px;
 }
 
 .error {
-	font-size: 0.8em;
+	font-size: 15px;
 	color: red;
-	width: 300px;
 	text-align: center;
 }
 
 .logout {
-	font-size: 0.8em;
+	font-size: 15px;
 	color: blue;
-	width: 300px;
 	text-align: center;
 }

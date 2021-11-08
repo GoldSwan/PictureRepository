@@ -26,15 +26,15 @@
 							<td></td>
 						</tr>
 						<tr>
-							<td><h3>
-									<span class="intro_span">나의 사진 저장소에 오신것을 환영합니다!</span>
-								</h3></td>
+							<td><h1>
+									<span class="intro_span">Picture Repository</span>
+								</h1></td>
 						</tr>
 						<tr>
 							<td><h3>
-									<span class="intro_span">언제 어디서든 나만의 사진을 접해보세요!!</span>
+									<span class="intro_span">언제 어디서든 사진을 불러올 수 있는 사진 저장소 플랫폼입니다.</span>
 								</h3></td>
-						</tr>
+						</tr>						
 						<tr>
 							<td><input class="input_login" placeholder="아이디"
 								maxLength="20" type="text" id="username" name="username"

@@ -2641,9 +2641,9 @@
 
 /* Footer */
 #footer {
-		text-align: center;
-		padding: 4em 0 4em 0;
-	}
+	text-align: center;
+	padding: 4em 0 4em 0;
+}
 
 		#footer:before {
 			content: '';
@@ -2661,6 +2661,10 @@
 
 		}
 
+#footer p{
+	color: white;
+}
+	
 /* imageSection */
 	#imageSection {
 		text-align: center;
@@ -2679,6 +2683,7 @@
   /*min-height: 8vh;*/
   background-color: #504954;
   font-family: "Poppins", sans-serif;
+  min-height: 60px;
 }
 
 .logo {
@@ -2694,10 +2699,13 @@
   display: flex;
   justify-content: start;
   margin-bottom: auto;
+  height: 60px;
+  line-height: 60px;
 }
 
 .nav-links li {
   list-style: none;
+    width: 130px;
 }
 
 .nav-links a {

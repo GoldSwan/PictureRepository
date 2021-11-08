@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-	background-color: #000;
+	background-color: black;
 	background-image: url("../../images/bg.jpg");
 	background-size: cover;
 	background-position: top center;
@@ -45,7 +45,7 @@ table {
 }
 
 .input_join {
-	font-size: 14px;
+	font-size: 15px;
 	border: 0px;
 	background: #ffffff;
 	outline: none;
@@ -58,7 +58,7 @@ table {
 }
 
 .input_msg {
-	font-size: 14px;
+	font-size: 15px;
 	padding: 1 3 0 2;
 	border: 0px;
 	background: #ffffff;
@@ -67,31 +67,13 @@ table {
 	resize: none;
 }
 
-.Button-LOGIN {
-	background-color: #ffffff;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	border: 2px solid #ea1e69;
-	display: inline-block;
-	cursor: pointer;
-	color: #ea1e69;
-	font-size: 15px;
-	font-weight: bold;
-	padding: 8px 24px;
-	text-decoration: none;
-	outline: none;
-	width: 304px;
-	height: 40px;
-}
-
 .Button-JOIN {
 	background-color: #ffffff;
 	border-radius: 2px;
-	border: 2px solid #0080ff;
+	border: 2px solid black;
 	display: inline-block;
 	cursor: pointer;
-	color: #0080ff;
+	color: black;
 	font-size: 15px;
 	font-weight: bold;
 	text-decoration: none;
@@ -100,18 +82,26 @@ table {
 	height: 43px;
 }
 
-.Button-LOGIN:hover {
-	background-color: #ea1e69;
-	color: white;
-}
-
-.Button-LOGIN:active {
-	position: relative;
-	top: 1px;
+.a-move-login {
+	background-color: #ffffff;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 2px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	outline: none;
+	width: 300px;
+	height: 40px;
+	line-height: 40px;
 }
 
 .Button-JOIN:hover {
-	background-color: #0080ff;
+	background-color: silver;
 	color: white;
 }
 
@@ -120,34 +110,24 @@ table {
 	top: 1px;
 }
 
+.a-move-login:hover {
+	background-color: silver;
+	color: white;
+}
+
+.a-move-login:active {
+	position: relative;
+	top: 1px;
+}
+
 .error {
-	font-size: 0.8em;
+	font-size: 15px;
 	color: red;
-	width: 300px;
 	text-align: center;
 }
 
 .logout {
-	font-size: 0.8em;
-	color: blue;
-	width: 300px;
-	text-align: center;
-}
-
-.a-blue {
-	background-color: #ffffff;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	border: 2px solid #0080ff;
-	display: inline-block;
-	cursor: pointer;
-	color: #0080ff;
 	font-size: 15px;
-	font-weight: bold;
-	text-decoration: none;
-	outline: none;
-	width: 300px;
-	height: 40px;
-	line-height: 40px;
+	color: blue;
+	text-align: center;
 }

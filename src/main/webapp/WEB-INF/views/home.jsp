@@ -9,7 +9,7 @@
 <title>Picture Repository</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="<c:url value="/resources/assets/css/main.css"/>" />
+<link rel="stylesheet" href="<c:url value="/resources/assets/css/home.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
 <link rel="icon" href="<c:url value="/resources/images/favicon.ico"/>" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
@@ -23,7 +23,7 @@
 					<c:if test="${pageContext.request.userPrincipal.name != null }">					
 									<nav id = "headerNav">
 										<ul class="nav-links">			
-											<li><a href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">업로드</a></li>	
+											<li><a href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">사진 업로드</a></li>	
 											<li><a href= "#none">${pageContext.request.userPrincipal.name}</a></li>	
 											<li><a href= "javascript:document.getElementById('logout').submit()">로그아웃</a></li>
 										</ul>

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-	background-color: #000;
+	background-color: black;
 	background-image: url("../../images/bg.jpg");
 	background-size: cover;
 	background-position: top center;
@@ -17,7 +17,7 @@ body {
 }
 
 .intro_span {
-	color : #ffffff; 
+	color : white; 
 }
 
 .layer .layer_inner {
@@ -45,14 +45,14 @@ table {
 }
 
 .Button-Move-LOGIN {
-	background-color: #ffffff;
+	background-color: white;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
-	border: 2px solid #0080ff;
+	border: 2px solid silver;
 	display: inline-block;
 	cursor: pointer;
-	color: #0080ff;
+	color: black;
 	font-size: 15px;
 	font-weight: bold;
 	text-decoration: none;
@@ -63,7 +63,7 @@ table {
 }
 
 .Button-Move-LOGIN:hover {
-	background-color: #0080ff;
+	background-color: silver;
 	color: white;
 }
 
