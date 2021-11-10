@@ -38,11 +38,18 @@ public class UploadController {
 	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
 	public ModelAndView uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
 		
-		String strUsername = req.getParameter("username");
-		String strTitle = req.getParameter("title");
-		String strContent = req.getParameter("content");
-		String strTag = req.getParameter("tag");
-		String strPublicRange = req.getParameter("publicRange");
+		String strBulletinId = "";
+		String strUsername = "";
+		String strTitle = "";
+		String strContent = "";
+		String strTag = "";
+		String strPublicRange = "";
+		
+		strUsername = req.getParameter("username");
+		strTitle = req.getParameter("title");
+		strContent = req.getParameter("content");
+		strTag = req.getParameter("tag");
+		strPublicRange = req.getParameter("publicRange");
 		
 		StringBuffer sb = new StringBuffer();
 		ModelAndView mv = new ModelAndView();
@@ -76,13 +83,18 @@ public class UploadController {
 			sb.append(strFileName).append(",");
 		}
 		
-		fileUploadService.createFileData(bulletinBoardInfoList, userFileInfoList);
-		
+		strBulletinId = fileUploadService.createFileData(bulletinBoardInfoList, userFileInfoList);
+
+		if(strBulletinId == "") {
+			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
+			mv.setViewName("imageFileUpload");				
+			return mv;
+		}
 		//redirect : 사진 업로드가 완료되면  imageFileUploadResult 화면으로 이동
 		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(req.getContextPath()+"/move/imageViewResult");
+		redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
 		mv.setView(redirectView);
-		
+		/*
 		List<Map<String, String>> list = new ArrayList<>();
 		Map<String, Object> searchDataMap = new HashMap<>();	
 		
@@ -102,7 +114,7 @@ public class UploadController {
 		mv.addObject("content",strContent);
 		mv.addObject("tag",strTag);
 		mv.addObject("publicRange",strPublicRange);
-		
+		*/
 		return mv;
 	}
 	

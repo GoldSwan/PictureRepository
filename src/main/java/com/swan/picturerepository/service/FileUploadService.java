@@ -44,7 +44,7 @@ public class FileUploadService {
 	}
 	
 	@Transactional
-	public void createFileData(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList) {
-		userFileInfoDAO.insertUserFileInfo(bulletinBoardInfoList, userFileInfoList);
+	public String createFileData(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList) {
+		return userFileInfoDAO.insertUserFileInfo(bulletinBoardInfoList, userFileInfoList);
 	}
 }

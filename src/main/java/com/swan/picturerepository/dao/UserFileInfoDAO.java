@@ -113,8 +113,10 @@ public class UserFileInfoDAO {
 		});
 	}
 	
-	public boolean insertUserFileInfo(final ArrayList<String> bulletinBoardInfoList, final ArrayList<String> userFileInfoList) {	
+	public String insertUserFileInfo(final ArrayList<String> bulletinBoardInfoList, final ArrayList<String> userFileInfoList) {	
 		KeyHolder keyHolder = new GeneratedKeyHolder();
+		String strBulletinId = "";
+		
 		if(jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -131,19 +133,19 @@ public class UserFileInfoDAO {
 				pstmt.setString(6, userFileInfoList.get(0));
 				return pstmt;
 			}}, keyHolder)!=1)
-			return false;
+			return "";
 		
-		String strBulletinId = keyHolder.getKey().toString();
+		strBulletinId = keyHolder.getKey().toString();
 		
 		String sqlStatement = "insert into UserFileInfo (bulletinId, fileId, isrtDt) values(?, ?, SYSDATE())";
 
 		for(String strFileId : userFileInfoList) {
 			if(!(jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId, strFileId }) == 1)) {
-				return false;
+				return "";
 			}
 		}
 	
-		return true;
+		return strBulletinId;
 	}
 	
 	public List<String> selectLikeFlag(String fileId) {
