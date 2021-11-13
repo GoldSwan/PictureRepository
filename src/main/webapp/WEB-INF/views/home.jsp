@@ -20,11 +20,11 @@
 		<!-- Header -->
 		<header id="header">
 			<div class="container">
-					<c:if test="${pageContext.request.userPrincipal.name != null }">					
+					<c:if test="${pageContext.request.userPrincipal.name != null }">
 									<nav id = "headerNav">
-										<ul class="nav-links">			
-											<li><a href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">사진 업로드</a></li>	
-											<li><a href= "#none">${pageContext.request.userPrincipal.name}</a></li>	
+										<ul class="nav-links">
+											<li><a href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">사진 업로드</a></li>
+											<li><a href= "#none">${pageContext.request.userPrincipal.name}</a></li>
 											<li><a href= "javascript:document.getElementById('logout').submit()">로그아웃</a></li>
 										</ul>
 										    <div class="burger">
@@ -32,7 +32,7 @@
         										<div class="line2"></div>
         										<div class="line3"></div>
       										</div>
-									 </nav>				
+									 </nav>
 								<div style = "text-align:center;display:inline-block;width:100%;">
 								<form class="" method="get"
 									action="<c:url value="/bulletinboards" />">
@@ -41,14 +41,14 @@
 											<button class="btn btn-search my-2" type="submit" style = "background-color:white;margin-bottom:.8rem!important">
 												<i class="fa fa-search"></i>
 											</button>
-								</form>	
-								</div>								
+								</form>
+								</div>
 								<form id="logout" action="<c:url value="/logout" />"
 										method="post" style = "margin:0 0 0 0;height:0">
 										<input type="hidden" name="${_csrf.parameterName }"
 											value="${_csrf.token }" /> ​​​​​​​
-								</form>																
-						 
+								</form>
+
 					</c:if>
 			</div>
 			<!--
@@ -78,8 +78,8 @@
 		<!-- nav -->
 		<nav id = "nav" aria-label="Page navigation example">
  			<ul id = "nav_ul" class="pagination">
-			</ul> 
-		</nav>		
+			</ul>
+		</nav>
 		<!-- Footer -->
  		<footer id="footer">
  			<p>Picture Repository</p>
@@ -137,24 +137,24 @@
 		  navSlide();
 		};
 
-		init();   
-		
-	window.addEventListener('DOMContentLoaded', function(){		
+		init();
+
+	window.addEventListener('DOMContentLoaded', function(){
 		if(jsonParam=='')
 			return;
-		
+
 		//jsonParam = jsonParam.replace(/&#034;/g,'"');
 		if(jsonParam!=''){
 			jsonParam = JSON.parse(jsonParam);
 		}
-	
+
 		loadImage();
 		loadPageLink();
 	});
-		
+
 	function loadImage(){
-		var searchData = jsonParam.imageData;		
-		
+		var searchData = jsonParam.imageData;
+
 		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
 			return;
 
@@ -164,9 +164,9 @@
 			document.getElementById('imageSection').appendChild(dynamic_div);
 		}
 		for(var i = 0 ; i < searchData.length ; i++){
-			var divIndex = i%4;		
+			var divIndex = i%4;
 			var dynamic_div_parent = document.createElement('div');
-			var dynamic_div_child = document.createElement('div');	
+			var dynamic_div_child = document.createElement('div');
 			var dynamic_a = document.createElement('a');
 			var dynamic_img = document.createElement('img');
 			var dynamic_btn = document.createElement('button');
@@ -174,19 +174,19 @@
 			//var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?fileId='+searchData[i].image+'&username=${pageContext.request.userPrincipal.name}';
 			//var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?bulletinId='+searchData[i].bulletinId+'&username=${pageContext.request.userPrincipal.name}';
 			var imageViewURL = '${pageContext.request.contextPath}/bulletinboards/'+searchData[i].bulletinId+'/?username=${pageContext.request.userPrincipal.name}';
-			console.log("imageViewURL:"+imageViewURL);
+			//console.log("imageViewURL:"+imageViewURL);
 			dynamic_i.style.color = (searchData[i].like == 'Y') ? 'red' : 'black';
 			dynamic_i.style.fontSize = '30px';
 			dynamic_div_parent.setAttribute('id', 'div_parent_'+i);
 			dynamic_div_child.setAttribute('id', 'div_child_'+i);
-			dynamic_a.setAttribute('id', 'a_'+i);	
+			dynamic_a.setAttribute('id', 'a_'+i);
 			dynamic_img.setAttribute('id', 'img_'+i);
 			dynamic_btn.setAttribute('id', 'btn_like_'+i);
-			dynamic_i.setAttribute('id', 'i_like_'+i);		
+			dynamic_i.setAttribute('id', 'i_like_'+i);
 			//dynamic_a.setAttribute('href', 'resources/images/fulls/'+searchData[i].image);
 			//dynamic_a.setAttribute('href', imageViewURL);//Image View 이동 추가
 			dynamic_img.setAttribute('src', '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image);
-			dynamic_btn.setAttribute('type', 'button');		
+			dynamic_btn.setAttribute('type', 'button');
 			document.getElementById('div_'+divIndex).appendChild(dynamic_div_parent);
 			document.getElementById('div_parent_'+i).appendChild(dynamic_a);
 			document.getElementById('a_'+i).appendChild(dynamic_img);
@@ -194,7 +194,7 @@
 			document.getElementById('div_child_'+i).appendChild(dynamic_btn);
 			document.getElementById('btn_like_'+i).appendChild(dynamic_i);
 			document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
-			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'false');	
+			document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'false');
 			document.getElementById('btn_like_'+i).addEventListener( "click", onClickAsyncLike);
 			document.getElementById('a_'+i).href = imageViewURL;
 			document.getElementById('a_'+i).target = "_blank";
@@ -202,28 +202,28 @@
 			imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 		}
 	}
-	
+
 	function loadPageLink(){
 		var startPage = jsonParam.startPage;
 		var endPage = jsonParam.endPage;
 		var isPreviousPage = jsonParam.isPreviousPage;
 		var isNextPage = jsonParam.isNextPage;
 		var search = document.getElementById('search').value;
-		
+
 		if(endPage==null || endPage=='' || endPage=='undefined')
 			return;
 		var start_li = document.createElement('li');
 		var start_a = document.createElement('a');
 		start_li.setAttribute('id','nav_start_li');
-		start_a.setAttribute('id','nav_start_a');	
+		start_a.setAttribute('id','nav_start_a');
 		document.getElementById('nav_ul').appendChild(start_li);
 		document.getElementById('nav_start_li').appendChild(start_a);
 		document.getElementById('nav_start_li').setAttribute('class','page-item');
 		document.getElementById('nav_start_a').setAttribute('class','page-link');
-		var previousUrlValue = (isPreviousPage == false) ? '#none' : '${pageContext.request.contextPath}/search?search='+search + '&page=' + (startPage-1);
+		var previousUrlValue = (isPreviousPage == false) ? '#none' : '${pageContext.request.contextPath}/bulletinboards?search='+search + '&page=' + (startPage-1);
 		document.getElementById('nav_start_a').setAttribute('href',previousUrlValue);
 		document.getElementById('nav_start_a').innerHTML = '<';
-		
+
 		for(var i = startPage ; i <= endPage ; i++){
 			var dynamic_li = document.createElement('li');
 			var dynamic_a = document.createElement('a');
@@ -235,31 +235,31 @@
 			document.getElementById('nav_a' + i).setAttribute('class','page-link');
 			var page = i;
 			var sendParam = 'search=' + search + '&page=' + page;
-			var urlValue = '${pageContext.request.contextPath}/search?'+sendParam;
+			var urlValue = '${pageContext.request.contextPath}/bulletinboards?'+sendParam;
 			document.getElementById('nav_a' + i).setAttribute('href',urlValue);
 			document.getElementById('nav_a' + i).innerHTML = page;
 		}
-		
+
 		var end_li = document.createElement('li');
 		var end_a = document.createElement('a');
 		end_li.setAttribute('id','nav_end_li');
-		end_a.setAttribute('id','nav_end_a');	
+		end_a.setAttribute('id','nav_end_a');
 		document.getElementById('nav_ul').appendChild(end_li);
 		document.getElementById('nav_end_li').appendChild(end_a);
 		document.getElementById('nav_end_li').setAttribute('class','page-item');
 		document.getElementById('nav_end_a').setAttribute('class','page-link');
-		var nextUrlValue = (isNextPage == false) ? '#none' : '${pageContext.request.contextPath}/search?search='+search + '&page=' + (endPage+1);
+		var nextUrlValue = (isNextPage == false) ? '#none' : '${pageContext.request.contextPath}/bulletinboards?search='+search + '&page=' + (endPage+1);
 		document.getElementById('nav_end_a').setAttribute('href',nextUrlValue);
 		document.getElementById('nav_end_a').innerHTML = '>';
 	}
-	
+
 	function onClickAsyncLike(){
 		var xhttp = new XMLHttpRequest();
 		var username = '${pageContext.request.userPrincipal.name}';
 		var fileId = imageLikeMap.get(this.id);
 		var strArray = (this.id).split('_');
 		var likeHeart = document.getElementById('i_'+strArray[1]+'_'+strArray[2]);
-		
+
 		xhttp.open('POST','${pageContext.request.contextPath}/async-like.do', true);
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == xhttp.DONE) {
@@ -280,7 +280,7 @@
 		xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		xhttp.send(sendParam);
 	}
-	
+
 	</script>
 </body>
 </html>
