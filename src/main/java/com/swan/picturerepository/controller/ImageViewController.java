@@ -17,11 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
-import com.swan.picturerepository.service.FileSearchService;
+import com.swan.picturerepository.service.BulletinboardService;
 
 @Controller
 public class ImageViewController {
-	@Autowired private FileSearchService fileSearchService;
+	@Autowired private BulletinboardService bulletinboardService;
 	List<UserFileInfoDTO> fileList = null;
 	String strbulletinId = "";//2021-09-11 KSW : 게시판 ID(bulletinId) 추가
 	String strUsername = "";
@@ -38,7 +38,7 @@ public class ImageViewController {
 		mv.setViewName("imageView");
 		strbulletinId = req.getParameter("bulletinId");
 		strUsername = req.getParameter("username");
-		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
+		fileList = bulletinboardService.getSearchFileListBybulletinId(strbulletinId);
 		List<Map<String, String>> list = new ArrayList<>();
 		if(fileList!=null && fileList.size()>0) {
 			//strTitle = fileList.get(0).getTitle();

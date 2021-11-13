@@ -18,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
+
 import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.model.BulletinBoard;
+import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileSearchService;
 import com.swan.picturerepository.service.PageNavicationService;
 
@@ -27,6 +29,7 @@ import com.swan.picturerepository.service.PageNavicationService;
 @RequestMapping("/bulletinboards")
 public class SearchController {
 	
+	@Autowired private BulletinboardService bulletinboardService;
 	@Autowired private FileSearchService fileSearchService;
 	@Autowired private PageNavicationService pageNavicationService;
 	List<BulletinBoard> boardList = null;
@@ -53,9 +56,9 @@ public class SearchController {
 			return mv;
 		}
 		maxImageCnt = pageNavicationService.getMAX_IMAGE_CNT();
-		boardList = fileSearchService.getSearchBoardList(strSearch, page, maxImageCnt);
+		boardList = bulletinboardService.getSearchBoardList(strSearch, page, maxImageCnt);
 		//searchCnt = fileList.size();	
-		searchCnt = fileSearchService.getSearchFileCnt(strSearch);
+		searchCnt = bulletinboardService.getSearchBulletinboardCnt(strSearch);
 		maxPage = pageNavicationService.getMaxPage(searchCnt);
 		startPage = pageNavicationService.getStartPage(page);
 		endPage =pageNavicationService.getEndPage(page, maxPage);	
@@ -104,7 +107,6 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "/{bulletinId}", method = {RequestMethod.GET})
-	//public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId, @RequestParam("username") String strUsername) {	
 	public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId) {	
 		List<UserFileInfoDTO> fileList = null;
 		String strTitle = "";

@@ -14,8 +14,6 @@ import net.coobird.thumbnailator.Thumbnails;
 @Service
 public class FileUploadService {
 
-	@Autowired
-	UserFileInfoDAO userFileInfoDAO;
 	static final int THUMB_WIDTH = 346;
 	static final int THUMB_HEIGHT = 440;
 	static final int FULL_THUMB_WIDTH = 692;
@@ -41,10 +39,5 @@ public class FileUploadService {
 			imageFullThumbnailFile.getParentFile().mkdirs();
 			Thumbnails.of(imageFile).forceSize(FULL_THUMB_WIDTH, FULL_THUMB_HEIGHT).toFile(imageFullThumbnailFile);//게시판용 썸네일 생성
 		}
-	}
-	
-	@Transactional
-	public String createFileData(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList) {
-		return userFileInfoDAO.insertUserFileInfo(bulletinBoardInfoList, userFileInfoList);
 	}
 }

@@ -2,9 +2,7 @@ package com.swan.picturerepository.controller;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -21,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.google.gson.Gson;
+import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileUploadService;
 
 @Controller
@@ -33,6 +31,7 @@ public class UploadController {
 	private String thumbnailUploadPath;
 	@Resource(name = "fullUploadPath")
 	private String fullUploadPath;
+	@Autowired BulletinboardService bulletinboardService;
 	@Autowired FileUploadService fileUploadService;
 	
 	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
@@ -42,13 +41,13 @@ public class UploadController {
 		String strUsername = "";
 		String strTitle = "";
 		String strContent = "";
-		String strTag = "";
+		//String strTag = "";
 		String strPublicRange = "";
 		
 		strUsername = req.getParameter("username");
 		strTitle = req.getParameter("title");
 		strContent = req.getParameter("content");
-		strTag = req.getParameter("tag");
+		//strTag = req.getParameter("tag");
 		strPublicRange = req.getParameter("publicRange");
 		
 		StringBuffer sb = new StringBuffer();
@@ -83,38 +82,18 @@ public class UploadController {
 			sb.append(strFileName).append(",");
 		}
 		
-		strBulletinId = fileUploadService.createFileData(bulletinBoardInfoList, userFileInfoList);
+		strBulletinId = bulletinboardService.createBulletinboard(bulletinBoardInfoList, userFileInfoList);
 
 		if(strBulletinId == "") {
 			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
 			mv.setViewName("imageFileUpload");				
 			return mv;
 		}
-		//redirect : 사진 업로드가 완료되면  imageFileUploadResult 화면으로 이동
+		
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
 		mv.setView(redirectView);
-		/*
-		List<Map<String, String>> list = new ArrayList<>();
-		Map<String, Object> searchDataMap = new HashMap<>();	
-		
-		
-		for(int i = 0; i<userFileInfoList.size();i++) {
-			Map<String, String> map = new HashMap<>();
-			map.put("image", userFileInfoList.get(i));
-			list.add(map);
-		}
-		
-		searchDataMap.put("imageData", list);
-		String strSearchDataMap = new Gson().toJson(searchDataMap);
-		
-		mv.addObject("searchDataMap",strSearchDataMap);
-		mv.addObject("username",strUsername);
-		mv.addObject("title",strTitle);
-		mv.addObject("content",strContent);
-		mv.addObject("tag",strTag);
-		mv.addObject("publicRange",strPublicRange);
-		*/
+
 		return mv;
 	}
 	
