@@ -52,7 +52,7 @@ public class SearchController {
 		try {
 			page = Integer.parseInt(strPage);
 		}catch(NumberFormatException e){
-			mv.setViewName("home");
+			mv.setViewName("board/home");
 			return mv;
 		}
 		maxImageCnt = pageNavicationService.getMAX_IMAGE_CNT();
@@ -101,7 +101,7 @@ public class SearchController {
 		mv.addObject("searchDataMap",strSearchDataMap);
 		mv.addObject("search",strSearch);
 		
-		mv.setViewName("home");
+		mv.setViewName("board/home");
 		 
 		return mv;
 	}
@@ -120,7 +120,7 @@ public class SearchController {
 		
 		ModelAndView mv = new ModelAndView();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		mv.setViewName("imageView");
+		mv.setViewName("board/imageView");
 		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
 		List<Map<String, String>> list = new ArrayList<>();
 		if(fileList!=null && fileList.size()>0) {

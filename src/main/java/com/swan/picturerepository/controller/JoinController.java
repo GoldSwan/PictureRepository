@@ -31,14 +31,14 @@ public class JoinController {
 		String confirmPassword = req.getParameter("confirmPassword");	
 		model.addAttribute("confirmPassword",confirmPassword);
 		if(result.hasErrors()) {					
-			return "join";
+			return "board/join";
 		}
 		if(!userJoinService.reConfirmPassword(password, confirmPassword)) {
 			model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");	
-			return "join";
+			return "board/join";
 		}
 		userJoinService.createUser(user);
-		return "joinSuccess";
+		return "board/joinSuccess";
 	}
 	
 	@RequestMapping(value = "/join", method = {RequestMethod.GET})
@@ -46,7 +46,7 @@ public class JoinController {
 			
 		model.addAttribute("user",new User());
 		
-		return "join";
+		return "board/join";
 	}
 	
 	@RequestMapping(value = "/async-valid.do", method = {RequestMethod.GET, RequestMethod.POST})

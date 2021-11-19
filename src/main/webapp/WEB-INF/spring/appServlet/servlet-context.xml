@@ -20,12 +20,12 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<context:component-scan base-package="com.swan.picturerepository"/>
-	
+	<!--  
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value = "/WEB-INF/views/"/>
 		<beans:property name="suffix" value = ".jsp" />
 	</beans:bean>	
-	
+	-->
 	<beans:bean id="multipartResolver"
 	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	<beans:property name="maxUploadSize" value="50000000"></beans:property>
@@ -46,4 +46,16 @@
 	</beans:constructor-arg>
 	</beans:bean>
 	
+ <!-- tiles 선언 -->
+    <beans:bean id="urlBasedViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+        <beans:property name="order" value="0" /> <!-- 서블릿 호출 순서 -->
+    </beans:bean>
+    <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <beans:property name="definitions">
+            <beans:list>
+                <beans:value>/WEB-INF/spring/appServlet/tiles.xml</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
 </beans:beans>

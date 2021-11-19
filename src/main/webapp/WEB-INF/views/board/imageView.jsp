@@ -2,24 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/assets/css/imageView.css"/>">
-<link rel="stylesheet"
-	href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
-<link rel="icon"
-	href="<c:url value="/resources/images/favicon.ico"/>" />
-<style>
-</style>
-<meta charset="UTF-8">
-<title>Image View</title>
-</head>
-<body>
 	<div id="wrapper">
-		<header id="header">
-		</header>
         <section id="imageSection">
         	<%-- <div><img alt="" src="${pageContext.request.contextPath}/resources/images/fulls/${fileId}"></div> --%>
         	<div><span>제목 : <c:out value = "${title}"/></span></div>
@@ -29,8 +12,6 @@
         	<div><span>좋아요 횟수 : <c:out value = "${likeCnt}"/></span></div>       	
         	<div><span>좋아요 여부 : <c:out value = "${likeFlag}"/></span></div>
         </section>
-		<footer id="footer"> 
-		</footer>
 	</div>
 	<script>
 	var jsonParam = '${searchDataMap}';
@@ -94,5 +75,3 @@
 		}
 	}
 	</script>
-</body>
-</html>

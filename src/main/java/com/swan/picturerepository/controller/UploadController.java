@@ -64,7 +64,7 @@ public class UploadController {
 		for (MultipartFile file : fileList) {
 			if (file.isEmpty()) {
 				model.addAttribute("uploadMultiErrorMsg", "선택한 파일이 없습니다.");
-				mv.setViewName("imageFileUpload");				
+				mv.setViewName("board/imageFileUpload");				
 				return mv;
 			}
 		}
@@ -86,7 +86,7 @@ public class UploadController {
 
 		if(strBulletinId == "") {
 			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
-			mv.setViewName("imageFileUpload");				
+			mv.setViewName("board/imageFileUpload");				
 			return mv;
 		}
 		
@@ -100,13 +100,6 @@ public class UploadController {
 	@RequestMapping(value = "/move/imageFileUpload")
 	public String moveUpload(Model model, @RequestParam("username") String username) {
 		model.addAttribute("username", username);
-		return "imageFileUpload";
-	}
-	
-	@RequestMapping(value = "/move/imageFileUploadResult")
-	public String moveUploadResult(Model model, @RequestParam("uploadFileNames") String uploadFileNames, @RequestParam("username") String username) {
-		model.addAttribute("username", username);
-		model.addAttribute("uploadFileNames", uploadFileNames);
-		return "imageFileUploadResult";
+		return "board/imageFileUpload";
 	}
 }

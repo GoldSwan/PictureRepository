@@ -30,16 +30,16 @@ body {
 	display: inline-block;
 }
 
-table tr {
+.login_table tr {
 	height: 15px;
 }
 
-table td {
+.login_table td {
 	text-align: center;
 	height: 15px;
 }
 
-table {
+.login_table {
 	margin: auto;
 }
 

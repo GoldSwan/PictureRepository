@@ -2,26 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="_csrf" content="${_csrf.token }" />
-<meta name="_csrf_header" content="${_csrf.headerName }" />
-<link rel="stylesheet"
-	href="<c:url value="/resources/assets/css/login.css"/>">
-<link rel="icon"
-	href="<c:url value="/resources/images/favicon.ico"/>" />
-<title>Login</title>
-</head>
-<body>
 	<div class="layer">
 		<div class="layer_inner">
 			<div class="content">
 				<form action="<c:url value="/login" />" method="post" name="login">
 					<input type="hidden" name="${_csrf.parameterName }"
 						value="${_csrf.token }" />
-					<table>
+					<table class="login_table">
 						<tr>
 							<td></td>
 						</tr>
@@ -68,5 +55,3 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>

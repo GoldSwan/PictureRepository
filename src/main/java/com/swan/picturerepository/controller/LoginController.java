@@ -18,11 +18,11 @@ public class LoginController {
 		if (logout != null)
 			model.addAttribute("logoutMsg", "로그아웃 되었습니다.");
 
-		return "login";
+		return "board/login";
 	}
 	@RequestMapping(value = "/move/login", method = {RequestMethod.GET, RequestMethod.POST})
 	public String moveLogin() {
 
-		return "login";
+		return "board/login";
 	}
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="default_main" templateExpression="/WEB-INF/views/tiles/layout.jsp">
+        <put-attribute name="css" expression="/WEB-INF/views/tiles/css.jsp" />
+        <put-attribute name="script" expression="/WEB-INF/views/tiles/script.jsp" />
+        <put-attribute name="header" expression="/WEB-INF/views/tiles/header.jsp" />
+        <put-attribute name="footer" expression="/WEB-INF/views/tiles/footer.jsp" />
+    </definition>
+    <!-- tiles 사용하여 화면에 표현 -->
+    <definition name="*/*" extends="default_main">
+    	<put-attribute name="includeCSS" value="/resources/assets/css/{2}.css"/>
+    	<put-attribute name="title" value="{2}"/>
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/> <!-- controller에서 사용하기 위한 방법을 설정-->
+    </definition>
+</tiles-definitions>

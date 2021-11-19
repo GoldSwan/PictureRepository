@@ -3,69 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>Picture Repository</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="<c:url value="/resources/assets/css/home.css"/>" />
-<link rel="stylesheet" href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
-<link rel="icon" href="<c:url value="/resources/images/favicon.ico"/>" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
-</head>
-<body>
 	<!-- Wrapper -->
 	<div id="wrapper">
-		<!-- Header -->
-		<header id="header">
-			<div class="container">
-					<c:if test="${pageContext.request.userPrincipal.name != null }">
-									<nav id = "headerNav">
-										<ul class="nav-links">
-											<li><a href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">사진 업로드</a></li>
-											<li><a href= "#none">${pageContext.request.userPrincipal.name}</a></li>
-											<li><a href= "javascript:document.getElementById('logout').submit()">로그아웃</a></li>
-										</ul>
-										    <div class="burger">
-        										<div class="line1"></div>
-        										<div class="line2"></div>
-        										<div class="line3"></div>
-      										</div>
-									 </nav>
-								<div style = "text-align:center;display:inline-block;width:100%;">
-								<form class="" method="get"
-									action="<c:url value="/bulletinboards" />">
-											<input id = "search" class="form-control" type="search" placeholder="검색" value="${search}" name="search" style = "display:inline-block;width:80%">
-											<input type="hidden" name="page" value='1'>	​​​​​​​
-											<button class="btn btn-search my-2" type="submit" style = "background-color:white;margin-bottom:.8rem!important">
-												<i class="fa fa-search"></i>
-											</button>
-								</form>
-								</div>
-								<form id="logout" action="<c:url value="/logout" />"
-										method="post" style = "margin:0 0 0 0;height:0">
-										<input type="hidden" name="${_csrf.parameterName }"
-											value="${_csrf.token }" /> ​​​​​​​
-								</form>
-
-					</c:if>
-			</div>
-			<!--
- 			<ul class="icons">
-				<li><a href="#" class="icon style2 fa-twitter"><span
-						class="label">Twitter</span></a></li>
-				<li><a href="#" class="icon style2 fa-facebook"><span
-						class="label">Facebook</span></a></li>
-				<li><a href="#" class="icon style2 fa-instagram"><span
-						class="label">Instagram</span></a></li>
-				<li><a href="#" class="icon style2 fa-500px"><span
-						class="label">500px</span></a></li>
-				<li><a href="#" class="icon style2 fa-envelope-o"><span
-						class="label">Email</span></a></li>
-			</ul> -->
-		</header>
-
 		<!-- Main -->
 		<section id="main">
 			<!-- Thumbnails -->
@@ -87,16 +26,12 @@
 
 	</div>
 	<!-- Scripts -->
-	<script src="resources/assets/js/jquery.min.js"></script>
-	<script src="resources/assets/js/jquery.poptrox.min.js"></script>
-	<script src="resources/assets/js/skel.min.js"></script>
-	<script src="resources/assets/js/main.js"></script>
 	<script>
 	var jsonParam = '${searchDataMap}';
 	/* var jsonParam = '${searchDataMap}'; */
 	/* var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>'; */
 	var imageLikeMap = new Map();//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
-	const burger = document.querySelector(".burger");
+/* 	const burger = document.querySelector(".burger");
 	const nav = document.querySelector(".nav-links");
 	const navlinks = document.querySelectorAll(".nav-links li");
 	const navAnimation = () => {
@@ -137,7 +72,7 @@
 		  navSlide();
 		};
 
-		init();
+		init(); */
 
 	window.addEventListener('DOMContentLoaded', function(){
 		if(jsonParam=='')
@@ -282,5 +217,3 @@
 	}
 
 	</script>
-</body>
-</html>

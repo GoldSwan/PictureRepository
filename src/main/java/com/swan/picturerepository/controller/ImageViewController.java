@@ -35,7 +35,7 @@ public class ImageViewController {
 		
 		ModelAndView mv = new ModelAndView();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		mv.setViewName("imageView");
+		mv.setViewName("board/imageView");
 		strbulletinId = req.getParameter("bulletinId");
 		strUsername = req.getParameter("username");
 		fileList = bulletinboardService.getSearchFileListBybulletinId(strbulletinId);
@@ -73,7 +73,7 @@ public class ImageViewController {
 	public ModelAndView showImageViewResult(HttpServletRequest req, Model model) {	
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("imageView");
+		mv.setViewName("board/imageView");
 		
 		strUsername = req.getParameter("username");
 		strSearchDataMap = req.getParameter("searchDataMap");

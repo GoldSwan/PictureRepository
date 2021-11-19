@@ -10,12 +10,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
-		return "/home";
-	}
-	@RequestMapping(value = "/loginUserinfoPopup", method = RequestMethod.GET)
-	public ModelAndView openLoginUserinfoPopup() {
-		ModelAndView mv = new ModelAndView();
-		 mv.setViewName("loginUserinfoPopup");
-		return mv;
+		return "board/home";
 	}
 }
