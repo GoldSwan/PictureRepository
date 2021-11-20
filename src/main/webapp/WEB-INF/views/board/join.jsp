@@ -9,7 +9,7 @@
 				 <sf:form action="${pageContext.request.contextPath}/join.do" method="get" name="join" modelAttribute="user">
  					<input type="hidden" name="${_csrf.parameterName }"
 						value="${_csrf.token }" />
-					<table>
+					<table class = "join_table">
 						<tr>
 							<td id = td_username><sf:input class="input_join" placeholder="아이디"
 								maxLength="20" type="text" id="username" name="username"
