@@ -10,7 +10,7 @@
 <meta name="_csrf" content="${_csrf.token }" />
 <meta name="_csrf_header" content="${_csrf.headerName }" />
 <tiles:insertAttribute name="css" />
-<link rel="stylesheet" href="${contextpath}<tiles:getAsString name = "includeCSS"/>"/>
+<link rel="stylesheet" href="${contextpath}<tiles:getAsString name = "dynamic_css"/>"/>
 <title><tiles:getAsString name = "title"/></title>
 </head>
 <body>
