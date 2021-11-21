@@ -23,6 +23,7 @@ import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileUploadService;
 
 @Controller
+@RequestMapping("/bulletinboards")
 public class UploadController {
 	
 	@Resource(name = "imageUploadPath")
@@ -34,7 +35,7 @@ public class UploadController {
 	@Autowired BulletinboardService bulletinboardService;
 	@Autowired FileUploadService fileUploadService;
 	
-	@RequestMapping(value = "/uploadForm/multi", method = RequestMethod.POST)
+	@RequestMapping(value = "/newbulletinboard", method = RequestMethod.POST)
 	public ModelAndView uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
 		
 		String strBulletinId = "";
@@ -97,7 +98,7 @@ public class UploadController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/move/imageFileUpload")
+	@RequestMapping(value = "/newbulletinboard" , method = RequestMethod.GET)
 	public String moveUpload(Model model, @RequestParam("username") String username) {
 		model.addAttribute("username", username);
 		return "board/imageFileUpload";

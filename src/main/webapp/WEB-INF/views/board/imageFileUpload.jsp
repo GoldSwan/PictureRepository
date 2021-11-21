@@ -41,8 +41,9 @@
 		<div id="header">
 			<h3>사진 올리기</h3>
 		</div>
-		<form id="uploadForm" action="<c:url value="/uploadForm/multi" />"
+		<form id="uploadForm" action="<c:url value="/bulletinboards/newbulletinboard" />"
 			method="post" enctype="multipart/form-data">
+			<!-- <input hidden="hidden" name = "_method" value = "PUT"/> -->
 <%-- 		<form id="uploadForm" action="<c:url value="/uploadForm/multi" />"
 			method="post" enctype="multipart/form-data" onsubmit="return false"> --%>
 			<!-- <div class="form-group"> -->
@@ -52,9 +53,9 @@
 						<span>파일 용량/갯수 : </span><span id = "fileStatusSpan"></span>
 					</div>
 					<div id=fileDiv>
-						<input hidden="hidden" />
+						<!-- <input hidden="hidden"/> -->
 						<input type="file" class="form-control-file" multiple="multiple"
-							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this)"/>
+							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this)"  value = "put"/>
 					</div>
 					<div>
 						<c:if test="${not empty uploadMultiErrorMsg }">
@@ -71,19 +72,19 @@
 					<textarea placeholder="내용" name="content">${content}</textarea>
 				</div>
 				<div class = "inputText">
-					<input id="tagId" type="text" name="post_tag" class="form-control" value placeholder="태그"
+					<input id="tagId" type="text" name="post_tag" class="form-control" placeholder="태그"
 					onkeyup="if(window.event.keyCode==13||window.event.keyCode==32){(enterTag())}" style = "display:inline"/>
 					<div id="tag" class="bootstrap-tagsinput" style = "padding-left:10%;padding-right:10%;"></div>			
 				</div>
 				<div class = "inputText">
-					<input type="hidden" name="username" value="${username}" />
+					<input type="text" name="username" value="${username}" />
 				</div>
 				<div class = "radio">
 					<input type="radio" name="publicRange" value="A" checked = "checked"><span>전체 공개</span> 
 					<input type="radio" name="publicRange" value="C"><span>비공개</span>
 				</div>
 				<div class = "inputText">
-					<input type="submit" class="btn btn-primary" value="저장" />
+					<button type="submit" class="btn btn-primary">저장</button>
 				</div>
 			</section>
 		</form>

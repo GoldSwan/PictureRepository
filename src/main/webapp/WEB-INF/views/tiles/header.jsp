@@ -9,7 +9,7 @@
 					<c:if test="${pageContext.request.userPrincipal.name != null }">
 									<nav id = "headerNav">
 										<ul class="nav-links">
-											<li><a href= "<c:url value="/move/imageFileUpload?username=${pageContext.request.userPrincipal.name}"/>">사진 올리기</a></li>
+											<li><a href= "<c:url value="/bulletinboards/newbulletinboard?username=${pageContext.request.userPrincipal.name}"/>">사진 올리기</a></li>
 											<li><a href= "#none">${pageContext.request.userPrincipal.name}</a></li>
 											<li><a href= "javascript:document.getElementById('logout').submit()">로그아웃</a></li>
 										</ul>
