@@ -119,7 +119,7 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
 - [x]  파일 업로드 후 이동한 페이지에서 새로고침하면 다시 업로드 되는 현상 발견 > redirect 방식으로 이동하여 해결
 - [x]  javascript에서 빈 값의 EL 표현식 에러 개선 > 할당 변수에 ' 작은 따옴표를 양쪽에 달아 해결
 
-##  API Docs
+## HTTP API Docs
 
 |Method|URL|설명|
 |:---|:---|:---|
