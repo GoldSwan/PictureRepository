@@ -21,4 +21,5 @@
     <tiles:insertAttribute name="footer" />
 </body>
 <tiles:insertAttribute name="script" />
+<script src="${contextpath}<tiles:getAsString name = "dynamic_js"/>"/></script>
 </html>
