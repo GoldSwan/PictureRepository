@@ -69,22 +69,28 @@ public class UploadController {
 				return mv;
 			}
 		}
-
-		for (int i = 0 ; i < fileList.size() ; i++) {
-			UUID uid = UUID.randomUUID();
-			String strFileName = fileList.get(i).getOriginalFilename();
-			String strFileExtension = FilenameUtils.getExtension(strFileName);
-			String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
-			File imageFile = fileUploadService.uploadImageFile(imageUploadPath, strFileId, fileList.get(i).getBytes(), strFileName);
-			fileUploadService.uploadThumbnailFile(thumbnailUploadPath, strFileId, imageFile, strFileName);
-			fileUploadService.uploadFullThumbnailFile(fullUploadPath, strFileId, imageFile, strFileName);
-			userFileInfoList.add(i,strFileId);		
+		try {
+			for (int i = 0 ; i < fileList.size() ; i++) {
+				UUID uid = UUID.randomUUID();
+				String strFileName = fileList.get(i).getOriginalFilename();
+				String strFileExtension = FilenameUtils.getExtension(strFileName);
+				String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
+				File imageFile = fileUploadService.uploadImageFile(imageUploadPath, strFileId, fileList.get(i).getBytes(), strFileName);
+				fileUploadService.uploadThumbnailFile(thumbnailUploadPath, strFileId, imageFile, strFileName);
+				fileUploadService.uploadFullThumbnailFile(fullUploadPath, strFileId, imageFile, strFileName);
+				userFileInfoList.add(i,strFileId);		
 			
-			sb.append(strFileName).append(",");
-		}
+				sb.append(strFileName).append(",");
+			}
 		
 		strBulletinId = bulletinboardService.createBulletinboard(bulletinBoardInfoList, userFileInfoList);
-
+		
+		}catch(Exception e) {
+			model.addAttribute("uploadMultiErrorMsg", e.getMessage());
+			mv.setViewName("board/imageFileUpload");				
+			return mv;
+		}
+		
 		if(strBulletinId == "") {
 			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
 			mv.setViewName("board/imageFileUpload");				
