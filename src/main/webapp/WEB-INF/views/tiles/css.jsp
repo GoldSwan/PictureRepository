@@ -4,7 +4,6 @@
 <!-- favicon.ico -->
 <link rel="icon" href="<c:url value="/resources/images/favicon.ico"/>" />
 <!-- common -->
-<%-- <link rel="stylesheet" href="<c:url value="/resources/assets/css/home.css"/>" /> --%>
 <link rel="stylesheet" href="<c:url value="/resources/assets/css/bootstrap.min.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/assets/css/header.css"/>" />
 <!-- home -->
