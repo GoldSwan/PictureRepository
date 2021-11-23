@@ -120,7 +120,7 @@ public class SearchController {
 		
 		ModelAndView mv = new ModelAndView();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		mv.setViewName("board/imageView");
+		mv.setViewName(".notdynamicjs/board/imageView");
 		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
 		List<Map<String, String>> list = new ArrayList<>();
 		if(fileList!=null && fileList.size()>0) {
@@ -149,6 +149,7 @@ public class SearchController {
 		mv.addObject("content",strContent);
 		mv.addObject("likeCnt",strLikeCnt);
 		mv.addObject("likeFlag",strLikeFlag);
+		mv.addObject("bulletinId", strbulletinId);
 		
 		return mv;
 	}
