@@ -27,9 +27,6 @@
 	</div>
 	<!-- Scripts -->
 	<script>
-	var jsonParam = '${searchDataMap}';
-	/* var jsonParam = '${searchDataMap}'; */
-	/* var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>'; */
 	var imageLikeMap = new Map();//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 /* 	const burger = document.querySelector(".burger");
 	const nav = document.querySelector(".nav-links");
@@ -75,6 +72,9 @@
 		init(); */
 
 	window.addEventListener('DOMContentLoaded', function(){
+		var jsonParam = '${searchDataMap}';
+		/* var jsonParam = '${searchDataMap}'; */
+		/* var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>'; */
 		if(jsonParam=='')
 			return;
 
@@ -83,11 +83,11 @@
 			jsonParam = JSON.parse(jsonParam);
 		}
 
-		loadImage();
-		loadPageLink();
+		loadImage(jsonParam);
+		loadPageLink(jsonParam);
 	});
 
-	function loadImage(){
+	function loadImage(jsonParam){
 		var searchData = jsonParam.imageData;
 
 		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
@@ -138,7 +138,7 @@
 		}
 	}
 
-	function loadPageLink(){
+	function loadPageLink(jsonParam){
 		var startPage = jsonParam.startPage;
 		var endPage = jsonParam.endPage;
 		var isPreviousPage = jsonParam.isPreviousPage;

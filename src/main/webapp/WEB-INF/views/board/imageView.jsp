@@ -4,7 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 	<div id="wrapper">
         <section id="imageSection">
-        	<%-- <div><img alt="" src="${pageContext.request.contextPath}/resources/images/fulls/${fileId}"></div> --%>
+        	<div><a class="btn btn-primary" href= "javascript:document.getElementById('delete').submit()">삭제</a></div>    	
+        	<form id="delete" action="<c:url value="/bulletinboards/newbulletinboard/${bulletinId}/delete"/>"
+					method="post" style = "margin:0 0 0 0;height:0">
+<!-- 					<input type="hidden" name = "_method" value = "put"/> -->
+ 					<input type="hidden" name="${_csrf.parameterName }"
+										 value="${_csrf.token }" />​​​​​​​
+			</form>
         	<div><span>제목 : <c:out value = "${title}"/></span></div>
         	<div><span>작성시간 : <c:out value = "${isrtDt}"/></span></div>
         	<div><span>작성자 : <c:out value = "${username}"/></span></div>
@@ -14,21 +20,22 @@
         </section>
 	</div>
 	<script>
-	var jsonParam = '${searchDataMap}';
 	/* var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>'; */
 	window.addEventListener('DOMContentLoaded', function(){		
+		var jsonParam = '${searchDataMap}';
 		if(jsonParam=='')
 			return;
 		
 		//jsonParam = jsonParam.replace(/&#034;/g,'"');
+		console.log(jsonParam);
 		if(jsonParam!=''){
 			jsonParam = JSON.parse(jsonParam);
 		}
 	
-		loadImage();
+		loadImage(jsonParam);
 	});
 	
-	function loadImage(){
+	function loadImage(jsonParam){
 		var searchData = jsonParam.imageData;		
 		
 		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
