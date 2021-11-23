@@ -12,6 +12,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,6 +102,20 @@ public class UploadController {
 		redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
 		mv.setView(redirectView);
 
+		return mv;
+	}
+	//PUT METHOD가 잘 동작하지 않기에 POST로 처리
+	@RequestMapping(value = "/newbulletinboard/{bulletinId}", method = RequestMethod.POST)
+	public ModelAndView updateBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(".notdynamicjs/board/imageView");
+		return mv;
+	}
+	//DELETE METHOD가 잘 동작하지 않기에 POST로 처리
+	@RequestMapping(value = "/newbulletinboard/{bulletinId}/delete", method = RequestMethod.POST)
+	public ModelAndView deleteBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(".notdynamicjs/board/imageView");
 		return mv;
 	}
 	
