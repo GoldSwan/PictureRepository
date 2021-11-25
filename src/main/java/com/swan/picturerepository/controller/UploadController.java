@@ -10,11 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,7 +40,7 @@ public class UploadController {
 	@Autowired BulletinboardService bulletinboardService;
 	@Autowired FileUploadService fileUploadService;
 	
-	@RequestMapping(value = "/newbulletinboard", method = RequestMethod.POST)
+	@PostMapping(value = "/newbulletinboard")
 	public ModelAndView uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
 		
 		String strBulletinId = "";
@@ -105,23 +109,29 @@ public class UploadController {
 		return mv;
 	}
 	//PUT METHOD가 잘 동작하지 않기에 POST로 처리
-	@RequestMapping(value = "/newbulletinboard/{bulletinId}", method = RequestMethod.POST)
+	@PutMapping(value = "/newbulletinboard/{bulletinId}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ModelAndView updateBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(".notdynamicjs/board/imageView");
 		return mv;
 	}
 	//DELETE METHOD가 잘 동작하지 않기에 POST로 처리
-	@RequestMapping(value = "/newbulletinboard/{bulletinId}/delete", method = RequestMethod.POST)
-	public ModelAndView deleteBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
+	//@RequestMapping(value = "/newbulletinboard/{bulletinId}/delete", method = RequestMethod.POST)
+	@DeleteMapping(value = "/newbulletinboard/{bulletinId}")
+	public ModelAndView deleteBulletinboard(HttpServletRequest req, @PathVariable("bulletinId") String strBulletinId) throws Exception {
+		
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName(".notdynamicjs/board/imageView");
+		mv.setView(redirectView);
 		return mv;
 	}
 	
-	@RequestMapping(value = "/newbulletinboard" , method = RequestMethod.GET)
-	public String moveUpload(Model model, @RequestParam("username") String username) {
-		model.addAttribute("username", username);
-		return "board/imageFileUpload";
+	@GetMapping(value = "/newbulletinboard")
+	public ModelAndView moveUpload(Model model, @RequestParam("username") String username) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("board/imageFileUpload");
+		model.addAttribute("username", username);	
+		return mv;
 	}
 }
