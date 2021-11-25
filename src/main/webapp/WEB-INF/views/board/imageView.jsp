@@ -5,9 +5,9 @@
 	<div id="wrapper">
         <section id="imageSection">
         	<div><a class="btn btn-primary" href= "javascript:document.getElementById('delete').submit()">삭제</a></div>    	
-        	<form id="delete" action="<c:url value="/bulletinboards/newbulletinboard/${bulletinId}/delete"/>"
+        	<form id="delete" action="<c:url value="/bulletinboards/newbulletinboard/${bulletinId}"/>"
 					method="post" style = "margin:0 0 0 0;height:0">
-<!-- 					<input type="hidden" name = "_method" value = "put"/> -->
+ 					<input type="hidden" name = "_method" value = "delete"/>
  					<input type="hidden" name="${_csrf.parameterName }"
 										 value="${_csrf.token }" />​​​​​​​
 			</form>
