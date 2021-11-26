@@ -4,13 +4,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 	<div id="wrapper">
         <section id="imageSection">
-        	<div><a class="btn btn-primary" href= "javascript:document.getElementById('delete').submit()">삭제</a></div>    	
+        	<div><a class="btn btn-primary" href= "#" onclick="deleteCheck()">삭제</a></div>    	
         	<form id="delete" action="<c:url value="/bulletinboards/newbulletinboard/${bulletinId}"/>"
 					method="post" style = "margin:0 0 0 0;height:0">
  					<input type="hidden" name = "_method" value = "delete"/>
  					<input type="hidden" name="${_csrf.parameterName }"
 										 value="${_csrf.token }" />​​​​​​​
 			</form>
+			<div>
+				<c:if test="${not empty deleteErrorMsg }">
+					<span id="deleteErrorMsg.errors" class="error">${deleteErrorMsg }</span>
+				</c:if>
+			</div>
         	<div><span>제목 : <c:out value = "${title}"/></span></div>
         	<div><span>작성시간 : <c:out value = "${isrtDt}"/></span></div>
         	<div><span>작성자 : <c:out value = "${username}"/></span></div>
@@ -80,5 +85,14 @@
 			//imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 			
 		}
+	}
+	
+	function deleteCheck() {
+		 if (confirm("삭제하시겠습니까?") == true){
+			 location.href = "javascript:document.getElementById('delete').submit()";
+		     return true;
+		 }else{
+		     return false;
+		 }
 	}
 	</script>

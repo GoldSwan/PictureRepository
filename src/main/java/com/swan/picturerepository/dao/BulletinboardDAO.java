@@ -125,6 +125,16 @@ public class BulletinboardDAO {
 		return strBulletinId;
 	}
 	
+	public boolean deleteBulletinboardInfo(String strBulletinId) {		
+		String sqlStatement = "delete from bulletinboard where bulletinId = ?";
+		return ((jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId }) == 1));
+	}
+	
+	public boolean deleteUserFileInfo(String strBulletinId) {				
+		String sqlStatement = "delete from userfileinfo where bulletinId = ?";
+		return ((jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId }) == 1));
+	}
+	
 	public List<String> selectLikeFlag(String fileId) {
 		String sqlStatement = "select likeFlag from bulletinboard where representativeFileId = ?";
 		 

@@ -15,6 +15,7 @@ import com.swan.picturerepository.model.BulletinBoard;
 public class BulletinboardService {
 
 	@Autowired BulletinboardDAO bulletinboardDAO;
+	@Autowired FileUploadService fileUploadService;
 	
 	public List<BulletinBoard> getSearchBoardList(String strSearch, int page, int maxImageCnt) {		
 		//List<UserFileInfo> fileList = userFileInfoDAO.selectFileName(strSearch);
@@ -37,5 +38,9 @@ public class BulletinboardService {
 	@Transactional
 	public String createBulletinboard(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList) {
 		return bulletinboardDAO.insertBulletinboardInfo(bulletinBoardInfoList, userFileInfoList);
+	}
+	@Transactional
+	public boolean deleteBulletinboard(String strBulletinId) {
+		return bulletinboardDAO.deleteBulletinboardInfo(strBulletinId) && bulletinboardDAO.deleteUserFileInfo(strBulletinId);
 	}
 }

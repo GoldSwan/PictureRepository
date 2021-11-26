@@ -118,11 +118,18 @@ public class UploadController {
 	//DELETE METHOD가 잘 동작하지 않기에 POST로 처리
 	//@RequestMapping(value = "/newbulletinboard/{bulletinId}/delete", method = RequestMethod.POST)
 	@DeleteMapping(value = "/newbulletinboard/{bulletinId}")
-	public ModelAndView deleteBulletinboard(HttpServletRequest req, @PathVariable("bulletinId") String strBulletinId) throws Exception {
+	public ModelAndView deleteBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strBulletinId) throws Exception {
 		
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
 		ModelAndView mv = new ModelAndView();
+		RedirectView redirectView = new RedirectView();
+		
+		if(!bulletinboardService.deleteBulletinboard(strBulletinId)) {
+			model.addAttribute("deleteErrorMsg", "삭제에서 에러가 발생했습니다.");
+			mv.setViewName("board/imageFileUpload");
+			return mv;
+		}
+		
+		redirectView.setUrl(req.getContextPath()+"/bulletinboards?search=&page=1");
 		mv.setView(redirectView);
 		return mv;
 	}
