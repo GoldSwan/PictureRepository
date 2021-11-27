@@ -15,7 +15,6 @@ import com.swan.picturerepository.model.BulletinBoard;
 public class BulletinboardService {
 
 	@Autowired BulletinboardDAO bulletinboardDAO;
-	@Autowired FileUploadService fileUploadService;
 	
 	public List<BulletinBoard> getSearchBoardList(String strSearch, int page, int maxImageCnt) {		
 		//List<UserFileInfo> fileList = userFileInfoDAO.selectFileName(strSearch);
