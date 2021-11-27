@@ -30,7 +30,7 @@
 	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	<beans:property name="maxUploadSize" value="50000000"></beans:property>
 	</beans:bean>
-
+<!-- 
 	<beans:bean id = "imageUploadPath" class="java.lang.String">
 	<beans:constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\originals">
 	</beans:constructor-arg>
@@ -45,7 +45,7 @@
 	<beans:constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\fulls">
 	</beans:constructor-arg>
 	</beans:bean>
-	
+	 -->
  <!-- tiles 선언 -->
     <beans:bean id="urlBasedViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />

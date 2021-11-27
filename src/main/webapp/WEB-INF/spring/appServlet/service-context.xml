@@ -9,6 +9,20 @@
 	
 	<context:component-scan base-package="com.swan.picturerepository.service">
 	</context:component-scan>
+	
+	<bean id = "imageUploadPath" class="java.lang.String">
+	<constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\originals">
+	</constructor-arg>
+	</bean>
 
+	<bean id = "thumbnailUploadPath" class="java.lang.String">
+	<constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\thumbs">
+	</constructor-arg>
+	</bean>
+	
+	<bean id = "fullUploadPath" class="java.lang.String">
+	<constructor-arg value="C:\Users\SuwanKim\Desktop\GitRepository\picturerepository\src\main\webapp\resources\images\fulls">
+	</constructor-arg>
+	</bean>
 </beans>
 <!-- @Service 어노테이션이 선언된 클래스를 Spring DI Container에 의해 스캔되어져 빈으로 등록해줌 -->
