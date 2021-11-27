@@ -127,7 +127,7 @@ TO DO LIST를 작성하며 진행하고 있는 Spring Web 사이드 프로젝트
 |GET|/bulletinboards/{bulletinId}|특정 게시글 조회|
 |GET|/bulletinboards/{searchtype}|타입별(제목, 제목+내용, 태그) 게시글 검색 조회|
 |POST|/bulletinboards/newbulletinboard|게시글 생성|
-|POST|/bulletinboards/newbulletinboard/{bulletinId}|게시글 수정|
+|PUT|/bulletinboards/newbulletinboard/{bulletinId}|게시글 수정|
 |DELETE|/bulletinboards/newbulletinboard/{bulletinId}|게시글 삭제|
 
 ## **사용 기술**
