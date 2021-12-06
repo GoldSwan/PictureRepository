@@ -1,8 +1,11 @@
 package com.swan.picturerepository.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.google.gson.Gson;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileSearchService;
@@ -105,7 +109,54 @@ public class UploadController {
 		return mv;
 	}
 
-	@PutMapping(value = "/newbulletinboard/{bulletinId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value = "/newbulletinboard/{bulletinId}")
+	public ModelAndView selectBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		List<UserFileInfoDTO> fileList = null;
+		String strTitle = "";
+		//String strIsrtDt = "";
+		String strUsername = "";
+		String strContent = "";
+		String strLikeCnt = "";
+		String strLikeFlag = "";	
+		String strSearchDataMap = "";
+		
+		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
+		List<Map<String, String>> list = new ArrayList<>();
+		if(fileList!=null && fileList.size()>0) {
+			strTitle = fileList.get(0).getTitle();
+			//strIsrtDt = fileList.get(0).getIsrtDt();
+			strUsername = fileList.get(0).getUsername();
+			strContent = fileList.get(0).getContent();
+			strLikeCnt = fileList.get(0).getLikeCnt();
+			strLikeFlag = fileList.get(0).getLikeFlag();
+
+			for(int i = 0; i<fileList.size();i++) {
+				Map<String, String> map = new HashMap<>();				
+				map.put("image", fileList.get(i).getFileId());
+				list.add(map);
+			}
+		}
+		
+		Map<String, Object> searchDataMap = new HashMap<>();	
+		searchDataMap.put("imageData", list);
+		strSearchDataMap = new Gson().toJson(searchDataMap);
+		
+		mv.addObject("searchDataMap",strSearchDataMap);
+		mv.addObject("title",strTitle);
+		//mv.addObject("isrtDt",strIsrtDt);
+		mv.addObject("username",strUsername);
+		mv.addObject("content",strContent);
+		//mv.addObject("likeCnt",strLikeCnt);
+		//mv.addObject("likeFlag",strLikeFlag);
+		mv.addObject("bulletinId", strbulletinId);
+		
+		mv.setViewName("board/imageFileUpload");
+		return mv;
+	}
+	
+	@PutMapping(value = "/newbulletinboard/{bulletinId}")
 	public ModelAndView updateBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(".notdynamicjs/board/imageView");

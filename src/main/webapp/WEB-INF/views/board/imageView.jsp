@@ -4,7 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 	<div id="wrapper">
         <section id="imageSection">
-        	<div><a class="btn btn-primary" href= "#" onclick="deleteCheck()">삭제</a></div>    	
+        	<div>
+        		<a class="btn btn-primary" href= "#" onclick="deleteCheck()">삭제</a>
+        		<a class="btn btn-primary" href= "<c:url value="/bulletinboards/newbulletinboard/${bulletinId}"/>">수정</a>
+        	</div>    	
         	<form id="delete" action="<c:url value="/bulletinboards/newbulletinboard/${bulletinId}"/>"
 					method="post" style = "margin:0 0 0 0;height:0">
  					<input type="hidden" name = "_method" value = "delete"/>
