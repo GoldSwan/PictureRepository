@@ -8,7 +8,6 @@
 		</div>
 		<form id="uploadForm" action="<c:url value="/bulletinboards/newbulletinboard" />"
 			method="post" enctype="multipart/form-data">
-			<!-- <input hidden="hidden" name = "_method" value = "PUT"/> -->
 			<section id="uploadSection">
 				<div>
 					<div>
@@ -27,6 +26,9 @@
 				</div>
 			</section>
 			<section id="inputSection">
+				<div class = "inputText">			
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+				</div>						
 				<div class = "inputText">
 					<input type="text" name="title" placeholder="제목" value="${title}" />
 				</div>
@@ -40,7 +42,7 @@
 					<div id="tag" class="bootstrap-tagsinput" style = "padding-left:10%;padding-right:10%;"></div>			
 				</div>
 				<div class = "inputText">
-					<input type="text" name="username" value="${username}" />
+					<input type="hidden" name="username" value="${username}" />
 				</div>
 				<div class = "radio">
 					<input type="radio" name="publicRange" value="A" checked = "checked"><span>전체 공개</span> 
