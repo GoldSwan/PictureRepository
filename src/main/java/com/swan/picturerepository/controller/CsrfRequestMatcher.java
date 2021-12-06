@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CsrfRequestMatcher implements RequestMatcher {
-	private Pattern defaultAllowPattern = Pattern.compile("^(GET|POST|TRACE|HEAD|OPTIONS)$");
+	private Pattern defaultAllowPattern = Pattern.compile("^(GET|TRACE|HEAD|OPTIONS)$");//CSRF Token을 사용하지 않도록 하는 기본 HTTP Method 설정
 	private RegexRequestMatcher csrfDisabledMatcher = new RegexRequestMatcher("/RegisterKey|/upload/.*", null);
 
 	@Override
