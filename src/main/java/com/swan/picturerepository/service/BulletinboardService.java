@@ -38,6 +38,12 @@ public class BulletinboardService {
 	public String createBulletinboard(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList) {
 		return bulletinboardDAO.insertBulletinboardInfo(bulletinBoardInfoList, userFileInfoList);
 	}
+	
+	@Transactional
+	public boolean updateBulletinboard(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList, String strBulletinId) {
+		return bulletinboardDAO.updateBulletinboardInfo(bulletinBoardInfoList, userFileInfoList, strBulletinId);
+	}
+	
 	@Transactional
 	public boolean deleteBulletinboard(String strBulletinId) {
 		return bulletinboardDAO.deleteBulletinboardInfo(strBulletinId) && bulletinboardDAO.deleteUserFileInfo(strBulletinId);

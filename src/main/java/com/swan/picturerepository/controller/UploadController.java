@@ -47,13 +47,11 @@ public class UploadController {
 		String strUsername = "";
 		String strTitle = "";
 		String strContent = "";
-		//String strTag = "";
 		String strPublicRange = "";
 		
 		strUsername = req.getParameter("username");
 		strTitle = req.getParameter("title");
 		strContent = req.getParameter("content");
-		//strTag = req.getParameter("tag");
 		strPublicRange = req.getParameter("publicRange");
 		
 		StringBuffer sb = new StringBuffer();
@@ -115,22 +113,16 @@ public class UploadController {
 		
 		List<UserFileInfoDTO> fileList = null;
 		String strTitle = "";
-		//String strIsrtDt = "";
 		String strUsername = "";
-		String strContent = "";
-		String strLikeCnt = "";
-		String strLikeFlag = "";	
+		String strContent = "";		
 		String strSearchDataMap = "";
 		
 		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
 		List<Map<String, String>> list = new ArrayList<>();
 		if(fileList!=null && fileList.size()>0) {
 			strTitle = fileList.get(0).getTitle();
-			//strIsrtDt = fileList.get(0).getIsrtDt();
 			strUsername = fileList.get(0).getUsername();
 			strContent = fileList.get(0).getContent();
-			strLikeCnt = fileList.get(0).getLikeCnt();
-			strLikeFlag = fileList.get(0).getLikeFlag();
 
 			for(int i = 0; i<fileList.size();i++) {
 				Map<String, String> map = new HashMap<>();				
@@ -145,21 +137,72 @@ public class UploadController {
 		
 		mv.addObject("searchDataMap",strSearchDataMap);
 		mv.addObject("title",strTitle);
-		//mv.addObject("isrtDt",strIsrtDt);
 		mv.addObject("username",strUsername);
 		mv.addObject("content",strContent);
-		//mv.addObject("likeCnt",strLikeCnt);
-		//mv.addObject("likeFlag",strLikeFlag);
 		mv.addObject("bulletinId", strbulletinId);
 		
 		mv.setViewName("board/imageFileUpload");
 		return mv;
 	}
 	
-	@PutMapping(value = "/newbulletinboard/{bulletinId}")
-	public ModelAndView updateBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
+	@PostMapping(value = "/newbulletinboard/{bulletinId}")
+	public ModelAndView updateBulletinboard(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList, @PathVariable("bulletinId") String strBulletinId) throws Exception {
+		
+		//List<UserFileInfoDTO> preFileList = null;
+		String strUsername = "";
+		String strTitle = "";
+		String strContent = "";
+		String strPublicRange = "";
+		
+		strUsername = req.getParameter("username");
+		strTitle = req.getParameter("title");
+		strContent = req.getParameter("content");
+		strPublicRange = req.getParameter("publicRange");
+		
+		StringBuffer sb = new StringBuffer();
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName(".notdynamicjs/board/imageView");
+		ArrayList<String> bulletinBoardInfoList = new ArrayList<>();	
+		ArrayList<String> userFileInfoList = new ArrayList<>();
+		
+		bulletinBoardInfoList.add(0, strContent);
+		bulletinBoardInfoList.add(1, "N");
+		bulletinBoardInfoList.add(2, strPublicRange);
+		bulletinBoardInfoList.add(3, strTitle);
+		bulletinBoardInfoList.add(4, strUsername);
+		
+		//preFileList = fileSearchService.getSearchFileListByFileId(strbulletinId);//기존파일 리스트
+		
+		try {
+			//신규 파일 리스트
+			for (int i = 0 ; i < fileList.size() ; i++) {
+				UUID uid = UUID.randomUUID();
+				String strFileName = fileList.get(i).getOriginalFilename();
+				String strFileExtension = FilenameUtils.getExtension(strFileName);
+				String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
+				File imageFile = fileUploadService.uploadImageFile(strFileId, fileList.get(i).getBytes(), strFileName);
+				fileUploadService.uploadThumbnailFile(strFileId, imageFile, strFileName);
+				fileUploadService.uploadFullThumbnailFile(strFileId, imageFile, strFileName);
+				userFileInfoList.add(i,strFileId);		
+			
+				sb.append(strFileName).append(",");
+			}
+		
+		if(!bulletinboardService.updateBulletinboard(bulletinBoardInfoList, userFileInfoList, strBulletinId)) {
+			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
+			mv.setViewName("board/imageFileUpload");				
+			return mv;
+		}
+		
+		}catch(Exception e) {
+			model.addAttribute("uploadMultiErrorMsg", e.getMessage());
+			mv.setViewName("board/imageFileUpload");				
+			return mv;
+		}		
+		
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
+		mv.setView(redirectView);
+		
 		return mv;
 	}
 	

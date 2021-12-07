@@ -125,6 +125,36 @@ public class BulletinboardDAO {
 		return strBulletinId;
 	}
 	
+	public boolean updateBulletinboardInfo(final ArrayList<String> bulletinBoardInfoList, final ArrayList<String> userFileInfoList,  String strBulletinId) {	
+		
+		String sqlStatement = " update bulletinboard"
+				+ " set content = ?"
+				+ " ,isrtDt = SYSDATE()"
+				+ " ,likeFlag = ?"
+				+ " ,publicRange = ?"
+				+ " ,title = ?"
+				+ " ,representativeFileId = ?"
+				+ " where bulletinId = ?";		
+	
+		if(!(jdbcTemplate.update(sqlStatement,
+				new Object[] { bulletinBoardInfoList.get(0)
+						, bulletinBoardInfoList.get(1)
+						, bulletinBoardInfoList.get(2)
+						, bulletinBoardInfoList.get(3)
+						, userFileInfoList.get(0)
+						, strBulletinId}) == 1)) return false;
+							
+		sqlStatement = "insert into UserFileInfo (bulletinId, fileId, isrtDt) values(?, ?, SYSDATE())";
+
+		for(String strFileId : userFileInfoList) {
+			if(!(jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId, strFileId }) == 1)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	public boolean deleteBulletinboardInfo(String strBulletinId) {		
 		String sqlStatement = "delete from bulletinboard where bulletinId = ?";
 		return ((jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId }) == 1));
