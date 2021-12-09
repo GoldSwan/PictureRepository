@@ -195,6 +195,8 @@
 		var strArray = (this.id).split('_');
 		var likeHeart = document.getElementById('i_'+strArray[1]+'_'+strArray[2]);
 
+		var token = document.querySelector('meta[name="_csrf"]').content;
+		var header = document.querySelector('meta[name="_csrf_header"]').content;
 		xhttp.open('POST','${pageContext.request.contextPath}/async-like.do', true);
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == xhttp.DONE) {
@@ -213,6 +215,8 @@
 		/* var sendParam = "username=" + username + "&fileId=" + fileId; */
 		sendParam = "fileId=" + fileId;
 		xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		xhttp.setRequestHeader(header, token);
+		
 		xhttp.send(sendParam);
 	}
 
