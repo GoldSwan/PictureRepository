@@ -57,3 +57,36 @@
   		    event.preventDefault();
   		  };
   		});
+  		
+  		function previewImage(input) {
+  		    const multipleContainer = document.getElementById("multipleContainerSection");
+  		    //하위 태그 삭제
+  		    while ( multipleContainer.hasChildNodes()) 
+  		    { 
+  		    	multipleContainer.removeChild(multipleContainer.firstChild); 
+  		    }
+  		    //이미지 파일 미리보기 생성
+  		    if(input.files) {
+  		        const fileArr = Array.from(input.files);
+  		        const $colDiv = document.createElement("div");
+  		        $colDiv.classList.add("column");
+
+  		        fileArr.forEach((file, index) => {
+  		            const reader = new FileReader();
+  		            const $imgDiv = document.createElement("div");   
+  		            const $img = document.createElement("img");
+  		            $img.classList.add("image");
+  		            $imgDiv.appendChild($img);
+  		            reader.onload = e => {
+  		                $img.src = e.target.result;              
+  		                $imgDiv.style.width = "117.02px";
+  		                $imgDiv.style.height = "160px";
+  		                $img.style.width = "117.02px";
+  		                $img.style.height = "160px";
+  		            }
+  		            $colDiv.appendChild($imgDiv);	            
+  		            reader.readAsDataURL(file);
+  		        })
+  		        multipleContainer.appendChild($colDiv);
+  		    }
+  		}

@@ -15,8 +15,8 @@
 						<span>파일 용량/갯수 : </span><span id = "fileStatusSpan"></span>
 					</div>
 					<div id=fileDiv>
-						<input type="file" class="form-control-file" multiple="multiple"
-							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this)"  value = "put"/>
+						<input id = "inputMultipleImage" type="file" class="form-control-file" multiple="multiple"
+							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this); previewImage(this)"  value = "put"/>
 					</div>
 					<div>
 						<c:if test="${not empty uploadMultiErrorMsg }">
@@ -24,6 +24,8 @@
 						</c:if>
 					</div>
 				</div>
+			</section>
+			<section id="multipleContainerSection">
 			</section>
 			<section id="inputSection">
 				<div class = "inputText">

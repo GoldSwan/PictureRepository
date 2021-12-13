@@ -69,6 +69,14 @@ h1, h2, h3, h4, h5, h6, span {
 	display: block;
 }
 
+#multipleContainerSection {
+	display: block;
+    padding: 0 10% 0 10%;
+}
+
+#multipleContainerSection div {
+	display: inline-block;
+}
 
 #inputSection {
 	display: block;
