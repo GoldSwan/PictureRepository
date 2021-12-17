@@ -59,18 +59,19 @@
   		});
   		
   		function previewImage(input) {
-  		    const multipleContainer = document.getElementById("multipleContainerSection");
+  		    const column = document.getElementById("column");
+  		    
   		    //하위 태그 삭제
-  		    while ( multipleContainer.hasChildNodes()) 
+  		    while ( column.hasChildNodes()) 
   		    { 
-  		    	multipleContainer.removeChild(multipleContainer.firstChild); 
+  		    	column.removeChild(column.firstChild);     	
   		    }
+  		    
   		    //이미지 파일 미리보기 생성
   		    if(input.files) {
   		        const fileArr = Array.from(input.files);
-  		        const $colDiv = document.createElement("div");
-  		        $colDiv.classList.add("column");
-
+  		        const $colDiv = document.getElementById("column");
+  		        
   		        fileArr.forEach((file, index) => {
   		            const reader = new FileReader();
   		            const $imgDiv = document.createElement("div");   
@@ -87,6 +88,5 @@
   		            $colDiv.appendChild($imgDiv);	            
   		            reader.readAsDataURL(file);
   		        })
-  		        multipleContainer.appendChild($colDiv);
   		    }
   		}
