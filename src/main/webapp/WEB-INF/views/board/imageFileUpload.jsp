@@ -25,7 +25,9 @@
 					</div>
 				</div>
 			</section>
-			<section id="multipleContainerSection">
+			<section id="multipleContainerSection" class = "thumbnails">
+				<div id="column">
+				</div>
 			</section>
 			<section id="inputSection">
 				<div class = "inputText">
@@ -61,4 +63,43 @@
 
 		 document.getElementById("uploadForm").action = "${pageContext.request.contextPath}/bulletinboards/newbulletinboard/"+bulletinId;
 	}
+	
+	window.addEventListener('DOMContentLoaded', function(){
+  		var jsonParam = '${searchDataMap}';
+  			
+  		if(jsonParam=='')
+  			return;
+
+  		if(jsonParam!=''){
+  			jsonParam = JSON.parse(jsonParam);
+  		}
+ 
+  		loadSavedImage(jsonParam);
+  		
+  	});
+	
+	function loadSavedImage(jsonParam){
+		
+		const searchData = jsonParam.imageData;
+		const column = document.getElementById("column");
+		const $colDiv = document.getElementById("column");
+        
+		for(var i = 0 ; i < searchData.length ; i++){
+            const $imgDiv = document.createElement("div");   
+            const $img = document.createElement("img");
+            
+            $img.classList.add("previmage");
+            $imgDiv.appendChild($img);
+			
+            $img.src = '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image;        
+            $imgDiv.style.width = "117.02px";
+            $imgDiv.style.height = "160px";
+            $img.style.width = "117.02px";
+            $img.style.height = "160px";
+            
+            $colDiv.appendChild($imgDiv);	      
+            searchData[i].image
+		}
+	}
+	
 	</script>
