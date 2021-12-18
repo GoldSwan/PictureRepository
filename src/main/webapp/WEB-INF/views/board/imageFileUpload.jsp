@@ -16,7 +16,7 @@
 					</div>
 					<div id=fileDiv>
 						<input id = "inputMultipleImage" type="file" class="form-control-file" multiple="multiple"
-							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this); previewImage(this)"  value = "put"/>
+							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this); removePreSelectImage(); previewImage(this);"  value = "put"/>
 					</div>
 					<div>
 						<c:if test="${not empty uploadMultiErrorMsg }">
@@ -25,8 +25,12 @@
 					</div>
 				</div>
 			</section>
-			<section id="multipleContainerSection" class = "thumbnails">
-				<div id="column">
+			<section id="multipleContainerSection" class = "thumbnails">				
+				<div><span>이전 저장된 이미지</span></div>
+				<div id="prevSaveDiv" style = "display : inline-block">
+				</div>
+				<div><span>선택한 이미지</span></div>
+				<div id="selectDiv" style = "display : inline-block">
 				</div>
 			</section>
 			<section id="inputSection">
@@ -79,10 +83,9 @@
   	});
 	
 	function loadSavedImage(jsonParam){
-		
+		//이전 저장된 이미지 미리보기
 		const searchData = jsonParam.imageData;
-		const column = document.getElementById("column");
-		const $colDiv = document.getElementById("column");
+		const $prevSaveDiv = document.getElementById("prevSaveDiv");
         
 		for(var i = 0 ; i < searchData.length ; i++){
             const $imgDiv = document.createElement("div");   
@@ -91,13 +94,14 @@
             $img.classList.add("previmage");
             $imgDiv.appendChild($img);
 			
-            $img.src = '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image;        
+            $img.src = '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image;     
+            $imgDiv.style.display = "inline-block";
             $imgDiv.style.width = "117.02px";
             $imgDiv.style.height = "160px";
             $img.style.width = "117.02px";
             $img.style.height = "160px";
             
-            $colDiv.appendChild($imgDiv);	      
+            $prevSaveDiv.appendChild($imgDiv);	      
             searchData[i].image
 		}
 	}

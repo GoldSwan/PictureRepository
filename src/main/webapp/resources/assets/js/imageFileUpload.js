@@ -59,34 +59,36 @@
   		});
   		
   		function previewImage(input) {
-  		    const column = document.getElementById("column");
-  		    
-  		    //하위 태그 삭제
-  		    while ( column.hasChildNodes()) 
-  		    { 
-  		    	column.removeChild(column.firstChild);     	
-  		    }
-  		    
-  		    //이미지 파일 미리보기 생성
+  		    //선택한 이미지 파일 미리보기 생성
   		    if(input.files) {
   		        const fileArr = Array.from(input.files);
-  		        const $colDiv = document.getElementById("column");
+  		        const $selectDiv = document.getElementById("selectDiv");
   		        
   		        fileArr.forEach((file, index) => {
   		            const reader = new FileReader();
   		            const $imgDiv = document.createElement("div");   
   		            const $img = document.createElement("img");
-  		            $img.classList.add("image");
+		            $imgDiv.style.display = "inline-block";
   		            $imgDiv.appendChild($img);
   		            reader.onload = e => {
-  		                $img.src = e.target.result;              
+  		                $img.src = e.target.result;    
   		                $imgDiv.style.width = "117.02px";
   		                $imgDiv.style.height = "160px";
   		                $img.style.width = "117.02px";
   		                $img.style.height = "160px";
   		            }
-  		            $colDiv.appendChild($imgDiv);	            
+  		            $selectDiv.appendChild($imgDiv);	            
   		            reader.readAsDataURL(file);
   		        })
   		    }
   		}
+  		
+  		function removePreSelectImage(){
+  		    const $selectDiv = document.getElementById("selectDiv");
+  		    
+  		    //하위 태그 삭제
+  		    while ( $selectDiv.hasChildNodes()) 
+  		    { 
+  		    	$selectDiv.removeChild($selectDiv.firstChild);     	
+  		    }	    
+  		}	
