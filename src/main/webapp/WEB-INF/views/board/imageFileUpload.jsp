@@ -25,12 +25,12 @@
 					</div>
 				</div>
 			</section>
-			<section id="multipleContainerSection" class = "thumbnails">				
+			<section id="multipleContainerSection">				
 				<div><span>이전 저장된 이미지</span></div>
-				<div id="prevSaveDiv" style = "display : inline-block">
+				<div id="prevSaveDiv" style = "display : inline-block" class = "thumbnails">
 				</div>
 				<div><span>선택한 이미지</span></div>
-				<div id="selectDiv" style = "display : inline-block">
+				<div id="selectDiv" style = "display : inline-block" class = "thumbnails">
 				</div>
 			</section>
 			<section id="inputSection">
@@ -89,20 +89,31 @@
         
 		for(var i = 0 ; i < searchData.length ; i++){
             const $imgDiv = document.createElement("div");   
+            const $childDiv = document.createElement("div");
             const $img = document.createElement("img");
+            const $btn = document.createElement('button');
+            const $i = document.createElement('i');
             
-            $img.classList.add("previmage");
-            $imgDiv.appendChild($img);
+            $i.style.color =  'black';
+            $i.style.fontSize = '25px';
+			$i.setAttribute('class', 'fa fa-times');
+			$i.setAttribute('aria-hidden', 'false');
+            
+			$btn.setAttribute('type', 'button');		
 			
             $img.src = '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image;     
-            $imgDiv.style.display = "inline-block";
-            $imgDiv.style.width = "117.02px";
-            $imgDiv.style.height = "160px";
             $img.style.width = "117.02px";
             $img.style.height = "160px";
             
-            $prevSaveDiv.appendChild($imgDiv);	      
-            searchData[i].image
+            $imgDiv.style.display = "inline-block";
+            $imgDiv.style.width = "117.02px";
+            $imgDiv.style.height = "160px";
+            
+            $childDiv.appendChild($btn);           
+			$btn.appendChild($i);
+            $imgDiv.appendChild($img);
+            $imgDiv.appendChild($childDiv);
+            $prevSaveDiv.appendChild($imgDiv);
 		}
 	}
 	

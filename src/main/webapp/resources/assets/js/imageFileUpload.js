@@ -68,8 +68,22 @@
   		            const reader = new FileReader();
   		            const $imgDiv = document.createElement("div");   
   		            const $img = document.createElement("img");
+  		            const $childDiv = document.createElement("div");
+  		            const $btn = document.createElement('button');
+  		            const $i = document.createElement('i');
+  		            
+  		            $i.style.color =  'black';
+  		            $i.style.fontSize = '25px';
+  					$i.setAttribute('class', 'fa fa-times');
+  					$i.setAttribute('aria-hidden', 'false');
+  		            
+  					$btn.setAttribute('type', 'button');
 		            $imgDiv.style.display = "inline-block";
+		            
+		            $childDiv.appendChild($btn);           
+					$btn.appendChild($i);
   		            $imgDiv.appendChild($img);
+		            $imgDiv.appendChild($childDiv);
   		            reader.onload = e => {
   		                $img.src = e.target.result;    
   		                $imgDiv.style.width = "117.02px";
