@@ -61,6 +61,10 @@
 
 	</div>
 	<script>
+	
+	const arrRemoveSavedImageFileIds = [];//수정시 삭제할 이미지들의 fileId를 보내기 위한 Array
+	const mapSearchFileId = new Map();//삭제버튼 클릭시 해당버튼의 이미지fileId를 찾기 위한  Map
+	
 	function updateCheck() {
 		 var  bulletinId = '${bulletinId}';
 		 if (bulletinId == null) return;
@@ -100,11 +104,15 @@
 			$i.setAttribute('aria-hidden', 'false');
             
 			$btn.setAttribute('type', 'button');		
+			$btn.id = "btnImageRemove"+i;
+            $btn.addEventListener( "click", onClickRemoveSavedImage);
+			mapSearchFileId.set('btnImageRemove'+i, searchData[i].image);
 			
             $img.src = '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image;     
             $img.style.width = "117.02px";
             $img.style.height = "160px";
             
+            $imgDiv.id = 'imgDiv'+i;
             $imgDiv.style.display = "inline-block";
             $imgDiv.style.width = "117.02px";
             $imgDiv.style.height = "160px";
@@ -115,6 +123,11 @@
             $imgDiv.appendChild($childDiv);
             $prevSaveDiv.appendChild($imgDiv);
 		}
+	}
+	
+	function onClickRemoveSavedImage(){	
+		const fileId = mapSearchFileId.get(this.id);
+		console.log(fileId);
 	}
 	
 	</script>
