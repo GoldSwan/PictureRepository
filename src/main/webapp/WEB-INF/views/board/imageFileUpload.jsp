@@ -9,6 +9,7 @@
 		<form id="uploadForm" action="<c:url value="/bulletinboards/newbulletinboard" />"
 			method="post" enctype="multipart/form-data">
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+			<input type="hidden" name="removeImageList" value="" />
 			<section id="uploadSection">
 				<div>
 					<div>
@@ -63,7 +64,7 @@
 	<script>
 	
 	const arrRemoveSavedImageFileIds = [];//수정시 삭제할 이미지들의 fileId를 보내기 위한 Array
-	const mapSearchFileId = new Map();//삭제버튼 클릭시 해당버튼의 이미지fileId를 찾기 위한  Map
+	const setSearchFileIds = new Set();//삭제버튼 클릭시 해당버튼의 이미지fileId를 찾기 위한  Set
 	
 	function updateCheck() {
 		 var  bulletinId = '${bulletinId}';
@@ -103,10 +104,10 @@
 			$i.setAttribute('class', 'fa fa-times');
 			$i.setAttribute('aria-hidden', 'false');
             
-			$btn.setAttribute('type', 'button');		
+			$btn.setAttribute('type', 'button');
 			$btn.id = "btnImageRemove"+i;
             $btn.addEventListener( "click", onClickRemoveSavedImage);
-			mapSearchFileId.set('btnImageRemove'+i, searchData[i].image);
+            $btn.value = searchData[i].image;
 			
             $img.src = '${pageContext.request.contextPath}/resources/images/thumbs/'+searchData[i].image;     
             $img.style.width = "117.02px";
@@ -125,9 +126,12 @@
 		}
 	}
 	
-	function onClickRemoveSavedImage(){	
-		const fileId = mapSearchFileId.get(this.id);
+	function onClickRemoveSavedImage(){		
+		const fileId = this.value;
+		if(!setSearchFileIds.has(fileId)){
+			setSearchFileIds.add(fileId);
 		console.log(fileId);
+		}
 	}
 	
 	</script>
