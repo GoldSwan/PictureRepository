@@ -17,7 +17,7 @@
 					</div>
 					<div id=fileDiv>
 						<input id = "inputMultipleImage" type="file" class="form-control-file" multiple="multiple"
-							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this); removePreSelectImage(); previewImage(this);"  value = "put"/>
+							name="file" accept="image/gif, image.jpeg, image/png, image/jpg" onchange="changeFileStatus(this); removePreSelectImage(); previewImage(this);" />
 					</div>
 					<div>
 						<c:if test="${not empty uploadMultiErrorMsg }">
@@ -63,13 +63,18 @@
 	</div>
 	<script>
 	
-	const arrRemoveSavedImageFileIds = [];//수정시 삭제할 이미지들의 fileId를 보내기 위한 Array
 	const setSearchFileIds = new Set();//삭제버튼 클릭시 해당버튼의 이미지fileId를 찾기 위한  Set
 	
 	function updateCheck() {
-		 var  bulletinId = '${bulletinId}';
+		 const  bulletinId = '${bulletinId}';
 		 if (bulletinId == null) return;
-
+		 /*
+		 const obj = new Object();
+		 const arrRemoveSavedImageFileIds = [];//수정시 삭제할 이미지들의 fileId를 보내기 위한 Array
+		 arrRemoveSavedImageFileIds = Array.from(setSearchFileIds);
+		 obj.value = arrRemoveSavedImageFileIds;
+		 var values = JSON.stringify(obj);
+         */
 		 document.getElementById("uploadForm").action = "${pageContext.request.contextPath}/bulletinboards/newbulletinboard/"+bulletinId;
 	}
 	
@@ -128,9 +133,13 @@
 	
 	function onClickRemoveSavedImage(){		
 		const fileId = this.value;
+		const $btn = this;
 		if(!setSearchFileIds.has(fileId)){
 			setSearchFileIds.add(fileId);
-		console.log(fileId);
+			//미리보기 제거
+			const $childDiv =  $btn.parentElement;
+			const $imgDiv =  $childDiv.parentElement;
+			$imgDiv.parentElement.removeChild($imgDiv);
 		}
 	}
 	
