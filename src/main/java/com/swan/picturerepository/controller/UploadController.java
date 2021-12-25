@@ -27,6 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileSearchService;
@@ -148,19 +152,43 @@ public class UploadController {
 	@PostMapping(value = "/newbulletinboard/{bulletinId}")
 	public ModelAndView updateBulletinboard(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList, @PathVariable("bulletinId") String strBulletinId) throws Exception {
 		
-		//List<UserFileInfoDTO> preFileList = null;
+		ModelAndView mv = new ModelAndView();
+		RedirectView redirectView = new RedirectView();
 		String strUsername = "";
 		String strTitle = "";
 		String strContent = "";
 		String strPublicRange = "";
+		String strRemoveImageList = "";
+		List<UserFileInfoDTO> savedFileList = new ArrayList<UserFileInfoDTO>();	
 		
 		strUsername = req.getParameter("username");
 		strTitle = req.getParameter("title");
 		strContent = req.getParameter("content");
 		strPublicRange = req.getParameter("publicRange");
+		strRemoveImageList = req.getParameter("removeImageList");
+		
+		Map<String, ArrayList<String>> mapRemoveImages = new Gson().fromJson(strRemoveImageList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
+		
+		List<String> arrImages = mapRemoveImages.get("images");
+		for(String strFileId : arrImages) {
+			savedFileList.add(new UserFileInfoDTO.Builder("", "", "", "", strFileId, "", "").build());
+		}
+		
+		if(!fileUploadService.deleteImageFile(savedFileList) || !fileUploadService.deleteThumbnailFile(savedFileList) || !fileUploadService.deleteFullThumbnailFile(savedFileList)) {
+			model.addAttribute("deleteErrorMsg", "파일 삭제에서 에러가 발생했습니다.");
+			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
+			mv.setView(redirectView);
+			return mv;
+		}
+
+		if(!fileUploadService.deleteFileInfo(savedFileList)) {
+			model.addAttribute("deleteErrorMsg", "데이터 삭제에서 에러가 발생했습니다.");
+			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
+			mv.setView(redirectView);
+			return mv;
+		}
 		
 		StringBuffer sb = new StringBuffer();
-		ModelAndView mv = new ModelAndView();
 		ArrayList<String> bulletinBoardInfoList = new ArrayList<>();	
 		ArrayList<String> userFileInfoList = new ArrayList<>();
 		
@@ -169,8 +197,6 @@ public class UploadController {
 		bulletinBoardInfoList.add(2, strPublicRange);
 		bulletinBoardInfoList.add(3, strTitle);
 		bulletinBoardInfoList.add(4, strUsername);
-		
-		//preFileList = fileSearchService.getSearchFileListByFileId(strbulletinId);//기존파일 리스트
 		
 		try {
 			//신규 파일 리스트
@@ -199,7 +225,6 @@ public class UploadController {
 			return mv;
 		}		
 		
-		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
 		mv.setView(redirectView);
 		

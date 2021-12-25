@@ -58,4 +58,15 @@ public class UserFileInfoDAO {
 					}		
 		});
 	}
+	
+	public boolean deleteUserFileInfo(List<UserFileInfoDTO> fileList) {		
+		String sqlStatement = "delete from userfileinfo where fileId = ?";
+		
+		for(UserFileInfoDTO userFileInfoDTO : fileList) {
+			if(!(jdbcTemplate.update(sqlStatement, new Object[] { userFileInfoDTO.getFileId() }) == 1)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

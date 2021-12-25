@@ -1,13 +1,18 @@
 package com.swan.picturerepository.service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 
+import com.swan.picturerepository.dao.BulletinboardDAO;
+import com.swan.picturerepository.dao.UserFileInfoDAO;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
 
 import net.coobird.thumbnailator.Thumbnails;
@@ -25,6 +30,8 @@ public class FileUploadService {
 	private String thumbnailUploadPath;
 	@Resource(name = "fullUploadPath")
 	private String fullUploadPath;
+	
+	@Autowired UserFileInfoDAO userFileInfoDAO;
 	
 	public File uploadImageFile(String savedName, byte[] fileData, String fileName) throws Exception {
 		File imageFile = new File(imageUploadPath, savedName);
@@ -80,5 +87,10 @@ public class FileUploadService {
 			}
 		}
 		return true;
+	}
+	
+	@Transactional
+	public boolean deleteFileInfo(List<UserFileInfoDTO> fileList) {
+		return userFileInfoDAO.deleteUserFileInfo(fileList);
 	}
 }
