@@ -133,7 +133,7 @@ public class BulletinboardDAO {
 				+ " ,likeFlag = ?"
 				+ " ,publicRange = ?"
 				+ " ,title = ?"
-				+ " ,representativeFileId = ?"
+				+ " ,representativeFileId = case when 'NEWFILE' = ? then ? else representativeFileId end"
 				+ " where bulletinId = ?";		
 	
 		if(!(jdbcTemplate.update(sqlStatement,
@@ -141,7 +141,8 @@ public class BulletinboardDAO {
 						, bulletinBoardInfoList.get(1)
 						, bulletinBoardInfoList.get(2)
 						, bulletinBoardInfoList.get(3)
-						, userFileInfoList.get(0)
+						, userFileInfoList.size() > 0 ? "NEWFILE" : "NONEWFILE"
+						, userFileInfoList.size() > 0 ? userFileInfoList.get(0) : "NOFILEID"
 						, strBulletinId}) == 1)) return false;
 							
 		sqlStatement = "insert into UserFileInfo (bulletinId, fileId, isrtDt) values(?, ?, SYSDATE())";

@@ -7,7 +7,7 @@
 			<h3>사진 올리기</h3>
 		</div>
 		<form id="uploadForm" action="<c:url value="/bulletinboards/newbulletinboard" />"
-			method="post" enctype="multipart/form-data">
+			method="post"  onsubmit="return imageCheck();" enctype="multipart/form-data">
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 			<input type="hidden" name="username" value="${username}" />			
 			<input type="hidden" id = "removeImageList" name="removeImageList" value="" />

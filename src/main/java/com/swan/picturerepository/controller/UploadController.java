@@ -174,18 +174,19 @@ public class UploadController {
 			savedFileList.add(new UserFileInfoDTO.Builder("", "", "", "", strFileId, "", "").build());
 		}
 		
-		if(!fileUploadService.deleteImageFile(savedFileList) || !fileUploadService.deleteThumbnailFile(savedFileList) || !fileUploadService.deleteFullThumbnailFile(savedFileList)) {
-			model.addAttribute("deleteErrorMsg", "파일 삭제에서 에러가 발생했습니다.");
-			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
-			mv.setView(redirectView);
-			return mv;
-		}
-
-		if(!fileUploadService.deleteFileInfo(savedFileList)) {
-			model.addAttribute("deleteErrorMsg", "데이터 삭제에서 에러가 발생했습니다.");
-			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
-			mv.setView(redirectView);
-			return mv;
+		if(savedFileList.size() > 0) {
+			if(!fileUploadService.deleteImageFile(savedFileList) || !fileUploadService.deleteThumbnailFile(savedFileList) || !fileUploadService.deleteFullThumbnailFile(savedFileList)) {
+				model.addAttribute("deleteErrorMsg", "파일 삭제에서 에러가 발생했습니다.");
+				redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
+				mv.setView(redirectView);
+				return mv;
+			}
+			if(!fileUploadService.deleteFileInfo(savedFileList)) {
+				model.addAttribute("deleteErrorMsg", "데이터 삭제에서 에러가 발생했습니다.");
+				redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
+				mv.setView(redirectView);
+				return mv;
+			}
 		}
 		
 		StringBuffer sb = new StringBuffer();
@@ -201,23 +202,24 @@ public class UploadController {
 		try {
 			//신규 파일 리스트
 			for (int i = 0 ; i < fileList.size() ; i++) {
-				UUID uid = UUID.randomUUID();
-				String strFileName = fileList.get(i).getOriginalFilename();
-				String strFileExtension = FilenameUtils.getExtension(strFileName);
-				String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
-				File imageFile = fileUploadService.uploadImageFile(strFileId, fileList.get(i).getBytes(), strFileName);
-				fileUploadService.uploadThumbnailFile(strFileId, imageFile, strFileName);
-				fileUploadService.uploadFullThumbnailFile(strFileId, imageFile, strFileName);
-				userFileInfoList.add(i,strFileId);		
-			
-				sb.append(strFileName).append(",");
+				if(!fileList.get(i).isEmpty()) {
+					UUID uid = UUID.randomUUID();
+					String strFileName = fileList.get(i).getOriginalFilename();
+					String strFileExtension = FilenameUtils.getExtension(strFileName);
+					String strFileId = String.format("%s.%s",uid.toString(),strFileExtension);
+					File imageFile = fileUploadService.uploadImageFile(strFileId, fileList.get(i).getBytes(), strFileName);
+					fileUploadService.uploadThumbnailFile(strFileId, imageFile, strFileName);
+					fileUploadService.uploadFullThumbnailFile(strFileId, imageFile, strFileName);
+					userFileInfoList.add(i,strFileId);		
+					sb.append(strFileName).append(",");
+				}
 			}
-		
-		if(!bulletinboardService.updateBulletinboard(bulletinBoardInfoList, userFileInfoList, strBulletinId)) {
-			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
-			mv.setViewName("board/imageFileUpload");				
-			return mv;
-		}
+			
+			if(!bulletinboardService.updateBulletinboard(bulletinBoardInfoList, userFileInfoList, strBulletinId)) {
+				model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
+				mv.setViewName("board/imageFileUpload");				
+				return mv;
+			}
 		
 		}catch(Exception e) {
 			model.addAttribute("uploadMultiErrorMsg", e.getMessage());

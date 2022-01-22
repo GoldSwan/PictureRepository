@@ -58,9 +58,21 @@
   	        document.getElementById('fileStatusSpan').innerHTML = totalFileSize + ' / ' + file.files.length+'개';
   		}
   		
+  		function imageCheck(){
+ 			 //이전 저장된 이미지, 선택한 이미지가 없는 경우 "선택된 이미지가 없습니다." 메세지 리턴
+			 console.log(document.getElementById("prevSaveDiv").childElementCount);
+  			 console.log(document.getElementById("selectDiv").childElementCount);
+  			 
+  			 if(document.getElementById("prevSaveDiv").childElementCount == 0 && document.getElementById("selectDiv").childElementCount == 0){
+  				 window.alert("선택된 이미지가 없습니다.");
+  				 return false;
+  			 }
+  			 return true;
+  		}
+  		
   		function updateCheck(bulletinId) {
   			 if (bulletinId == null) return;
-  			
+  			 
   			 const arrRemoveSavedImageFileIds = Array.from(setSearchFileIds);
   			 var obj = {"images":[]};
   			 for(var i = 0 ; i < arrRemoveSavedImageFileIds.length ; i++){
