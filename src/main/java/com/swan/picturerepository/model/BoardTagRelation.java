@@ -20,18 +20,16 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class BulletinTag implements Serializable {
+public class BoardTagRelation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	private Long bulletinId;	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long tagId;
-	@Column(length=10)
-	private String tagName;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	private Long boardTagId;	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name ="bulletinId")
-	private BulletinBoard bulletinBoard;	
+	@JoinColumn
+	private BulletinBoard bulletinId;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn
+	private HashTag tagId;	
 }
