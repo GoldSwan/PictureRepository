@@ -11,6 +11,7 @@
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 			<input type="hidden" name="username" value="${username}" />			
 			<input type="hidden" id = "removeImageList" name="removeImageList" value="" />
+			<input type="hidden" id = "hashTagList" name="hashTagList" value="" />
 			<section id="uploadSection">
 				<div>
 					<div>
