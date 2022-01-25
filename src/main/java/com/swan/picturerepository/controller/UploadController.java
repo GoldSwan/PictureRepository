@@ -52,16 +52,19 @@ public class UploadController {
 		String strTitle = "";
 		String strContent = "";
 		String strPublicRange = "";
+		String strHashTagList = "";
 		
 		strUsername = req.getParameter("username");
 		strTitle = req.getParameter("title");
 		strContent = req.getParameter("content");
 		strPublicRange = req.getParameter("publicRange");
+		strHashTagList = req.getParameter("hashTagList");
 		
 		StringBuffer sb = new StringBuffer();
 		ModelAndView mv = new ModelAndView();
 		ArrayList<String> bulletinBoardInfoList = new ArrayList<>();	
 		ArrayList<String> userFileInfoList = new ArrayList<>();
+		Map<String, ArrayList<String>> mapHashTags = new Gson().fromJson(strHashTagList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
 		
 		bulletinBoardInfoList.add(0, strContent);
 		bulletinBoardInfoList.add(1, "N");

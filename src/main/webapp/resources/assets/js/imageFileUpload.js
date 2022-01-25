@@ -70,6 +70,21 @@
   			 return true;
   		}
 
+  		function setHashTagList(){
+  			//신규해시태그
+ 			 var objTags = {"tags":[]};
+  			 const tags =  document.querySelectorAll(".badge");
+ 			 for (var i = 0; i < tags.length; i++) {
+ 				 var tag = tags[i].innerText;
+ 				 tag = tag.substring(0, tag.length - 1);
+ 				 objTags.tags.push(tag);
+ 				//console.log("tag text:"+tags[i].innerText);
+ 			 }
+ 			 const paramTags = JSON.stringify(objTags);
+ 			 //console.log("paramTags:"+paramTags);
+ 			 document.getElementById("hashTagList").value = paramTags;
+  		}
+  		
   		function updateCheck(bulletinId) {
   			 if (bulletinId == null) return;
 
@@ -81,19 +96,6 @@
   			 const param = JSON.stringify(obj);
   			 //console.log("param:"+param);
   			 document.getElementById("removeImageList").value = param;
-
-  			 //해시태그
-  			 var objTags = {"tags":[]};
-   			 const tags =  document.querySelectorAll(".badge");
-  			 for (var i = 0; i < tags.length; i++) {
-  				 var tag = tags[i].innerText;
-  				 tag = tag.substring(0, tag.length - 1);
-  				 objTags.tags.push(tag);
-  				//console.log("tag text:"+tags[i].innerText);
-  			 }
-  			 const paramTags = JSON.stringify(objTags);
-  			 //console.log("paramTags:"+paramTags);
-  			 document.getElementById("hashTagList").value = paramTags;
 
   			 document.getElementById("uploadForm").action = rootPath + "/bulletinboards/newbulletinboard/"+bulletinId;
   		}

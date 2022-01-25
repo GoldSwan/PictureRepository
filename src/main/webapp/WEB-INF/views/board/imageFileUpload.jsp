@@ -12,6 +12,7 @@
 			<input type="hidden" name="username" value="${username}" />			
 			<input type="hidden" id = "removeImageList" name="removeImageList" value="" />
 			<input type="hidden" id = "hashTagList" name="hashTagList" value="" />
+			<input type="hidden" id = "removeHashTagList" name="removeHashTagList" value="" />
 			<section id="uploadSection">
 				<div>
 					<div>
@@ -55,7 +56,7 @@
 					<input type="radio" name="publicRange" value="C"/><span>비공개</span>
 				</div>
 				<div class = "inputText">
-					<input type="submit" class="btn btn-primary" onclick="updateCheck(${bulletinId})" value = "저장"/>
+					<input type="submit" class="btn btn-primary" onclick="setHashTagList(); updateCheck(${bulletinId});" value = "저장"/>
 				</div>
 			</section>
 		</form>
