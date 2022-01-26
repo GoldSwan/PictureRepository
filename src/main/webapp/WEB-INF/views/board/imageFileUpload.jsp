@@ -56,7 +56,7 @@
 					<input type="radio" name="publicRange" value="C"/><span>비공개</span>
 				</div>
 				<div class = "inputText">
-					<input type="submit" class="btn btn-primary" onclick="setHashTagList(); updateCheck(${bulletinId});" value = "저장"/>
+					<input type="submit" class="btn btn-primary" onclick="setHashTagList(); setRemoveHashTagList(); updateCheck(${bulletinId});" value = "저장"/>
 				</div>
 			</section>
 		</form>

@@ -25,7 +25,22 @@
 
   		function removeTag(){
   			var listSpan = document.getElementById("tag");
-  			listSpan.removeChild(listSpan.childNodes[0]);
+  			var tagSpan = listSpan.childNodes[0];
+			var tag = tagSpan.innerText;
+				tag = tag.substring(0, tag.length - 1);
+				//console.log("tag:"+tag);
+			var input = document.getElementById("removeHashTagList");
+  			var tagRemoveSpan = document.createElement('span');
+  			var result = document.getElementById('tag');
+  			
+  			tagRemoveSpan.className='remove-badge';
+  			tagRemoveSpan.style.display = 'none';
+  			if(tag !== ""){
+  				tagRemoveSpan.append(tag);
+  	  			result.append(tagRemoveSpan);
+  			}
+  			
+  			listSpan.removeChild(tagSpan);
   		}
   		$('input[type="text"]').keydown(function() {
   		  if (event.keyCode === 13) {
@@ -83,6 +98,20 @@
  			 const paramTags = JSON.stringify(objTags);
  			 //console.log("paramTags:"+paramTags);
  			 document.getElementById("hashTagList").value = paramTags;
+  		}
+  
+  		function setRemoveHashTagList(){
+  			//삭제해시태그
+ 			 var objTags = {"tags":[]};
+  			 const tags =  document.querySelectorAll(".remove-badge");
+ 			 for (var i = 0; i < tags.length; i++) {
+ 				 var tag = tags[i].innerText;
+ 				 objTags.tags.push(tag);
+ 				//console.log("tag text:"+tags[i].innerText);
+ 			 }
+ 			 const paramTags = JSON.stringify(objTags);
+ 			 //console.log("paramTags:"+paramTags);
+ 			 document.getElementById("removeHashTagList").value = paramTags;
   		}
   		
   		function updateCheck(bulletinId) {

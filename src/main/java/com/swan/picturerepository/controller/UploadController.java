@@ -53,12 +53,14 @@ public class UploadController {
 		String strContent = "";
 		String strPublicRange = "";
 		String strHashTagList = "";
+		String strRemoveHashTagList = "";
 		
 		strUsername = req.getParameter("username");
 		strTitle = req.getParameter("title");
 		strContent = req.getParameter("content");
 		strPublicRange = req.getParameter("publicRange");
 		strHashTagList = req.getParameter("hashTagList");
+		strRemoveHashTagList = req.getParameter("removeHashTagList");
 		
 		StringBuffer sb = new StringBuffer();
 		ModelAndView mv = new ModelAndView();
@@ -163,6 +165,7 @@ public class UploadController {
 		String strPublicRange = "";
 		String strRemoveImageList = "";
 		String strHashTagList = "";
+		String strRemoveHashTagList = "";
 		List<UserFileInfoDTO> savedFileList = new ArrayList<UserFileInfoDTO>();	
 		
 		strUsername = req.getParameter("username");
@@ -171,7 +174,8 @@ public class UploadController {
 		strPublicRange = req.getParameter("publicRange");
 		strRemoveImageList = req.getParameter("removeImageList");
 		strHashTagList = req.getParameter("hashTagList");
-
+		strRemoveHashTagList = req.getParameter("removeHashTagList");
+		
 		Map<String, ArrayList<String>> mapRemoveImages = new Gson().fromJson(strRemoveImageList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
 		
 		List<String> arrImages = mapRemoveImages.get("images");
