@@ -1,5 +1,7 @@
 package com.swan.picturerepository.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,4 +22,6 @@ public class HashTag {
 	private Long tagId;
 	@Column(length=10)
 	private String tagName;
+	@Column
+	private Timestamp isrtDt;
 }

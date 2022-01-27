@@ -35,6 +35,7 @@ import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileSearchService;
 import com.swan.picturerepository.service.FileUploadService;
+import com.swan.picturerepository.service.HashTagService;
 
 @Controller
 @RequestMapping("/bulletinboards")
@@ -43,6 +44,7 @@ public class UploadController {
 	@Autowired BulletinboardService bulletinboardService;
 	@Autowired FileUploadService fileUploadService;
 	@Autowired FileSearchService fileSearchService;
+	@Autowired HashTagService hashTagService;
 	
 	@PostMapping(value = "/newbulletinboard")
 	public ModelAndView uploadFormMulti(Model model, HttpServletRequest req, @RequestParam("file") List<MultipartFile> fileList) throws Exception {
@@ -67,6 +69,8 @@ public class UploadController {
 		ArrayList<String> bulletinBoardInfoList = new ArrayList<>();	
 		ArrayList<String> userFileInfoList = new ArrayList<>();
 		Map<String, ArrayList<String>> mapHashTags = new Gson().fromJson(strHashTagList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
+		
+		List<String> arrTags = mapHashTags.get("tags");
 		
 		bulletinBoardInfoList.add(0, strContent);
 		bulletinBoardInfoList.add(1, "N");
@@ -96,6 +100,7 @@ public class UploadController {
 			}
 		
 		strBulletinId = bulletinboardService.createBulletinboard(bulletinBoardInfoList, userFileInfoList);
+		List<String> listTagIds = hashTagService.createHashTag(arrTags);
 		
 		}catch(Exception e) {
 			model.addAttribute("uploadMultiErrorMsg", e.getMessage());
