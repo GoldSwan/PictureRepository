@@ -13,7 +13,8 @@ public class HashTagService {
 	@Autowired HashTagDAO hashTagDAO;
 	
 	@Transactional
-	public List<String> createHashTag(List<String> arrTags) {
-		return hashTagDAO.createHashTagInfo(arrTags);
+	public boolean createHashTag(String strBulletinId, List<String> arrTags) {
+		List<String> listHashTagId = hashTagDAO.createHashTagInfo(arrTags);
+		return hashTagDAO.createBoardTagRelationInfo(strBulletinId, listHashTagId);
 	}
 }

@@ -100,8 +100,7 @@ public class UploadController {
 			}
 		
 		strBulletinId = bulletinboardService.createBulletinboard(bulletinBoardInfoList, userFileInfoList);
-		List<String> listTagIds = hashTagService.createHashTag(arrTags);
-		
+
 		}catch(Exception e) {
 			model.addAttribute("uploadMultiErrorMsg", e.getMessage());
 			mv.setViewName("board/imageFileUpload");				
@@ -112,6 +111,12 @@ public class UploadController {
 			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
 			mv.setViewName("board/imageFileUpload");				
 			return mv;
+		}
+		//해시태그 생성
+		if(!hashTagService.createHashTag(strBulletinId, arrTags)) {
+			model.addAttribute("uploadMultiErrorMsg", "해시태그 생성에서 에러가 발생했습니다.");
+			mv.setViewName("board/imageFileUpload");				
+			return mv;			
 		}
 		
 		RedirectView redirectView = new RedirectView();
