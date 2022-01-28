@@ -1,6 +1,7 @@
 package com.swan.picturerepository.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,13 +24,17 @@ import lombok.ToString;
 public class BoardTagRelation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	//private Long boardTagId;	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private Long boardTagId;	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn
+	@JoinColumn(name = "bulletinId")
 	private BulletinBoard bulletinId;
+	@Id
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn
+	@JoinColumn(name = "tagId")
 	private HashTag tagId;	
+	@Column
+	private Timestamp isrtDt;	
 }
