@@ -6,11 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +21,7 @@ import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.model.BulletinBoard;
 import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileSearchService;
+import com.swan.picturerepository.service.HashTagService;
 import com.swan.picturerepository.service.PageNavicationService;
 
 @Controller
@@ -32,6 +31,8 @@ public class SearchController {
 	@Autowired private BulletinboardService bulletinboardService;
 	@Autowired private FileSearchService fileSearchService;
 	@Autowired private PageNavicationService pageNavicationService;
+	@Autowired private HashTagService hashTagService;
+	
 	List<BulletinBoard> boardList = null;
 	
 	@RequestMapping(value = "", method = {RequestMethod.GET})
@@ -109,6 +110,7 @@ public class SearchController {
 	@RequestMapping(value = "/{bulletinId}", method = {RequestMethod.GET})
 	public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId) {	
 		List<UserFileInfoDTO> fileList = null;
+		List<String> tagList = null;
 		String strTitle = "";
 		String strIsrtDt = "";
 		String strUsername = "";
@@ -121,8 +123,10 @@ public class SearchController {
 		ModelAndView mv = new ModelAndView();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		mv.setViewName(".notdynamicjs/board/imageView");
-		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
-		List<Map<String, String>> list = new ArrayList<>();
+		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);	
+		List<Map<String, String>> listImages = new ArrayList<>();
+		List<Map<String, String>> listTags = new ArrayList<>();
+		
 		if(fileList!=null && fileList.size()>0) {
 			strTitle = fileList.get(0).getTitle();
 			strIsrtDt = fileList.get(0).getIsrtDt();
@@ -134,12 +138,23 @@ public class SearchController {
 			for(int i = 0; i<fileList.size();i++) {
 				Map<String, String> map = new HashMap<>();				
 				map.put("image", fileList.get(i).getFileId());
-				list.add(map);
+				listImages.add(map);
+			}
+		}
+		
+		tagList = hashTagService.getSearchTagList(strbulletinId);
+		
+		if(tagList!=null && tagList.size()>0) {
+			for(String strTagName : tagList) {
+				Map<String, String> map = new HashMap<>();
+				map.put("tag", strTagName);
+				listTags.add(map);
 			}
 		}
 		
 		Map<String, Object> searchDataMap = new HashMap<>();	
-		searchDataMap.put("imageData", list);
+		searchDataMap.put("imageData", listImages);
+		searchDataMap.put("tagData", listTags);
 		strSearchDataMap = new Gson().toJson(searchDataMap);
 		
 		mv.addObject("searchDataMap",strSearchDataMap);
@@ -153,5 +168,4 @@ public class SearchController {
 		
 		return mv;
 	}
-
 }

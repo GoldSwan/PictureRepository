@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 	<div id="wrapper">
-        <section id="imageSection">
+        <section id="viewSection">
         	<div>
         		<a class="btn btn-primary" href= "#" onclick="deleteCheck()">삭제</a>
         		<a class="btn btn-primary" href= "<c:url value="/bulletinboards/newbulletinboard/${bulletinId}"/>">수정</a>
@@ -24,7 +24,10 @@
         	<div><span>작성자 : <c:out value = "${username}"/></span></div>
         	<div><span>내용 : <c:out value = "${content}"/></span></div>
         	<div><span>좋아요 횟수 : <c:out value = "${likeCnt}"/></span></div>       	
-        	<div><span>좋아요 여부 : <c:out value = "${likeFlag}"/></span></div>
+        	<div><span>좋아요 여부 : <c:out value = "${likeFlag}"/></span></div>    
+        	<section id="imageSection">
+        	</section>  
+     		 <div id="tag" class="bootstrap-tagsinput" style = "padding-left:10%;padding-right:10%;"></div>        	 	
         </section>
 	</div>
 	<script>
@@ -41,6 +44,7 @@
 		}
 	
 		loadImage(jsonParam);
+		loadHashTag(jsonParam);
 	});
 	
 	function loadImage(jsonParam){
@@ -87,6 +91,26 @@
 			document.getElementById('a_'+i).rel = "noopener";
 			//imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
 			
+		}
+	}
+
+	function loadHashTag(jsonParam){
+		var searchData = jsonParam.tagData;		
+		
+		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
+			return;
+		for(var i = 0 ; i < searchData.length ; i++){
+		    var tagSpan = document.createElement('span');
+	  	    var result = document.getElementById('tag');
+	  	    tagSpan.className='badge';
+	  	    tagSpan.setAttribute( 'onclick', "location.href = '#'" );//#에 태그검색 URL 추가 필요
+	        
+	  	    var content =  searchData[i].tag;
+	        
+	  	    if(content !== ""){
+	  	    	tagSpan.append(content);
+	  	      	result.append(tagSpan);
+	  	    }
 		}
 	}
 	

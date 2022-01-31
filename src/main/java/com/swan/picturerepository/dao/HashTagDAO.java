@@ -54,6 +54,22 @@ public class HashTagDAO {
 		});
 	}
 	
+	public List<String> selectTagList(String strBulletinId) {
+		String sqlStatement = " SELECT b.tagName"
+							+ " FROM boardtagrelation a"
+							+ " INNER JOIN hashtag b on b.tagId = a.tagId"
+							+ " WHERE a.bulletinId = ?";
+		
+		
+		return jdbcTemplate.query(sqlStatement, new Object[] { strBulletinId }, 
+				new RowMapper<String>() {
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return rs.getString("tagName");
+					}				
+		});
+	}
+	
 	public String createHashTagInfoInsert(final String tagName) {
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();

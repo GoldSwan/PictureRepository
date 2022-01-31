@@ -17,4 +17,8 @@ public class HashTagService {
 		List<String> listHashTagId = hashTagDAO.createHashTagInfo(arrTags);
 		return hashTagDAO.createBoardTagRelationInfo(strBulletinId, listHashTagId);
 	}
+	
+	public List<String> getSearchTagList(String strBulletinId){
+		return hashTagDAO.selectTagList(strBulletinId);
+	}
 }
