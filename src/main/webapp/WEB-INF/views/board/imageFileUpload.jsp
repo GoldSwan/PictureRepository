@@ -78,7 +78,7 @@
   		}
  
   		loadSavedImage(jsonParam);
-  		
+  		loadHashTag(jsonParam);
   	});	
   		
 	</script>

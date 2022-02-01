@@ -131,13 +131,16 @@ public class UploadController {
 		ModelAndView mv = new ModelAndView();
 		
 		List<UserFileInfoDTO> fileList = null;
+		List<String> tagList = null;
 		String strTitle = "";
 		String strUsername = "";
 		String strContent = "";		
 		String strSearchDataMap = "";
 		
 		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
-		List<Map<String, String>> list = new ArrayList<>();
+		List<Map<String, String>> listImages = new ArrayList<>();
+		List<Map<String, String>> listTags = new ArrayList<>();
+		
 		if(fileList!=null && fileList.size()>0) {
 			strTitle = fileList.get(0).getTitle();
 			strUsername = fileList.get(0).getUsername();
@@ -146,12 +149,23 @@ public class UploadController {
 			for(int i = 0; i<fileList.size();i++) {
 				Map<String, String> map = new HashMap<>();				
 				map.put("image", fileList.get(i).getFileId());
-				list.add(map);
+				listImages.add(map);
+			}
+		}
+		
+		tagList = hashTagService.getSearchTagList(strbulletinId);
+		
+		if(tagList!=null && tagList.size()>0) {
+			for(String strTagName : tagList) {
+				Map<String, String> map = new HashMap<>();
+				map.put("tag", strTagName);
+				listTags.add(map);
 			}
 		}
 		
 		Map<String, Object> searchDataMap = new HashMap<>();	
-		searchDataMap.put("imageData", list);
+		searchDataMap.put("imageData", listImages);
+		searchDataMap.put("tagData", listTags);
 		strSearchDataMap = new Gson().toJson(searchDataMap);
 		
 		mv.addObject("searchDataMap",strSearchDataMap);

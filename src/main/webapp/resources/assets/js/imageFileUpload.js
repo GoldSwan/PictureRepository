@@ -180,60 +180,85 @@
   			}
   		}
 
-  			function previewImage(input) {
-  	  		    //선택한 이미지 파일 미리보기 생성
-  	  		    if(input.files) {
-  	  		        const fileArr = Array.from(input.files);
-  	  		        const $selectDiv = document.getElementById("selectDiv");
-
-  	  		        fileArr.forEach((file, index) => {
-  	  		            const reader = new FileReader();
-  	  		            const $imgDiv = document.createElement("div");
-  	  		            const $img = document.createElement("img");
-  	  		            //const $childDiv = document.createElement("div");
-  	  		            //const $btn = document.createElement('button');
-  	  		            //const $i = document.createElement('i');
-
-  	  		            //$i.style.color =  'black';
-  	  		            //$i.style.fontSize = '25px';
-  	  					//$i.setAttribute('class', 'fa fa-times');
-  	  					//$i.setAttribute('aria-hidden', 'false');
-
-  	  					//console.log("index:"+index);
-  	  					//$btn.value = index;//삭제시 필요한 index 지정
-  			            //$btn.addEventListener( "click", onClickRemoveSelectImage);
-  	  					//$btn.setAttribute('type', 'button');
-
-  			            $imgDiv.style.display = "inline-block";
-
-  			            //$childDiv.appendChild($btn);
-  						//$btn.appendChild($i);
-  	  		            $imgDiv.appendChild($img);
-  			            //$imgDiv.appendChild($childDiv);
-  	  		            reader.onload = e => {
-  	  		                $img.src = e.target.result;
-  	  		                $imgDiv.style.width = "117.02px";
-  	  		                $imgDiv.style.height = "160px";
-  	  		                $img.style.width = "117.02px";
-  	  		                $img.style.height = "160px";
-  	  		            }
-  	  		            $selectDiv.appendChild($imgDiv);
-  	  		            reader.readAsDataURL(file);
-  	  		        })
-  	  		    }
-  	  		}
-
-  	  		function removePreSelectImage(){
-  	  		    const $Div = document.getElementById("selectDiv");
-  	  		    //하위 태그 삭제
-  	  		    while ( $Div.hasChildNodes())
-  	  		    {
-  	  		    	$Div.removeChild($Div.firstChild);
-  	  		    }
-  	  		}
-
-  	  		function onClickRemoveSelectImage(){
-  	  			document.getElementById("inputMultipleImage").value = "";
-  	  			removePreSelectImage();
-  	  		document.getElementById('fileStatusSpan').innerHTML = "";
-  	  		}
+  	    function previewImage(input) {
+  	          //선택한 이미지 파일 미리보기 생성
+  	          if(input.files) {
+  	              const fileArr = Array.from(input.files);
+  	              const $selectDiv = document.getElementById("selectDiv");
+        
+  	              fileArr.forEach((file, index) => {
+  	                  const reader = new FileReader();
+  	                  const $imgDiv = document.createElement("div");
+  	                  const $img = document.createElement("img");
+  	                  //const $childDiv = document.createElement("div");
+  	                  //const $btn = document.createElement('button');
+  	                  //const $i = document.createElement('i');
+        
+  	                  //$i.style.color =  'black';
+  	                  //$i.style.fontSize = '25px';
+  	      			//$i.setAttribute('class', 'fa fa-times');
+  	      			//$i.setAttribute('aria-hidden', 'false');
+        
+  	      			//console.log("index:"+index);
+  	      			//$btn.value = index;//삭제시 필요한 index 지정
+  	                //$btn.addEventListener( "click", onClickRemoveSelectImage);
+  	      			//$btn.setAttribute('type', 'button');
+        
+  	                $imgDiv.style.display = "inline-block";
+        
+  	                //$childDiv.appendChild($btn);
+  	    			//$btn.appendChild($i);
+  	                  $imgDiv.appendChild($img);
+  	                //$imgDiv.appendChild($childDiv);
+  	                  reader.onload = e => {
+  	                      $img.src = e.target.result;
+  	                      $imgDiv.style.width = "117.02px";
+  	                      $imgDiv.style.height = "160px";
+  	                      $img.style.width = "117.02px";
+  	                      $img.style.height = "160px";
+  	                  }
+  	                  $selectDiv.appendChild($imgDiv);
+  	                  reader.readAsDataURL(file);
+  	              })
+  	          }
+  	    }
+        
+  	    function removePreSelectImage(){
+  	        const $Div = document.getElementById("selectDiv");
+  	        //하위 태그 삭제
+  	        while ( $Div.hasChildNodes())
+  	        {
+  	        	$Div.removeChild($Div.firstChild);
+  	        }
+  	    }
+        
+  	    function onClickRemoveSelectImage(){
+  	    	document.getElementById("inputMultipleImage").value = "";
+  	    	removePreSelectImage();
+  	        document.getElementById('fileStatusSpan').innerHTML = "";
+  	    }
+  	  
+  	  	function loadHashTag(jsonParam){
+  			var searchData = jsonParam.tagData;		
+  			
+  			if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
+  				return;
+  			for(var i = 0 ; i < searchData.length ; i++){
+  			    var tagSpan = document.createElement('span');
+  			    var x = document.createElement('span');
+  			    var xMark = 'x';
+  		  	    var result = document.getElementById('tag');
+  		  	    tagSpan.className='badge';
+  		  	    x.setAttribute( 'onclick', 'removeTag()' );
+  		        x.className='xClass';
+  		        
+  		  	    var content =  searchData[i].tag;
+  		        
+  		  	    if(content !== ""){
+  		  	    	tagSpan.append(content);
+  		  	        x.append(xMark);
+  		            tagSpan.append(x);
+  		            result.append(tagSpan);
+  		  	    }
+  			}
+  		}
