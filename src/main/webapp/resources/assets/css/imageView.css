@@ -45,6 +45,10 @@ h1, h2, h3, h4, h5, h6, span {
 
 /* Section */
 
+#viewSection div {
+	text-align: center;
+}
+
 #imageSection div {
 	text-align: center;
 }
@@ -58,4 +62,32 @@ h1, h2, h3, h4, h5, h6, span {
 #footer {
 	text-align: center;
 	padding: 6em 0 4em 0;
+}
+
+/* ETC */
+.badge:before{
+	content: "#"
+}
+
+.badge {
+	display: inline-block;
+	min-width: 10px;
+	padding: 4px 7px;
+	font-size: 12px;
+	font-weight: 550;
+	line-height: 1;
+	color: #2f2f2f;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: #ececec;
+	border-radius: 5px;
+	margin-right: 8px;
+	cursor : pointer;
+}
+.bootstrap-tagsinput{	
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	
 }
