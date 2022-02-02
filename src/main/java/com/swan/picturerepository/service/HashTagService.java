@@ -12,7 +12,6 @@ import com.swan.picturerepository.dao.HashTagDAO;
 public class HashTagService {
 	@Autowired HashTagDAO hashTagDAO;
 	
-	@Transactional
 	public boolean createHashTag(String strBulletinId, List<String> arrTags) {
 		List<String> listHashTagId = hashTagDAO.createHashTagInfo(arrTags);
 		return hashTagDAO.createBoardTagRelationInfo(strBulletinId, listHashTagId);

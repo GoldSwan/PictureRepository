@@ -36,8 +36,17 @@ public class BulletinboardService {
 	}
 	
 	@Transactional
-	public String createBulletinboard(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList) {
-		return bulletinboardDAO.insertBulletinboardInfo(bulletinBoardInfoList, userFileInfoList);
+	public String createBulletinboard(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList, ArrayList<String> tagList) {
+		String strBulletinId = "";
+		
+		strBulletinId = bulletinboardDAO.insertBulletinboardInfo(bulletinBoardInfoList, userFileInfoList);
+		
+		if(strBulletinId == "") return "BulletinboardError";
+		
+		if(!hashTagService.createHashTag(strBulletinId, tagList)) {
+			return "HashTagError";
+		}
+		return strBulletinId;
 	}
 	
 	@Transactional

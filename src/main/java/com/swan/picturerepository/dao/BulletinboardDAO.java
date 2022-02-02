@@ -110,7 +110,7 @@ public class BulletinboardDAO {
 				pstmt.setString(6, userFileInfoList.get(0));
 				return pstmt;
 			}}, keyHolder)!=1)
-			return "";
+			return "BulletinboardError";
 		
 		strBulletinId = keyHolder.getKey().toString();
 		

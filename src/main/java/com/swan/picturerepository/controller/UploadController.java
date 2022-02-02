@@ -70,7 +70,7 @@ public class UploadController {
 		ArrayList<String> userFileInfoList = new ArrayList<>();
 		Map<String, ArrayList<String>> mapHashTags = new Gson().fromJson(strHashTagList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
 		
-		List<String> arrTags = mapHashTags.get("tags");
+		ArrayList<String> tagList = mapHashTags.get("tags");
 		
 		bulletinBoardInfoList.add(0, strContent);
 		bulletinBoardInfoList.add(1, "N");
@@ -99,7 +99,7 @@ public class UploadController {
 				sb.append(strFileName).append(",");
 			}
 		
-		strBulletinId = bulletinboardService.createBulletinboard(bulletinBoardInfoList, userFileInfoList);
+		strBulletinId = bulletinboardService.createBulletinboard(bulletinBoardInfoList, userFileInfoList, tagList);
 
 		}catch(Exception e) {
 			model.addAttribute("uploadMultiErrorMsg", e.getMessage());
@@ -107,13 +107,13 @@ public class UploadController {
 			return mv;
 		}
 		
-		if(strBulletinId == "") {
+		if(strBulletinId == "BulletinboardError") {
 			model.addAttribute("uploadMultiErrorMsg", "업로드에서 에러가 발생했습니다.");
 			mv.setViewName("board/imageFileUpload");				
 			return mv;
 		}
-		//해시태그 생성
-		if(!hashTagService.createHashTag(strBulletinId, arrTags)) {
+
+		if(strBulletinId == "HashTagError") {
 			model.addAttribute("uploadMultiErrorMsg", "해시태그 생성에서 에러가 발생했습니다.");
 			mv.setViewName("board/imageFileUpload");				
 			return mv;			
