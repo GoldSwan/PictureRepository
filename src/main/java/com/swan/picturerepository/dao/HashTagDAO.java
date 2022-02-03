@@ -27,11 +27,11 @@ public class HashTagDAO {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
-	public List<String> createHashTagInfo(List<String> arrTags) {
+	public List<String> createHashTagInfo(List<String> tagList) {
 		List<String> listTagIds = new ArrayList<>();
 		String strTagId = "";
 		
-		for(String tagName : arrTags) {
+		for(String tagName : tagList) {
 			strTagId = createHashTagInfoInsert(tagName);
 			
 			if(strTagId == "")
@@ -103,7 +103,7 @@ public class HashTagDAO {
 	
 	public boolean createBoardTagRelationInfo(String strBulletinId, List<String> listHashTagId) {
 		
-		String sqlStatement = "insert into BoardTagRelation (bulletinId, tagId, isrtDt) values(?, ?, SYSDATE())";
+		String sqlStatement = "insert into boardtagrelation (bulletinId, tagId, isrtDt) values(?, ?, SYSDATE())";
 		
 		for(String strTagId : listHashTagId) {
 			if(!(jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId, strTagId }) == 1)) {
@@ -111,5 +111,53 @@ public class HashTagDAO {
 			}
 		}
 		return true;
+	}
+
+	public List<String> selectCanDeleteTagId(String strTagName, String strBulletinId) {
+		//현재 게시판이 아닌 다른 게시판에 태그 참조가 없는 경우 삭제 가능. 즉 아래 sql 실행 결과로 반환되는 tagId는 삭제 가능
+		String sqlStatement = " select tagId"
+				            + " from hashtag a"
+				            + " where a.tagName = ?"
+				            + " and not exists"
+				            + " (select 1 from boardtagrelation where tagId = a.tagId and bulletinId <> ?)"
+				            + " limit 1";
+		
+		return jdbcTemplate.query(sqlStatement, new Object[] { strTagName, strBulletinId }, 
+				new RowMapper<String>() {
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return rs.getString("tagId");
+					}				
+		});
+	}
+	
+	public boolean deleteHashTag(List<String> tagList) {
+		for(String tagId : tagList) {
+			if(!deleteHashTagInfo(tagId))
+				return false;
+		}
+		return true;
+	}
+	
+	public boolean deleteHashTagInfo(String strTagId) {
+		String sqlStatement = " delete a from hashtag a where a.tagId = ?";
+		return ((jdbcTemplate.update(sqlStatement, new Object[] { strTagId }) == 1));
+	}
+	
+	public boolean deleteBoardTagRelation(String strBulletinId, List<String> tagList) {
+		
+		for(String tagName : tagList) {
+			if(!deleteBoardTagRelationInfo(strBulletinId, tagName))
+				return false;
+		}
+		return true;
+	}
+	
+	public boolean deleteBoardTagRelationInfo(String strBulletinId, String strTagName) {		
+		String sqlStatement = " delete a"
+				            + " from boardtagrelation a"
+				            + " inner join hashtag b on b.tagId = a.tagId"
+				            + " where a.bulletinId = ? and b.tagName = ?";
+		return ((jdbcTemplate.update(sqlStatement, new Object[] { strBulletinId, strTagName }) == 1));
 	}
 }

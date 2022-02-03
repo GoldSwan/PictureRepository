@@ -55,14 +55,12 @@ public class UploadController {
 		String strContent = "";
 		String strPublicRange = "";
 		String strHashTagList = "";
-		String strRemoveHashTagList = "";
 		
 		strUsername = req.getParameter("username");
 		strTitle = req.getParameter("title");
 		strContent = req.getParameter("content");
 		strPublicRange = req.getParameter("publicRange");
 		strHashTagList = req.getParameter("hashTagList");
-		strRemoveHashTagList = req.getParameter("removeHashTagList");
 		
 		StringBuffer sb = new StringBuffer();
 		ModelAndView mv = new ModelAndView();
@@ -201,11 +199,16 @@ public class UploadController {
 		strRemoveHashTagList = req.getParameter("removeHashTagList");
 		
 		Map<String, ArrayList<String>> mapRemoveImages = new Gson().fromJson(strRemoveImageList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
+		Map<String, ArrayList<String>> mapHashTags = new Gson().fromJson(strHashTagList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
+		Map<String, ArrayList<String>> mapRemoveHashTags  = new Gson().fromJson(strRemoveHashTagList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
 		
 		List<String> arrImages = mapRemoveImages.get("images");
 		for(String strFileId : arrImages) {
 			savedFileList.add(new UserFileInfoDTO.Builder("", "", "", "", strFileId, "", "").build());
 		}
+		
+		ArrayList<String> tagList = mapHashTags.get("tags");
+		ArrayList<String> removeTagList = mapRemoveHashTags.get("tags");
 		
 		if(savedFileList.size() > 0) {
 			if(!fileUploadService.deleteImageFile(savedFileList) || !fileUploadService.deleteThumbnailFile(savedFileList) || !fileUploadService.deleteFullThumbnailFile(savedFileList)) {
@@ -254,6 +257,18 @@ public class UploadController {
 				return mv;
 			}
 		
+			//해시 태그 삭제
+			if(!hashTagService.deleteHashTag(strBulletinId, removeTagList)) {
+				model.addAttribute("uploadMultiErrorMsg", "해시태그 삭제에서 에러가 발생했습니다.");
+				mv.setViewName("board/imageFileUpload");				
+				return mv;
+			}
+			//해시 태그 생성
+			if(!hashTagService.createHashTag(strBulletinId, tagList)) {
+				model.addAttribute("uploadMultiErrorMsg", "해시태그 생성에서 에러가 발생했습니다.");
+				mv.setViewName("board/imageFileUpload");				
+				return mv;
+			}
 		}catch(Exception e) {
 			model.addAttribute("uploadMultiErrorMsg", e.getMessage());
 			mv.setViewName("board/imageFileUpload");				
@@ -271,6 +286,7 @@ public class UploadController {
 		ModelAndView mv = new ModelAndView();
 		RedirectView redirectView = new RedirectView();
 		List<UserFileInfoDTO> fileList = null;	
+		String strRemoveHashTagList = "";		
 		
 		fileList = fileSearchService.getSearchFileListByFileId(strBulletinId);
 		if(!fileUploadService.deleteImageFile(fileList) || !fileUploadService.deleteThumbnailFile(fileList) || !fileUploadService.deleteFullThumbnailFile(fileList)) {
@@ -280,6 +296,17 @@ public class UploadController {
 			return mv;
 		}
 	
+		//해시 태그 삭제
+		strRemoveHashTagList = req.getParameter("removeHashTagList");
+		Map<String, ArrayList<String>> mapRemoveHashTags  = new Gson().fromJson(strRemoveHashTagList, new TypeToken<HashMap<String, ArrayList<String>>>() {}.getType());
+		ArrayList<String> removeTagList = mapRemoveHashTags.get("tags");
+		
+		if(!hashTagService.deleteHashTag(strBulletinId, removeTagList)) {
+			model.addAttribute("deleteErrorMsg", "해시태그 삭제에서 에러가 발생했습니다.");
+			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);				
+			return mv;
+		}
+		
 		if(!bulletinboardService.deleteBulletinboard(strBulletinId)) {
 			model.addAttribute("deleteErrorMsg", "데이터 삭제에서 에러가 발생했습니다.");
 			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);

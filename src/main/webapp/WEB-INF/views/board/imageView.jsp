@@ -12,7 +12,8 @@
 					method="post" style = "margin:0 0 0 0;height:0">
  					<input type="hidden" name = "_method" value = "delete"/>
  					<input type="hidden" name="${_csrf.parameterName }"
-										 value="${_csrf.token }" />​​​​​​​
+										 value="${_csrf.token }" />
+					<input type="hidden" id = "removeHashTagList" name="removeHashTagList" value="" />					 ​​​​​​​
 			</form>
 			<div>
 				<c:if test="${not empty deleteErrorMsg }">
@@ -114,8 +115,21 @@
 		}
 	}
 	
+	function setRemoveHashTagList(){
+  		//삭제해시태그
+ 		var objTags = {"tags":[]};
+  		const tags =  document.querySelectorAll(".badge");
+ 		for (var i = 0; i < tags.length; i++) {
+ 			 var tag = tags[i].innerText;
+ 			 objTags.tags.push(tag);
+ 		}
+ 		const paramTags = JSON.stringify(objTags);
+ 		document.getElementById("removeHashTagList").value = paramTags;
+  	}
+		
 	function deleteCheck() {
 		 if (confirm("삭제하시겠습니까?") == true){
+			 setRemoveHashTagList();
 			 location.href = "javascript:document.getElementById('delete').submit()";
 		     return true;
 		 }else{
