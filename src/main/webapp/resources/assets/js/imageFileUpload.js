@@ -5,31 +5,28 @@
   			var result = document.getElementById('tag');
   			var input = document.getElementById('tagId');
   			tagSpan.className='badge';
-  			x.setAttribute( 'onclick', 'removeTag()' );
+  			x.setAttribute( 'onclick', 'removeTag(this)' );
   			x.className='xClass';
 
   			var content =  document.getElementById('tagId');
   			var string = content.value;
-  			var string2 = string.trim();
-  			var string3 = string2.replace("," , "");
+  			string = string.trim();
+  			string = string.replace("," , "");
 
-  			if(string3 !== ""){
-  				tagSpan.append(string3);
+  			if(string !== ""){
+  				tagSpan.append(string);
   	  			x.append(xMark);
   	  			tagSpan.append(x);
   	  			result.append(tagSpan);
   	  			input.value = null;
-  			}else if(string3 == string){}
-
+  			}
   		}
 
-  		function removeTag(){
+  		function removeTag(xspan){
   			var listSpan = document.getElementById("tag");
-  			var tagSpan = listSpan.childNodes[0];
+  			var tagSpan = xspan.parentNode;
 			var tag = tagSpan.innerText;
 				tag = tag.substring(0, tag.length - 1);
-				//console.log("tag:"+tag);
-			var input = document.getElementById("removeHashTagList");
   			var tagRemoveSpan = document.createElement('span');
   			var result = document.getElementById('tag');
   			
@@ -50,7 +47,6 @@
 
   		function changeFileStatus(file){
   			var totalFileSize = 0;
-  			var browser=navigator.appName;
 
   	    	for(let iFile of file.files){
   	    		if(/\.(jpeg|gif|png|jpg)$/i.test(iFile.name) == false){
@@ -93,10 +89,8 @@
  				 var tag = tags[i].innerText;
  				 tag = tag.substring(0, tag.length - 1);
  				 objTags.tags.push(tag);
- 				//console.log("tag text:"+tags[i].innerText);
  			 }
  			 const paramTags = JSON.stringify(objTags);
- 			 //console.log("paramTags:"+paramTags);
  			 document.getElementById("hashTagList").value = paramTags;
   		}
   
@@ -107,10 +101,8 @@
  			 for (var i = 0; i < tags.length; i++) {
  				 var tag = tags[i].innerText;
  				 objTags.tags.push(tag);
- 				//console.log("tag text:"+tags[i].innerText);
  			 }
  			 const paramTags = JSON.stringify(objTags);
- 			 //console.log("paramTags:"+paramTags);
  			 document.getElementById("removeHashTagList").value = paramTags;
   		}
   		
@@ -123,9 +115,8 @@
   				obj.images.push(arrRemoveSavedImageFileIds[i]);
   			 }
   			 const param = JSON.stringify(obj);
-  			 //console.log("param:"+param);
+  			 
   			 document.getElementById("removeImageList").value = param;
-
   			 document.getElementById("uploadForm").action = rootPath + "/bulletinboards/newbulletinboard/"+bulletinId;
   		}
 
@@ -189,27 +180,10 @@
   	              fileArr.forEach((file, index) => {
   	                  const reader = new FileReader();
   	                  const $imgDiv = document.createElement("div");
-  	                  const $img = document.createElement("img");
-  	                  //const $childDiv = document.createElement("div");
-  	                  //const $btn = document.createElement('button');
-  	                  //const $i = document.createElement('i');
-        
-  	                  //$i.style.color =  'black';
-  	                  //$i.style.fontSize = '25px';
-  	      			//$i.setAttribute('class', 'fa fa-times');
-  	      			//$i.setAttribute('aria-hidden', 'false');
-        
-  	      			//console.log("index:"+index);
-  	      			//$btn.value = index;//삭제시 필요한 index 지정
-  	                //$btn.addEventListener( "click", onClickRemoveSelectImage);
-  	      			//$btn.setAttribute('type', 'button');
-        
-  	                $imgDiv.style.display = "inline-block";
-        
-  	                //$childDiv.appendChild($btn);
-  	    			//$btn.appendChild($i);
+  	                  const $img = document.createElement("img");   
+  	                  
+  	                  $imgDiv.style.display = "inline-block";
   	                  $imgDiv.appendChild($img);
-  	                //$imgDiv.appendChild($childDiv);
   	                  reader.onload = e => {
   	                      $img.src = e.target.result;
   	                      $imgDiv.style.width = "117.02px";
@@ -217,6 +191,7 @@
   	                      $img.style.width = "117.02px";
   	                      $img.style.height = "160px";
   	                  }
+  	                  
   	                  $selectDiv.appendChild($imgDiv);
   	                  reader.readAsDataURL(file);
   	              })
@@ -248,8 +223,8 @@
   			    var x = document.createElement('span');
   			    var xMark = 'x';
   		  	    var result = document.getElementById('tag');
-  		  	    tagSpan.className='badge';
-  		  	    x.setAttribute( 'onclick', 'removeTag()' );
+  		  	    tagSpan.className='update-badge';
+  		  	    x.setAttribute( 'onclick', 'removeTag(this)' );
   		        x.className='xClass';
   		        
   		  	    var content =  searchData[i].tag;
