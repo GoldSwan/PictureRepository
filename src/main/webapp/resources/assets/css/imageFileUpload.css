@@ -108,11 +108,13 @@ h1, h2, h3, h4, h5, h6, span {
 }
 
 /* ETC */
-.badge:before{
+/*.badge:before{*/
+[class*='badge']{
 	content: "#"
 }
 
-.badge {
+/*.badge {*/
+[class*='badge']{
 	display: inline-block;
 	min-width: 10px;
 	padding: 4px 7px;
