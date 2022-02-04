@@ -43,17 +43,7 @@ public class UserFileInfoDAO {
 										, rs.getString("content")
 										, rs.getString("fileId")
 										, rs.getString("likeCnt")
-										, rs.getString("likeFlag")).build();
-						//Timestamp dtIsrtDt = Timestamp.valueOf(rs.getString("isrtDt"));
-						//userFileInfo.setFileId(rs.getString("fileId"));
-						//userFileInfo.set(rs.getString("fileName"));
-						//userFileInfo.setIsrtDt(dtIsrtDt);
-						//userFileInfo.setLikeFlag(rs.getString("likeFlag"));
-						//userFileInfo.setLikeCnt(rs.getLong("likeCnt"));
-						//userFileInfo.setContent(rs.getString("content"));
-						//userFileInfo.setTag(rs.getString("tag"));
-						//userFileInfo.setTitle(rs.getString("title"));
-						
+										, rs.getString("likeFlag")).build();						
 						return userFileInfo;											
 					}		
 		});
