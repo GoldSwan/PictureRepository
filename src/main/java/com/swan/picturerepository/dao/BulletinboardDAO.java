@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -16,50 +14,78 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.swan.picturerepository.dto.BulletinBoardDTO;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
-import com.swan.picturerepository.model.BulletinBoard;
 
 @Repository
 public class BulletinboardDAO {
 
 	private JdbcTemplate jdbcTemplate;
-	private SimpleJdbcCall procReadAllSearchFile;
-	//private SimpleJdbcCall procReadAllSearchFileCnt;
 	
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		procReadAllSearchFile = new SimpleJdbcCall(dataSource)
-				.withProcedureName("USP_SEARCH_FILE")
-				.returningResultSet("BulletinBoard",BeanPropertyRowMapper.newInstance(BulletinBoard.class));
-		//procReadAllSearchFileCnt = new SimpleJdbcCall(dataSource)
-		//		.withProcedureName("USP_SEARCH_FILE_CNT");	
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<BulletinBoard> selectBoardByProcedure(String strSearch, int page, int maxImageCnt) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("search_flg", "T");
-		param.put("search", strSearch);
-		param.put("pagesize", maxImageCnt);
-		param.put("start", (page-1)*maxImageCnt);
-		Map<String, Object> m = procReadAllSearchFile.execute(param);
-		return (List<BulletinBoard>)m.get("BulletinBoard");
+	public List<BulletinBoardDTO> selectBoardInfo(String strSearchType, String strSearch, int page, int maxImageCnt){
+		String sqlStatement = "";
+		int start = 0;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(" (")
+		  .append("   SELECT bulletinId, representativeFileId, likeFlag")
+		  .append("   FROM bulletinboard")
+		  .append("   WHERE 'title' = ?")
+		  .append("   AND title LIKE CONCAT('%', ?, '%')")
+		  .append("   AND publicRange = 'A'")
+		  .append("   ORDER BY isrtDt DESC")
+		  .append("   LIMIT ? OFFSET ?")
+		  .append("  )")
+		  .append("  UNION ALL")
+		  .append(" (")
+		  .append("   SELECT bulletinId, representativeFileId, likeFlag")
+		  .append("   FROM bulletinboard")
+		  .append("   WHERE 'content' = ?")
+		  .append("   AND content LIKE CONCAT('%', ?, '%')")
+		  .append("   AND publicRange = 'A'")
+		  .append("   ORDER BY isrtDt DESC")
+		  .append("   LIMIT ? OFFSET ?")
+		  .append("  )")
+		  .append("  UNION ALL")
+		  .append(" (")
+		  .append("   SELECT a.bulletinId, a.representativeFileId, a.likeFlag")
+		  .append("   FROM bulletinboard a")
+		  .append("   WHERE 'tag' = ?")
+		  .append("   AND publicRange = 'A'")
+		  .append("   AND EXISTS (")
+		  .append("       SELECT 1")
+		  .append("       FROM boardtagrelation b")
+		  .append("       INNER JOIN hashtag c on c.tagId = b.tagId")
+		  .append("       WHERE b.bulletinId = a.bulletinId")
+		  .append("       AND c.tagName = ?")
+		  .append("       )")
+		  .append("   ORDER BY isrtDt DESC")
+		  .append("   LIMIT ? OFFSET ?")
+		  .append("  )");	
+		
+		sqlStatement = sb.toString();
+		start = (page-1)*maxImageCnt;
+		return jdbcTemplate.query(sqlStatement, new Object[] {strSearchType, strSearch, maxImageCnt, start
+				                                            , strSearchType, strSearch, maxImageCnt, start
+				                                            , strSearchType, strSearch, maxImageCnt, start }, 
+					new RowMapper<BulletinBoardDTO>() {
+						@Override
+						public BulletinBoardDTO mapRow(ResultSet rs, int rowNum) throws SQLException {					
+							BulletinBoardDTO bulletinBoard = new BulletinBoardDTO.Builder(rs.getString("bulletinId"), rs.getString("representativeFileId"), rs.getString("likeFlag")).build();				
+							return bulletinBoard;											
+						}		
+			   });
 	}
-/*	
-	public int selectBulletinboardCntByProcedure(String strSearch) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("search", strSearch);
-		Map<String, Object> m = procReadAllSearchFileCnt.execute(param);
-		return Integer.parseInt(m.get("out_cnt").toString());
-	}
-*/
+	
 	public List<UserFileInfoDTO> selectFileId(String strbulletinId) {
 		String sqlStatement = "SELECT b.fileId, a.title, a.isrtDt, a.username, a.content, a.likeCnt, a.likeFlag"
 				+ " FROM bulletinboard a"
@@ -85,9 +111,44 @@ public class BulletinboardDAO {
 		});
 	}
 	
-	public int selectBulletinboardCnt(String strSearch) {
-		String sqlStatement = "SELECT COUNT(1) cnt FROM bulletinboard WHERE title LIKE CONCAT('%', ?,'%') OR content LIKE CONCAT('%', ?,'%') AND publicRange = 'A'";
-		return jdbcTemplate.queryForObject(sqlStatement, new Object[] {strSearch, strSearch}, Integer.class);
+	public int selectBulletinboardCnt(String strSearchType, String strSearch) {
+		String sqlStatement = "";
+		StringBuilder sb = new StringBuilder();
+		sb.append(" SELECT SUM(cnt) cnt ")
+		  .append(" FROM")		
+		  .append(" (")
+		  .append(" 	(")
+		  .append(" 		SELECT COUNT(1) cnt")
+		  .append(" 		FROM bulletinboard")
+		  .append(" 		WHERE 'title' = ?")
+		  .append(" 		AND title LIKE CONCAT('%', ?,'%')")
+		  .append(" 	)")
+		  .append(" 	UNION ALL")
+		  .append(" 	(")
+		  .append(" 		SELECT COUNT(1) cnt")
+		  .append(" 		FROM bulletinboard")
+		  .append(" 		WHERE 'content' = ?")
+		  .append(" 		AND content LIKE CONCAT('%', ?,'%')")
+		  .append(" 	)")
+		  .append(" 	UNION ALL")
+		  .append(" 	(")
+		  .append(" 		SELECT COUNT(1) cnt")
+		  .append(" 		FROM bulletinboard a")
+		  .append(" 		WHERE 'tag' = ?")
+		  .append(" 		AND EXISTS (")
+		  .append(" 			SELECT 1")
+		  .append(" 			FROM boardtagrelation b")
+		  .append(" 			INNER JOIN hashtag c on c.tagId = b.tagId")
+		  .append(" 			WHERE b.bulletinId = a.bulletinId")
+		  .append(" 			AND c.tagName = ?")
+		  .append(" 			)")
+		  .append(" 	)")
+		  .append(" )result");
+		
+		sqlStatement = sb.toString();
+		return jdbcTemplate.queryForObject(sqlStatement, new Object[] {strSearchType, strSearch
+				                                                     , strSearchType, strSearch
+				                                                     , strSearchType, strSearch}, Integer.class);
 	}
 	
 	public String insertBulletinboardInfo(final ArrayList<String> bulletinBoardInfoList, final ArrayList<String> userFileInfoList) {	
@@ -97,7 +158,6 @@ public class BulletinboardDAO {
 		if(jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				// TODO Auto-generated method stub
 				String sqlStatement = "insert into bulletinboard (content, isrtDt, likeFlag, publicRange, title, username, representativeFileId) values(?,SYSDATE(),?,?,?,?,?)";
 
 				PreparedStatement pstmt = con.prepareStatement(sqlStatement, new String[] {"bulletinId"});

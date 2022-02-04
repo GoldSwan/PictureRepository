@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.swan.picturerepository.dao.BulletinboardDAO;
+import com.swan.picturerepository.dto.BulletinBoardDTO;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
-import com.swan.picturerepository.model.BulletinBoard;
 
 @Service
 public class BulletinboardService {
@@ -17,9 +16,8 @@ public class BulletinboardService {
 	@Autowired BulletinboardDAO bulletinboardDAO;
 	@Autowired HashTagService hashTagService;
 	
-	public List<BulletinBoard> getSearchBoardList(String strSearch, int page, int maxImageCnt) {		
-		//List<UserFileInfo> fileList = userFileInfoDAO.selectFileName(strSearch);
-		List<BulletinBoard> fileList = (List<BulletinBoard>)bulletinboardDAO.selectBoardByProcedure(strSearch, page, maxImageCnt);
+	public List<BulletinBoardDTO> getSearchBoardList(String strSearchType, String strSearch, int page, int maxImageCnt) {		
+		List<BulletinBoardDTO> fileList = (List<BulletinBoardDTO>)bulletinboardDAO.selectBoardInfo(strSearchType, strSearch, page, maxImageCnt);
 		return fileList; 
 	}
 	
@@ -30,15 +28,14 @@ public class BulletinboardService {
 		return fileList; 
 	}
 	
-	public int getSearchBulletinboardCnt(String strSearch) {
-		int fileCnt = bulletinboardDAO.selectBulletinboardCnt(strSearch);
+	public int getSearchBulletinboardCnt(String strSearchType, String strSearch) {
+		int fileCnt = bulletinboardDAO.selectBulletinboardCnt(strSearchType, strSearch);
 		return fileCnt;
 	}
 	
-	@Transactional
 	public String createBulletinboard(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList, ArrayList<String> tagList) {
 		String strBulletinId = "";
-		
+
 		strBulletinId = bulletinboardDAO.insertBulletinboardInfo(bulletinBoardInfoList, userFileInfoList);
 		
 		if(strBulletinId == "") return "BulletinboardError";
@@ -46,15 +43,14 @@ public class BulletinboardService {
 		if(!hashTagService.createHashTag(strBulletinId, tagList)) {
 			return "HashTagError";
 		}
+
 		return strBulletinId;
 	}
 	
-	@Transactional
 	public boolean updateBulletinboard(ArrayList<String> bulletinBoardInfoList, ArrayList<String> userFileInfoList, String strBulletinId) {
 		return bulletinboardDAO.updateBulletinboardInfo(bulletinBoardInfoList, userFileInfoList, strBulletinId);
 	}
 	
-	@Transactional
 	public boolean deleteBulletinboard(String strBulletinId) {
 		return bulletinboardDAO.deleteBulletinboardInfo(strBulletinId) && bulletinboardDAO.deleteUserFileInfo(strBulletinId);
 	}

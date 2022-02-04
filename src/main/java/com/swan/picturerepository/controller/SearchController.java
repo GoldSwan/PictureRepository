@@ -16,9 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
-
+import com.swan.picturerepository.dto.BulletinBoardDTO;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
-import com.swan.picturerepository.model.BulletinBoard;
 import com.swan.picturerepository.service.BulletinboardService;
 import com.swan.picturerepository.service.FileSearchService;
 import com.swan.picturerepository.service.HashTagService;
@@ -33,13 +32,12 @@ public class SearchController {
 	@Autowired private PageNavicationService pageNavicationService;
 	@Autowired private HashTagService hashTagService;
 	
-	List<BulletinBoard> boardList = null;
+	List<BulletinBoardDTO> boardList = null;
 	
 	@RequestMapping(value = "", method = {RequestMethod.GET})
-	public ModelAndView doSearchBulletinboards(@RequestParam("search") String strSearch, @RequestParam("page") String strPage) throws JsonProcessingException {	
+	public ModelAndView doSearchBulletinboards(@RequestParam("searchtype") String strSearchType, @RequestParam("search") String strSearch, @RequestParam("page") String strPage) throws JsonProcessingException {	
 		ModelAndView mv = new ModelAndView();
-		//String strSearch = req.getParameter("search");
-		//String strPage = req.getParameter("page");
+
 		int page = 0;
 		int maxImageCnt = 0;//한 페이지에 나올 수 있는 최대 이미지 갯수
 		int startPage = 0;//요청 page 기준으로 하단 네이게이션의 처음 순번의 페이지
@@ -57,9 +55,9 @@ public class SearchController {
 			return mv;
 		}
 		maxImageCnt = pageNavicationService.getMAX_IMAGE_CNT();
-		boardList = bulletinboardService.getSearchBoardList(strSearch, page, maxImageCnt);
+		boardList = bulletinboardService.getSearchBoardList(strSearchType, strSearch, page, maxImageCnt);
 		//searchCnt = fileList.size();	
-		searchCnt = bulletinboardService.getSearchBulletinboardCnt(strSearch);
+		searchCnt = bulletinboardService.getSearchBulletinboardCnt(strSearchType, strSearch);
 		maxPage = pageNavicationService.getMaxPage(searchCnt);
 		startPage = pageNavicationService.getStartPage(page);
 		endPage =pageNavicationService.getEndPage(page, maxPage);	
@@ -76,16 +74,7 @@ public class SearchController {
 			map.put("like", boardList.get(i).getLikeFlag());
 			list.add(map);
 		}
-		//페이지별 16개씩만 짤라서 전송
-		//2021-06-11 KSW : 주석치리
-		/*
-		for(int i = dataIndex; i<dataMaxRange;i++) {
-			Map<String, String> map = new HashMap<>();
-			map.put("image", fileList.get(i).getFileId());
-			map.put("like", fileList.get(i).getLikeFlag());
-			list.add(map);
-		}	
-        */
+
 		if(searchCnt==0) {
 			mv.addObject("noData","검색된 데이터가 없습니다.");
 		}
@@ -101,6 +90,7 @@ public class SearchController {
 		String strSearchDataMap = new Gson().toJson(searchDataMap);
 		mv.addObject("searchDataMap",strSearchDataMap);
 		mv.addObject("search",strSearch);
+		mv.addObject("searchtype",strSearchType);
 		
 		mv.setViewName("board/home");
 		 
