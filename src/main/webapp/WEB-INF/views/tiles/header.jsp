@@ -22,7 +22,12 @@
 								<div style = "text-align:center;display:inline-block;width:100%;">
 								<form class="" method="get"
 									action="<c:url value="/bulletinboards" />">
-											<input id = "search" class="form-control" type="search" placeholder="검색" value="${search}" name="search" style = "display:inline-block;width:80%">
+									        <select name="searchtype" style = "display:inline-block;width:18%;height:38px;background:white;color:black;font-weight:bold;">
+											   <option value="title" <c:if test="${searchtype eq 'title'}"> selected </c:if>>제목</option>
+											   <option value="content" <c:if test="${searchtype eq 'content'}"> selected </c:if>>내용</option>
+											   <option value="tag" <c:if test="${searchtype eq 'tag'}"> selected </c:if>>태그</option>
+										    </select>
+											<input id = "search" class="form-control" type="search" placeholder="검색" value="${search}" name="search" style = "display:inline-block;width:62%;font-weight:bold;">
 											<input type="hidden" name="page" value='1'>	​​​​​​​
 											<button class="btn btn-search my-2" type="submit" style = "background-color:white;margin-bottom:.8rem!important">
 												<i class="fa fa-search"></i>
@@ -34,7 +39,6 @@
 										<input type="hidden" name="${_csrf.parameterName }"
 											value="${_csrf.token }" /> ​​​​​​​
 								</form>
-
 					</c:if>
 			</div>
 			<!--
