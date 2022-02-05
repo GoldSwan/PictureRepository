@@ -1,10 +1,13 @@
 package com.swan.picturerepository.controller;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,7 +101,7 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "/{bulletinId}", method = {RequestMethod.GET})
-	public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId) {	
+	public ModelAndView doSearchBulletinboardById(@PathVariable("bulletinId") String strbulletinId, HttpServletRequest req, Principal principal) {	
 		List<UserFileInfoDTO> fileList = null;
 		List<String> tagList = null;
 		String strTitle = "";
@@ -106,9 +109,12 @@ public class SearchController {
 		String strUsername = "";
 		String strContent = "";
 		String strLikeCnt = "";
-		String strLikeFlag = "";
-		
+		String strLikeFlag = "";	
 		String strSearchDataMap = "";
+		String strDeleteErrorMsg = "";
+		String strisAuth = "";
+		
+		strDeleteErrorMsg = req.getParameter("deleteErrorMsg");
 		
 		ModelAndView mv = new ModelAndView();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -142,6 +148,9 @@ public class SearchController {
 			}
 		}
 		
+		//수정, 삭제 권한
+		strisAuth = (bulletinboardService.isBulletinboardAuth(strbulletinId, principal.getName())) ? "Y" : "N";
+		
 		Map<String, Object> searchDataMap = new HashMap<>();	
 		searchDataMap.put("imageData", listImages);
 		searchDataMap.put("tagData", listTags);
@@ -155,6 +164,8 @@ public class SearchController {
 		mv.addObject("likeCnt",strLikeCnt);
 		mv.addObject("likeFlag",strLikeFlag);
 		mv.addObject("bulletinId", strbulletinId);
+		mv.addObject("deleteErrorMsg",strDeleteErrorMsg);
+		mv.addObject("isAuth",strisAuth);
 		
 		return mv;
 	}

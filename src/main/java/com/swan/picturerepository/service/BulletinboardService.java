@@ -54,4 +54,9 @@ public class BulletinboardService {
 	public boolean deleteBulletinboard(String strBulletinId) {
 		return bulletinboardDAO.deleteBulletinboardInfo(strBulletinId) && bulletinboardDAO.deleteUserFileInfo(strBulletinId);
 	}
+	//게시판 수정, 삭제 권한 확인
+	public boolean isBulletinboardAuth(String strBulletinId, String strUsername) {
+		int numAuth = bulletinboardDAO.selectBulletinboardAuth(strBulletinId, strUsername);
+		return (numAuth == 0) ? false : true;
+	}
 }

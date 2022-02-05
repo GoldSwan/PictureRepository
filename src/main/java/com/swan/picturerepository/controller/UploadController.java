@@ -1,7 +1,7 @@
 package com.swan.picturerepository.controller;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,14 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.swan.picturerepository.dto.UserFileInfoDTO;
 import com.swan.picturerepository.service.BulletinboardService;
@@ -125,15 +120,23 @@ public class UploadController {
 	}
 
 	@GetMapping(value = "/newbulletinboard/{bulletinId}")
-	public ModelAndView selectBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		
+	public ModelAndView selectBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strbulletinId, Principal principal) throws Exception {
+		ModelAndView mv = new ModelAndView();	
+		RedirectView redirectView = new RedirectView();
 		List<UserFileInfoDTO> fileList = null;
 		List<String> tagList = null;
 		String strTitle = "";
 		String strUsername = "";
 		String strContent = "";		
 		String strSearchDataMap = "";
+
+		//권한 체크
+		if(!bulletinboardService.isBulletinboardAuth(strbulletinId, principal.getName())){
+			model.addAttribute("deleteErrorMsg", "수정 권한이 없습니다.");
+			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strbulletinId);
+			mv.setView(redirectView);
+			return mv;
+		}
 		
 		fileList = fileSearchService.getSearchFileListByFileId(strbulletinId);
 		List<Map<String, String>> listImages = new ArrayList<>();
@@ -282,11 +285,19 @@ public class UploadController {
 	}
 	
 	@DeleteMapping(value = "/newbulletinboard/{bulletinId}")
-	public ModelAndView deleteBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strBulletinId) throws Exception {
+	public ModelAndView deleteBulletinboard(Model model, HttpServletRequest req, @PathVariable("bulletinId") String strBulletinId, Principal principal) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		RedirectView redirectView = new RedirectView();
 		List<UserFileInfoDTO> fileList = null;	
 		String strRemoveHashTagList = "";		
+		
+		//권한 체크
+		if(!bulletinboardService.isBulletinboardAuth(strBulletinId, principal.getName())){
+			model.addAttribute("deleteErrorMsg", "삭제 권한이 없습니다.");
+			redirectView.setUrl(req.getContextPath()+"/bulletinboards/" + strBulletinId);
+			mv.setView(redirectView);
+			return mv;
+		}
 		
 		fileList = fileSearchService.getSearchFileListByFileId(strBulletinId);
 		if(!fileUploadService.deleteImageFile(fileList) || !fileUploadService.deleteThumbnailFile(fileList) || !fileUploadService.deleteFullThumbnailFile(fileList)) {

@@ -151,6 +151,16 @@ public class BulletinboardDAO {
 				                                                     , strSearchType, strSearch}, Integer.class);
 	}
 	
+	public int selectBulletinboardAuth(String strBulletinId, String strUsername) {
+		String sqlStatement = " SELECT sum(auth) auth FROM"
+				            + " ("
+				            + " 	SELECT count(*) auth FROM bulletinboard WHERE bulletinId = (?) AND username = ?"
+				            + " 	UNION ALL"
+				            + " 	SELECT count(*) auth FROM user WHERE username = ? AND authority = 'ROLE_ADMIN'"
+				            + " )result";
+		return jdbcTemplate.queryForObject(sqlStatement, new Object[] {strBulletinId, strUsername, strUsername}, Integer.class);		
+	}
+	
 	public String insertBulletinboardInfo(final ArrayList<String> bulletinBoardInfoList, final ArrayList<String> userFileInfoList) {	
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		String strBulletinId = "";

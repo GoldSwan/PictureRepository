@@ -61,6 +61,8 @@
 			pattern="/resources/**" />
 		<security:intercept-url
 			access="hasRole('ROLE_USER')" pattern="/**" />
+		<security:intercept-url
+			access="hasRole('ROLE_ADMIN')" pattern="/**" />			
 	    <!-- <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" /> -->
 		<security:form-login username-parameter="username"
 			password-parameter="password" login-processing-url="/login"
