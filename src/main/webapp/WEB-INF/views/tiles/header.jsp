@@ -22,7 +22,7 @@
 								<div style = "text-align:center;display:inline-block;width:100%;">
 								<form class="" method="get"
 									action="<c:url value="/bulletinboards" />">
-									        <select name="searchtype" style = "display:inline-block;width:18%;height:38px;background:white;color:black;font-weight:bold;">
+									        <select name="searchtype" style = "display:inline-block;width:18%;height:38px;background:white;color:black;font-weight:bold;padding-top:2px;">
 											   <option value="title" <c:if test="${searchtype eq 'title'}"> selected </c:if>>제목</option>
 											   <option value="content" <c:if test="${searchtype eq 'content'}"> selected </c:if>>내용</option>
 											   <option value="tag" <c:if test="${searchtype eq 'tag'}"> selected </c:if>>태그</option>
