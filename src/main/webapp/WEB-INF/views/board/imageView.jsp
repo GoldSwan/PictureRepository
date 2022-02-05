@@ -9,7 +9,7 @@
         		<a class="btn btn-primary" href= "#" onclick="deleteCheck()">삭제</a>
         		<a class="btn btn-primary" href= "<c:url value="/bulletinboards/newbulletinboard/${bulletinId}"/>">수정</a>
         	</div>
-        	</c:if>    	
+        	</c:if>
         	<form id="delete" action="<c:url value="/bulletinboards/newbulletinboard/${bulletinId}"/>"
 					method="post" style = "margin:0 0 0 0;height:0">
  					<input type="hidden" name = "_method" value = "delete"/>
@@ -26,33 +26,33 @@
         	<div><span>작성시간 : <c:out value = "${isrtDt}"/></span></div>
         	<div><span>작성자 : <c:out value = "${username}"/></span></div>
         	<div><span>내용 : <c:out value = "${content}"/></span></div>
-        	<div><span>좋아요 횟수 : <c:out value = "${likeCnt}"/></span></div>       	
-        	<div><span>좋아요 여부 : <c:out value = "${likeFlag}"/></span></div>    
+        	<div><span>좋아요 횟수 : <c:out value = "${likeCnt}"/></span></div>
+        	<div><span>좋아요 여부 : <c:out value = "${likeFlag}"/></span></div>
         	<section id="imageSection">
-        	</section>  
-     		 <div id="tag" class="bootstrap-tagsinput" style = "padding-left:10%;padding-right:10%;"></div>        	 	
+        	</section>
+     		 <div id="tag" class="bootstrap-tagsinput" style = "padding-left:10%;padding-right:10%;"></div>
         </section>
 	</div>
 	<script>
 	/* var jsonParam = '<c:out value='${searchDataMap}' escapeXml = "false"/>'; */
-	window.addEventListener('DOMContentLoaded', function(){		
+	window.addEventListener('DOMContentLoaded', function(){
 		var jsonParam = '${searchDataMap}';
 		if(jsonParam=='')
 			return;
-		
+
 		//jsonParam = jsonParam.replace(/&#034;/g,'"');
 		console.log(jsonParam);
 		if(jsonParam!=''){
 			jsonParam = JSON.parse(jsonParam);
 		}
-	
+
 		loadImage(jsonParam);
 		loadHashTag(jsonParam);
 	});
-	
+
 	function loadImage(jsonParam){
-		var searchData = jsonParam.imageData;		
-		
+		var searchData = jsonParam.imageData;
+
 		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
 			return;
 
@@ -62,9 +62,9 @@
 			document.getElementById('imageSection').appendChild(dynamic_div);
 		}
 		for(var i = 0 ; i < searchData.length ; i++){
-			var divIndex = i%4;		
+			var divIndex = i%4;
 			var dynamic_div_parent = document.createElement('div');
-			var dynamic_div_child = document.createElement('div');	
+			var dynamic_div_child = document.createElement('div');
 			var dynamic_a = document.createElement('a');
 			var dynamic_img = document.createElement('img');
 			//var dynamic_btn = document.createElement('button');
@@ -75,12 +75,12 @@
 			//dynamic_i.style.fontSize = '30px';
 			dynamic_div_parent.setAttribute('id', 'div_parent_'+i);
 			dynamic_div_child.setAttribute('id', 'div_child_'+i);
-			dynamic_a.setAttribute('id', 'a_'+i);	
+			dynamic_a.setAttribute('id', 'a_'+i);
 			dynamic_img.setAttribute('id', 'img_'+i);
 			//dynamic_btn.setAttribute('id', 'btn_like_'+i);
-			//dynamic_i.setAttribute('id', 'i_like_'+i);		
+			//dynamic_i.setAttribute('id', 'i_like_'+i);
 			dynamic_img.setAttribute('src', '${pageContext.request.contextPath}/resources/images/fulls/'+searchData[i].image);
-			//dynamic_btn.setAttribute('type', 'button');		
+			//dynamic_btn.setAttribute('type', 'button');
 			document.getElementById('div_'+divIndex).appendChild(dynamic_div_parent);
 			document.getElementById('div_parent_'+i).appendChild(dynamic_a);
 			document.getElementById('a_'+i).appendChild(dynamic_img);
@@ -88,35 +88,35 @@
 			//document.getElementById('div_child_'+i).appendChild(dynamic_btn);
 			//document.getElementById('btn_like_'+i).appendChild(dynamic_i);
 			//document.getElementById('i_like_'+i).setAttribute('class', 'fa fa-heart');
-			//document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'false');	
+			//document.getElementById('i_like_'+i).setAttribute('aria-hidden', 'false');
 			document.getElementById('a_'+i).href = imageViewURL;
 			document.getElementById('a_'+i).target = "_blank";
 			document.getElementById('a_'+i).rel = "noopener";
 			//imageLikeMap.set('btn_like_'+i, searchData[i].image);//좋아요 클릭시 해당 버튼의 이미지 KEY 값을 찾기 위한 Map 생성
-			
+
 		}
 	}
 
 	function loadHashTag(jsonParam){
-		var searchData = jsonParam.tagData;		
-		
+		var searchData = jsonParam.tagData;
+
 		if(searchData==null || searchData=='' || searchData=='undefined' || searchData.length == 0)
 			return;
 		for(var i = 0 ; i < searchData.length ; i++){
 		    var tagSpan = document.createElement('span');
 	  	    var result = document.getElementById('tag');
-	  	    tagSpan.className='badge';
-	  	    tagSpan.setAttribute( 'onclick', "location.href = '#'" );//#에 태그검색 URL 추가 필요
-	        
 	  	    var content =  searchData[i].tag;
-	        
+
+	  	    tagSpan.className='badge';
+	  	    tagSpan.setAttribute( 'onclick', "location.href = '${pageContext.request.contextPath}/bulletinboards?searchtype=tag&search="+content+"&page=1'" );
+
 	  	    if(content !== ""){
 	  	    	tagSpan.append(content);
 	  	      	result.append(tagSpan);
 	  	    }
 		}
 	}
-	
+
 	function setRemoveHashTagList(){
   		//삭제해시태그
  		var objTags = {"tags":[]};
@@ -128,7 +128,7 @@
  		const paramTags = JSON.stringify(objTags);
  		document.getElementById("removeHashTagList").value = paramTags;
   	}
-		
+
 	function deleteCheck() {
 		 if (confirm("삭제하시겠습니까?") == true){
 			 setRemoveHashTagList();
