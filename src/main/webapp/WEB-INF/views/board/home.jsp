@@ -108,7 +108,7 @@
 			var dynamic_i = document.createElement('i');
 			//var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?fileId='+searchData[i].image+'&username=${pageContext.request.userPrincipal.name}';
 			//var imageViewURL = '${pageContext.request.contextPath}/move/imageView/?bulletinId='+searchData[i].bulletinId+'&username=${pageContext.request.userPrincipal.name}';
-			var imageViewURL = '${pageContext.request.contextPath}/bulletinboards/'+searchData[i].bulletinId+'/?username=${pageContext.request.userPrincipal.name}';
+			var imageViewURL = '${pageContext.request.contextPath}/bulletinboards/'+searchData[i].bulletinId;//+'/?username=${pageContext.request.userPrincipal.name}';
 			//console.log("imageViewURL:"+imageViewURL);
 			dynamic_i.style.color = (searchData[i].like == 'Y') ? 'red' : 'black';
 			dynamic_i.style.fontSize = '30px';
@@ -155,7 +155,7 @@
 		document.getElementById('nav_start_li').appendChild(start_a);
 		document.getElementById('nav_start_li').setAttribute('class','page-item');
 		document.getElementById('nav_start_a').setAttribute('class','page-link');
-		var previousUrlValue = (isPreviousPage == false) ? '#none' : '${pageContext.request.contextPath}/bulletinboards?search='+search + '&page=' + (startPage-1);
+		var previousUrlValue = (isPreviousPage == false) ? '#none' : '${pageContext.request.contextPath}/bulletinboards?searchtype=${searchtype}&search='+search + '&page=' + (startPage-1);
 		document.getElementById('nav_start_a').setAttribute('href',previousUrlValue);
 		document.getElementById('nav_start_a').innerHTML = '<';
 
@@ -169,7 +169,7 @@
 			document.getElementById('nav_li' + i).setAttribute('class','page-item');
 			document.getElementById('nav_a' + i).setAttribute('class','page-link');
 			var page = i;
-			var sendParam = 'search=' + search + '&page=' + page;
+			var sendParam = 'searchtype=${searchtype}'+'&search=' + search + '&page=' + page;
 			var urlValue = '${pageContext.request.contextPath}/bulletinboards?'+sendParam;
 			document.getElementById('nav_a' + i).setAttribute('href',urlValue);
 			document.getElementById('nav_a' + i).innerHTML = page;
@@ -183,7 +183,7 @@
 		document.getElementById('nav_end_li').appendChild(end_a);
 		document.getElementById('nav_end_li').setAttribute('class','page-item');
 		document.getElementById('nav_end_a').setAttribute('class','page-link');
-		var nextUrlValue = (isNextPage == false) ? '#none' : '${pageContext.request.contextPath}/bulletinboards?search='+search + '&page=' + (endPage+1);
+		var nextUrlValue = (isNextPage == false) ? '#none' : '${pageContext.request.contextPath}/bulletinboards?searchtype=${searchtype}&search='+search + '&page=' + (endPage+1);
 		document.getElementById('nav_end_a').setAttribute('href',nextUrlValue);
 		document.getElementById('nav_end_a').innerHTML = '>';
 	}
