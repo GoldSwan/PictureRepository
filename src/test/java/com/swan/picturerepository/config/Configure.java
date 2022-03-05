@@ -16,7 +16,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 		     ,"file:src/main/webapp/WEB-INF/spring/appServlet/service-context.xml"
 		     ,"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
 @TestPropertySource
-(locations = {"classpath:jdbc.properties"})
+(locations = {"file:src/main/webapp/WEB-INF/props/jdbc.properties"})
 public class Configure {
 
 	@Autowired
