@@ -17,7 +17,7 @@ public class PageNavicationService {
 	private GenericXmlApplicationContext ctx;
 	public PageNavicationService(){
 		 this.ctx = new GenericXmlApplicationContext();
-		 ctx.load("classpath:constant.xml");
+		 ctx.load("classpath:/props/constant.xml");
 		 ctx.refresh();
 		 ConstantProperty constantProperty = (ConstantProperty)ctx.getBean("constantProperty");
 		 this.MAX_IMAGE_CNT =constantProperty.getMax_image_cnt();
