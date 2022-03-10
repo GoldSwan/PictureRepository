@@ -23,6 +23,7 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+		<finalName>${artifactId}</finalName>
 	</properties>
 
 	<dependencies>
