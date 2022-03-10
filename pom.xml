@@ -23,7 +23,7 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
-		<finalName>${artifactId}</finalName>
+		<!--<finalName>${artifactId}</finalName>-->
 	</properties>
 
 	<dependencies>
@@ -221,7 +221,7 @@
 	</dependencies>
 	<build>
 		<finalName>picturerepository</finalName>
-		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
+		<pluginManagement><!-- lock down plugins versions to avoid using Maven
 				defaults (may be moved to parent pom) -->
 			<plugins>
 				<plugin>
