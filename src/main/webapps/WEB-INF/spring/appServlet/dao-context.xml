@@ -7,15 +7,19 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<context:property-placeholder location="/usr/local/tomcat8.5/webapps/ROOT/resources/props/jdbc.properties"/>
+	<!--<context:property-placeholder location="classpath:/props/jdbc.properties"/> -->
 	
 	<context:annotation-config></context:annotation-config>
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/picturerepository?useSSL=true" />
+		<property name="username" value="root" />
+		<property name="password" value="#root0987@" />	
+<!-- 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
+		<property name="password" value="${jdbc.password}" /> -->
 	</bean>
 	
 	<context:component-scan base-package="com.swan.picturerepository.dao">
