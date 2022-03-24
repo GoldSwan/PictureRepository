@@ -13,7 +13,7 @@
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/picturerepository?useSSL=true&amp;serverTimezone=Asia/Seoul" />
+		<property name="url" value="jdbc:mysql://localhost:3306/picturerepository?useSSL=true&amp;useTimezone=true&amp;serverTimezone=Asia/Seoul" />
 		<property name="username" value="root" />
 		<property name="password" value="#root0987@" />	
 <!-- 		<property name="driverClassName" value="${jdbc.driverClassName}" />
