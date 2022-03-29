@@ -17,7 +17,7 @@ public class PageNavicationService {
 	private GenericXmlApplicationContext ctx;
 	public PageNavicationService(){
 		 this.ctx = new GenericXmlApplicationContext();
-		 ctx.load("classpath:/props/constant.xml");
+		 ctx.load("file:/usr/local/tomcat8.5/webapps/ROOT/resources/props/constant.xml");
 		 ctx.refresh();
 		 ConstantProperty constantProperty = (ConstantProperty)ctx.getBean("constantProperty");
 		 this.MAX_IMAGE_CNT =constantProperty.getMax_image_cnt();
@@ -37,9 +37,9 @@ public class PageNavicationService {
 		}
 		return endPage > maxPage ? maxPage : endPage;
 	}
-	//조회한 데이터의 마지막 페이지  = (검색 이미지수 / 페이지 당 있을 수 있는 MAX 이미지 수)를 올림처리 
-	public int getMaxPage(int searchCnt) { 
-		return (int) Math.ceil((double) searchCnt / MAX_IMAGE_CNT); 
+	//조회한 데이터의 마지막 페이지  = (검색 이미지수 / 페이지 당 있을 수 있는 MAX 이미지 수)를 올림처리
+	public int getMaxPage(int searchCnt) {
+		return (int) Math.ceil((double) searchCnt / MAX_IMAGE_CNT);
 	}
 	public boolean getIsPreviousPage(int startPage) {
 		return startPage==1 ? false : true;
