@@ -17,7 +17,7 @@ public class PageNavicationService {
 	private GenericXmlApplicationContext ctx;
 	public PageNavicationService(){
 		 this.ctx = new GenericXmlApplicationContext();
-		 ctx.load("file:/usr/local/tomcat8.5/webapps/ROOT/resources/props/constant.xml");
+		 ctx.load("file:/usr/local/tomcat8.5/webapps/ROOT/WEB-INF/spring/appServlet/constant.xml");
 		 ctx.refresh();
 		 ConstantProperty constantProperty = (ConstantProperty)ctx.getBean("constantProperty");
 		 this.MAX_IMAGE_CNT =constantProperty.getMax_image_cnt();
