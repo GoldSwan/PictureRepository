@@ -11,17 +11,17 @@
 	</context:component-scan>
 
 	<bean id = "imageUploadPath" class="java.lang.String">
-	<constructor-arg value="file:/usr/local/tomcat8.5/webapps/ROOT/resources/images/originals">
+	<constructor-arg value="/usr/local/tomcat8.5/webapps/ROOT/resources/images/originals">
 	</constructor-arg>
 	</bean>
 
 	<bean id = "thumbnailUploadPath" class="java.lang.String">
-	<constructor-arg value="file:/usr/local/tomcat8.5/webapps/ROOT/resources/images/thumbs">
+	<constructor-arg value="/usr/local/tomcat8.5/webapps/ROOT/resources/images/thumbs">
 	</constructor-arg>
 	</bean>
 
 	<bean id = "fullUploadPath" class="java.lang.String">
-	<constructor-arg value="file:/usr/local/tomcat8.5/webapps/ROOT/resources/images/fulls">
+	<constructor-arg value="/usr/local/tomcat8.5/webapps/ROOT/resources/images/fulls">
 	</constructor-arg>
 	</bean>
 
